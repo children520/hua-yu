@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:background="@drawable/baibaoshu_border"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:layout_below="@id/plant_chinese_name"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/plant_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/apple"
+        android:layout_margin="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学名"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:id="@+id/plant_chinese_name"/>
+        <TextView
+            android:layout_toRightOf="@id/plant_chinese_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="拉丁名字"
+            android:id="@+id/plant_latin_name"/>
+        <TextView
+            android:layout_below="@id/plant_latin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="科属"
+            android:id="@+id/plant_family_genus"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_below="@id/plant_family_genus"
+            android:id="@+id/plant_soil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="泥炭土、叶糠和珍珠岩按3：2：1的比例配成混合土使用。"
+            android:layout_gravity="center_horizontal"/>
+    </RelativeLayout>
+
+</LinearLayout>

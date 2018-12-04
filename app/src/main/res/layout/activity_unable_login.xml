@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.xiaojun.huayu.LogIn">
+
+    <RelativeLayout
+        android:id="@+id/unable_login_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/solve_information_title"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/regist_xu"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="43dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="方法："
+            android:textColor="#000000"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/solve_information"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/solve_information_title"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="-132dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+
+        <ImageView
+            android:id="@+id/regist_xu"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@mipmap/login_xu"/>
+
+        <ImageView
+            android:id="@+id/regist"
+            android:layout_width="250dp"
+            android:layout_height="216dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="108dp"
+            android:src="@mipmap/login"/>
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

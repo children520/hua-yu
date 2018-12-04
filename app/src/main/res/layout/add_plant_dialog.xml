@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/add_plant_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="@color/black"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="搜索并添加植物"
+            android:textStyle="bold"
+            android:textSize="20dp"/>
+        <ImageView
+            android:id="@+id/add_plant_image"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/huayouhui_cancel_color_selector"/>
+    </RelativeLayout>
+        <SearchView
+            android:id="@+id/add_plant_search"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_below="@id/add_plant_title"
+            android:iconifiedByDefault="false"
+            android:queryHint="请输入想要搜索的植物名称"
+            android:layout_height="wrap_content">
+        </SearchView>
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/add_plant_search"
+            android:layout_margin="5dp"
+            android:id="@+id/add_plant_recycler_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+
+
+
+</RelativeLayout>

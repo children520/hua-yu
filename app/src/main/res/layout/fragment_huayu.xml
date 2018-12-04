@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <SearchView
+        android:id="@+id/home_searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="请输入想要搜索的植物内容"
+        android:background="@drawable/baibaoshu_border"/>
+    <TextView
+        android:id="@+id/pull_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上拉刷新"
+        android:textColor="@color/gray"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/home_searchView"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/pull_refresh"
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>
