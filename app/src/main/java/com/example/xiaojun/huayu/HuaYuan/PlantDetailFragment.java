@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -122,7 +123,7 @@ public class PlantDetailFragment extends Fragment {
         super.onResume();
         updateTime();
         updateUI();
-
+        CheckDrinkNotificate();
     }
     private void updateTime(){
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
@@ -167,7 +168,9 @@ public class PlantDetailFragment extends Fragment {
         plantBreedTimeTextView=view.findViewById(R.id.plant_detail_breed);
     }
     private void  CheckDrinkNotificate(){
-            if(vPlantBreedTime==8&&RemindSettingFragment.isIsDrinkOpen()){
+        SharedPreferences sharedPreferences=getActivity().getSharedPreferences("remindSetting",Context.MODE_PRIVATE);
+        boolean IsDrinkOpen=sharedPreferences.getBoolean("IsDrinkOpen",false);
+            if(vPlantBreedTime==8&&IsDrinkOpen){
             Intent intent=new Intent(getActivity(),PlantDetailFragment.class);
             PendingIntent pendingIntent=PendingIntent.getActivity(getActivity(),0,intent,0);
             Notification.Builder builder=new Notification.Builder(getActivity());
