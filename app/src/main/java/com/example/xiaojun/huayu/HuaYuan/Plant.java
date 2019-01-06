@@ -1,14 +1,34 @@
 package com.example.xiaojun.huayu.HuaYuan;
 
+import java.util.UUID;
+
 import cn.bmob.v3.BmobObject;
 
-public class PlantContent extends BmobObject {
+public class Plant extends BmobObject {
     private String ImageUrl;
     private String PlantChineseName;
     private String PlantLatinName;
     private String PlantFamilyGenus;
     private boolean IsChoice;
+    private String PlantBirthday;
 
+    public String getPlantBirthday() {
+        return PlantBirthday;
+    }
+
+    public void setPlantBirthday(String plantBirthday) {
+        PlantBirthday = plantBirthday;
+    }
+
+    public UUID getPlantId() {
+        return PlantId;
+    }
+
+    public void setPlantId(UUID plantId) {
+        PlantId = plantId;
+    }
+
+    private UUID PlantId;
     private String PlantSoil;
     private String PlantMorphologicalCharacteristics;
 
@@ -54,7 +74,7 @@ public class PlantContent extends BmobObject {
         return PlantBreedTime;
     }
 
-    public void setPlantChangeBreedTime(int plantBreedTime) {
+    public void setPlantBreedTime(int plantBreedTime) {
         PlantBreedTime = plantBreedTime;
     }
 

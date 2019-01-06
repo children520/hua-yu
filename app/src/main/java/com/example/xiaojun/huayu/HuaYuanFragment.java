@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -29,17 +30,15 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.example.xiaojun.huayu.HuaYuan.PlantContent;
+import com.example.xiaojun.huayu.HuaYuan.Plant;
 import com.example.xiaojun.huayu.HuaYuan.PlantContentAdapter;
+import com.example.xiaojun.huayu.HuaYuan.PlantLab;
 import com.example.xiaojun.huayu.HuaYuan.UserPlantContentAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -62,14 +61,11 @@ public class HuaYuanFragment extends Fragment {
 
 
     private static final int UPDATE_VIEW=3;
-    private static List<PlantContent> mUserPlantContentList=new ArrayList<>();
+    private static final int UPDATE_PLANT_VIEW=2;
+    private static List<Plant> mUserPlantList =new ArrayList<>();
 
-
-
-
-    private static String PlantBirthday;
     private List<String> singleList=new ArrayList<>();
-    private List<PlantContent> plantList=new ArrayList<>();
+    private List<Plant> plantList=new ArrayList<>();
     private TextView cityText, timeText, weatherText, tempText, windText, wetText;
     private WeatherSearchQuery query;
     private WeatherSearch weathersearch;
@@ -78,7 +74,7 @@ public class HuaYuanFragment extends Fragment {
     private AMapLocationClientOption mLocationOption=null;
     private ImageView addPlant;
     private AlertDialog AddPlantAlertDialog;
-    private int plantIndex;
+    private PlantLab mPlantLab;
     private RecyclerView mRecyclerView;
     private UserPlantContentAdapter mAdapter;
     private View AddPlantView;
@@ -87,11 +83,14 @@ public class HuaYuanFragment extends Fragment {
     private ImageView AddPlantImageView;
     private ImageView IsNotAddPlantImageView;
     private RecyclerView AddPlantRecyclerView;
-
-
+    private PlantLab plantLab;
+    private SwipeRefreshLayout HuanYuanSwipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_huayuan, container, false);
+        if(plantLab==null){
+            plantLab=new PlantLab(getActivity());
+        }
         requestLocation();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.huayuan_recycler_content);
         StaggeredGridLayoutManager LayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
@@ -132,20 +131,20 @@ public class HuaYuanFragment extends Fragment {
                     Toast.makeText(getActivity(),"请输入查找内容",Toast.LENGTH_SHORT).show();
                 }
 
-                BmobQuery<PlantContent> bmobQuery = new BmobQuery<PlantContent>();
-                bmobQuery.findObjects(new FindListener<PlantContent>() {
+                BmobQuery<Plant> bmobQuery = new BmobQuery<Plant>();
+                bmobQuery.findObjects(new FindListener<Plant>() {
                     @Override
-                    public void done(List<PlantContent> list, BmobException e) {
+                    public void done(List<Plant> list, BmobException e) {
                         if (e == null) {
-                            HashSet<PlantContent> plantSet =new HashSet<>();
-                          for (PlantContent plantContent :list){
-                              Log.d("name",plantContent.getPlantChineseName());
-                              if (query.equals(plantContent.getPlantChineseName())){
-                                      plantSet.add(plantContent);
+                            HashSet<Plant> plantSet =new HashSet<>();
+                          for (Plant plant :list){
+                              Log.d("name", plant.getPlantChineseName());
+                              if (query.equals(plant.getPlantChineseName())){
+                                      plantSet.add(plant);
                                   }
                           }
                             plantList.clear();
-                            Iterator<PlantContent> iterator=plantSet.iterator();
+                            Iterator<Plant> iterator=plantSet.iterator();
                             while (iterator.hasNext()){
                                 plantList.add(iterator.next());
                             }
@@ -176,7 +175,19 @@ public class HuaYuanFragment extends Fragment {
                 handler.sendMessage(message);
             }
         });
-
+        HuanYuanSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.huanyuan_swipe_refresh_layout);
+        HuanYuanSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                plantLab.displayPlantList(mUserPlantList);
+                Log.d("mUserPlantList",mUserPlantList.toString());
+                mAdapter = new UserPlantContentAdapter(mUserPlantList);
+                Log.d("adapter",mAdapter.toString());
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+                HuanYuanSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return view;
     }
     private Handler handler=new Handler(){
@@ -190,6 +201,7 @@ public class HuaYuanFragment extends Fragment {
                     AddPlantRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     break;
+
             }
         }
     };
@@ -201,7 +213,7 @@ public class HuaYuanFragment extends Fragment {
     }
     public static Intent newIntent(Context packageContext,String ImageUrl,String PlantChineseName,
                                    String PlantLatinName,String PlantFamilyGenus,
-                                   String PlantMorphologicalCharacteristics,String PlantSoil,
+                                   String PlantMorphologicalCharacteristics,String PlantSoil,String PlantBirthday,
                                    int PlantDrinkTime, int PlantFertilizationTime,int PlantScissorTime,
                                    int PlantChangeSoilTime,int PlantBreedTime){
         Intent intent=new Intent(packageContext,PlantDetailActivity.class);
@@ -221,10 +233,10 @@ public class HuaYuanFragment extends Fragment {
         return intent;
     }
     private void updateUI(){
-
        if(mAdapter==null) {
-
-           mAdapter = new UserPlantContentAdapter(mUserPlantContentList);
+           plantLab.displayPlantList(mUserPlantList);
+           Log.d("mUserPlantList",mUserPlantList.toString());
+           mAdapter = new UserPlantContentAdapter(mUserPlantList);
            Log.d("adapter",mAdapter.toString());
            mRecyclerView.setAdapter(mAdapter);
        }else {
@@ -235,7 +247,7 @@ public class HuaYuanFragment extends Fragment {
 
         if(mAdapter==null) {
 
-            mAdapter = new UserPlantContentAdapter(mUserPlantContentList);
+            mAdapter = new UserPlantContentAdapter(mUserPlantList);
             Log.d("adapter",mAdapter.toString());
             mRecyclerView.setAdapter(mAdapter);
         }else {
@@ -332,15 +344,10 @@ public class HuaYuanFragment extends Fragment {
             }
         }
     }
-    public static List<PlantContent> getUserPlantContentList() {
-        return mUserPlantContentList;
+    public static List<Plant> getUserPlantContentList() {
+        return mUserPlantList;
     }
 
-    public void setUserPlantContentList(List<PlantContent> userPlantContentList) {
-        mUserPlantContentList = userPlantContentList;
-    }
-    public static void setPlantBirthday(String plantBirthday) {
-        PlantBirthday = plantBirthday;
-    }
+
 
 }

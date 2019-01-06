@@ -4,20 +4,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xiaojun.huayu.HuaYuanFragment;
-import com.example.xiaojun.huayu.PlantDetailActivity;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;
 
 public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantContentAdapter.ViewHolder> {
-    private List<PlantContent> mPlantContentList;
+    private List<Plant> mPlantList;
     private static final int LAYOUT_TYPE_ONE=1;
     private static final int LAYOUT_TYPE_TWO=2;
 
@@ -27,45 +28,73 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
         private TextView mLatinNameView;
         private TextView mFamilyGenusView;
         private TextView mSoilView;
-        private PlantContent mPlantContent;
+        private Plant mPlant;
+        private ImageView deletePlantImageView;
         private ImageView IsNotAddPlantImageView;
-
+        private PlantLab plantLab;
         public ViewHolder(View view) {
             super(view);
+            plantLab=new PlantLab(view.getContext());
             view.setOnClickListener(this);
             mImageView=view.findViewById(R.id.plant_image);
             mChineseNameView=view.findViewById(R.id.plant_chinese_name);
             mLatinNameView=view.findViewById(R.id.plant_latin_name);
             mFamilyGenusView=view.findViewById(R.id.plant_family_genus);
             mSoilView=view.findViewById(R.id.plant_soil);
-
+            deletePlantImageView=view.findViewById(R.id.delete_plant);
 
         }
-        public void bindPlantContent(final PlantContent plantContent){
-            mPlantContent=plantContent;
-            mPlantContent.setChoice(true);
+        public void bindPlantContent(final Plant plant){
+            mPlant = plant;
+            Log.d("getPlantBreedTime()",mPlant.getPlantBreedTime()+"");
             mImageView.setImageResource(R.mipmap.apple);
-            mChineseNameView.setText(mPlantContent.getPlantChineseName());
-            mLatinNameView.setText(mPlantContent.getPlantLatinName());
-            mFamilyGenusView.setText(mPlantContent.getPlantFamilyGenus());
-            mSoilView.setText(mPlantContent.getPlantSoil());
+            mChineseNameView.setText(mPlant.getPlantChineseName());
+            mLatinNameView.setText(mPlant.getPlantLatinName());
+            mFamilyGenusView.setText(mPlant.getPlantFamilyGenus());
+            mSoilView.setText(mPlant.getPlantSoil());
+            deletePlantImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog alertDialog=null;
+                    AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+                    alertDialog=builder.setTitle("温馨提示").setMessage("确定要将该种植物从我的植物删除么？")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                }
+                            })
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    plantLab.deletePlant(mPlant);
+
+
+                                }
+                            }).create();
+
+                    alertDialog.show();
+
+                }
+            });
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent=HuaYuanFragment.newIntent(v.getContext(),mPlantContent.getImageUrl(),
-                    mPlantContent.getPlantChineseName(),mPlantContent.getPlantLatinName(),
-                    mPlantContent.getPlantFamilyGenus(),mPlantContent.getPlantMorphologicalCharacteristics(),
-                    mPlantContent.getPlantSoil(),mPlantContent.getPlantDrinkTime(),mPlantContent.getPlantFertilizateTime(),
-                    mPlantContent.getPlantScissorTime(),mPlantContent.getPlantChangeSoilTime(),mPlantContent.getPlantBreedTime());
+            Log.d("getPlantBreedTime()",mPlant.getPlantBreedTime()+"");
+            Log.d("getPlantFertilizateTime",mPlant.getPlantFertilizateTime()+"");
+            Intent intent=HuaYuanFragment.newIntent(v.getContext(), mPlant.getImageUrl(),
+                    mPlant.getPlantChineseName(), mPlant.getPlantLatinName(),
+                    mPlant.getPlantFamilyGenus(), mPlant.getPlantMorphologicalCharacteristics(),
+                    mPlant.getPlantSoil(),mPlant.getPlantBirthday(),  mPlant.getPlantDrinkTime(), mPlant.getPlantFertilizateTime(),
+                    mPlant.getPlantScissorTime(), mPlant.getPlantChangeSoilTime(), mPlant.getPlantBreedTime());
             v.getContext().startActivity(intent);
         }
 
     }
 
-    public UserPlantContentAdapter(List<PlantContent> plantContentList){
-        mPlantContentList=plantContentList;
+    public UserPlantContentAdapter(List<Plant> plantList){
+        mPlantList = plantList;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -76,14 +105,14 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PlantContent plantContent=mPlantContentList.get(position);
-        holder.bindPlantContent(plantContent);
+        Plant plant = mPlantList.get(position);
+        holder.bindPlantContent(plant);
 
     }
 
     @Override
     public int getItemCount() {
-        return mPlantContentList.size();
+        return mPlantList.size();
     }
 
 }

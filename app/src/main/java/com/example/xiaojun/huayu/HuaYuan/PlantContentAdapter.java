@@ -2,7 +2,6 @@ package com.example.xiaojun.huayu.HuaYuan;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HomeActivity;
 import com.example.xiaojun.huayu.HuaYuanFragment;
+import com.example.xiaojun.huayu.NewUserRegist;
 import com.example.xiaojun.huayu.R;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapter.ViewHolder> {
-    private List<PlantContent> mPlantContentList;
+    private List<Plant> mPlantList;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -29,9 +30,10 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
         private TextView mLatinNameView;
         private TextView mFamilyGenusView;
         private TextView mSoilView;
-        private PlantContent mPlantContent;
+        private Plant mPlant;
         private ImageView IsNotAddPlantImageView;
-
+        private PlantLab mPlantLab;
+        private String NowTime;
         public ViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
@@ -41,16 +43,19 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
             mFamilyGenusView=view.findViewById(R.id.plant_family_genus);
             mSoilView=view.findViewById(R.id.plant_soil);
             IsNotAddPlantImageView=view.findViewById(R.id.is_not_add_plant);
-
+            if (mPlantLab==null){
+                mPlantLab=new PlantLab(view.getContext());
+            }
         }
-        public void bindPlantContent(final PlantContent plantContent){
-            mPlantContent=plantContent;
-            mPlantContent.setChoice(true);
+        public void bindPlantContent(final Plant plant){
+
+            mPlant = plant;
+            mPlant.setChoice(true);
             mImageView.setImageResource(R.mipmap.apple);
-            mChineseNameView.setText(mPlantContent.getPlantChineseName());
-            mLatinNameView.setText(mPlantContent.getPlantLatinName());
-            mFamilyGenusView.setText(mPlantContent.getPlantFamilyGenus());
-            mSoilView.setText(mPlantContent.getPlantSoil());
+            mChineseNameView.setText(mPlant.getPlantChineseName());
+            mLatinNameView.setText(mPlant.getPlantLatinName());
+            mFamilyGenusView.setText(mPlant.getPlantFamilyGenus());
+            mSoilView.setText(mPlant.getPlantSoil());
             IsNotAddPlantImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -67,16 +72,28 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if(HuaYuanFragment.getUserPlantContentList().size()==0){
-                                        HuaYuanFragment.getUserPlantContentList().add(plantContent);
-                                        Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+
+                                        long flag=  mPlantLab.addPlant(plant);
+                                        if(flag==-1){
+                                            Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
+                                        }else {
+
+                                            Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                                        }
+
+
                                     }else{
-                                        for(PlantContent content:HuaYuanFragment.getUserPlantContentList()){
-                                            if(plantContent.getPlantChineseName().equals(content.getPlantChineseName())){
+                                        for(Plant content:HuaYuanFragment.getUserPlantContentList()){
+                                            if(plant.getPlantChineseName().equals(content.getPlantChineseName())){
                                                 Toast.makeText(v.getContext(),"不能重复添加哦",Toast.LENGTH_SHORT).show();
                                                 break;
                                             }else{
-                                                HuaYuanFragment.getUserPlantContentList().add(plantContent);
-                                                Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                                                long flag=  mPlantLab.addPlant(plant);
+                                                if(flag==-1){
+                                                    Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
+                                                }else {
+                                                    Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                                                }
                                                 break;
                                             }
                                         }
@@ -85,9 +102,7 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
 
                                 }
                             }).create();
-                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-                    Date date = new Date(System.currentTimeMillis());
-                    HuaYuanFragment.setPlantBirthday(simpleDateFormat.format(date));
+
                     alertDialog.show();
 
 
@@ -102,8 +117,8 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
 
     }
 
-    public PlantContentAdapter(List<PlantContent> plantContentList){
-        mPlantContentList=plantContentList;
+    public PlantContentAdapter(List<Plant> plantList){
+        mPlantList = plantList;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -114,14 +129,14 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PlantContent plantContent=mPlantContentList.get(position);
-        holder.bindPlantContent(plantContent);
+        Plant plant = mPlantList.get(position);
+        holder.bindPlantContent(plant);
 
     }
 
     @Override
     public int getItemCount() {
-        return mPlantContentList.size();
+        return mPlantList.size();
     }
 
 }
