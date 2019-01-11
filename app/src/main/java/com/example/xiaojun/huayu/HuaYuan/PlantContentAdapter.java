@@ -2,6 +2,7 @@ package com.example.xiaojun.huayu.HuaYuan;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapter.ViewHolder> {
     private List<Plant> mPlantList;
-
+    private static final int UPDATE_VIEW=3;
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView mImageView;
@@ -30,7 +31,6 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
         private TextView mLatinNameView;
         private TextView mFamilyGenusView;
         private TextView mSoilView;
-        private Plant mPlant;
         private ImageView IsNotAddPlantImageView;
         private PlantLab mPlantLab;
         private String NowTime;
@@ -48,14 +48,11 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
             }
         }
         public void bindPlantContent(final Plant plant){
-
-            mPlant = plant;
-            mPlant.setChoice(true);
             mImageView.setImageResource(R.mipmap.apple);
-            mChineseNameView.setText(mPlant.getPlantChineseName());
-            mLatinNameView.setText(mPlant.getPlantLatinName());
-            mFamilyGenusView.setText(mPlant.getPlantFamilyGenus());
-            mSoilView.setText(mPlant.getPlantSoil());
+            mChineseNameView.setText(plant.getPlantChineseName());
+            mLatinNameView.setText(plant.getPlantLatinName());
+            mFamilyGenusView.setText(plant.getPlantFamilyGenus());
+            mSoilView.setText(plant.getPlantSoil());
             IsNotAddPlantImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -72,11 +69,11 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if(HuaYuanFragment.getUserPlantContentList().size()==0){
-
                                         long flag=  mPlantLab.addPlant(plant);
                                         if(flag==-1){
                                             Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
                                         }else {
+
 
                                             Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
                                         }
@@ -92,6 +89,7 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                                 if(flag==-1){
                                                     Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
                                                 }else {
+
                                                     Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
                                                 }
                                                 break;

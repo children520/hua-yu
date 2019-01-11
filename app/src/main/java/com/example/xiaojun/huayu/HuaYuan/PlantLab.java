@@ -2,11 +2,12 @@ package com.example.xiaojun.huayu.HuaYuan;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.xiaojun.huayu.UserDbSchema;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,9 @@ import java.util.List;
 
 
 public class PlantLab {
+    private final  Plant plant=new Plant();
+
+
     private static PlantLab mPlantLab;
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -26,6 +30,7 @@ public class PlantLab {
 
     public PlantLab(Context context){
             mContext=context.getApplicationContext();
+
             mDatabase=new PlantBaseHelper(mContext).getWritableDatabase();
 
     }
@@ -52,7 +57,6 @@ public class PlantLab {
         if(cursor.moveToFirst()){
             do {
                 String plantchinesename=cursor.getString(cursor.getColumnIndex(PlantDbSchema.PlantTable.Cols.PLANTCHINESENAME));
-
                 if(!p.getPlantChineseName().equals(plantchinesename)){
                     mDatabase.insert(PlantDbSchema.PlantTable.Name,null,values);
                     break;
@@ -60,7 +64,6 @@ public class PlantLab {
             }while (cursor.moveToNext());
         }
         cursor.close();
-
         return mDatabase.insert(PlantDbSchema.PlantTable.Name,null,values);
     }
     public void deletePlant(Plant p){
@@ -77,7 +80,7 @@ public class PlantLab {
         Cursor cursor = mDatabase.query("Plant", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                Plant plant=new Plant();
+
                 String imageurl = cursor.getString(cursor.getColumnIndex(PlantDbSchema.PlantTable.Cols.IMAGEURL));
                 String ischoice = cursor.getString(cursor.getColumnIndex(PlantDbSchema.PlantTable.Cols.ISCHOICE));
                 String plantbreedtime = cursor.getString(cursor.getColumnIndex(PlantDbSchema.PlantTable.Cols.PLANTBREEDTIME));
@@ -104,7 +107,7 @@ public class PlantLab {
                 plant.setPlantScissorTime(Integer.parseInt(plantscissortime));
                 plant.setPlantSoil(plantsoil);
                 plant.setPlantBirthday(plantbirthday);
-                Log.d("plant",plant.toString());
+                Log.d("花园显示：",plantbirthday);
                 plantList.add(plant);
 
             } while (cursor.moveToNext());
@@ -118,5 +121,16 @@ public class PlantLab {
         String s=simpleDateFormat.format(date);
         return s;
     }
-
+    public void startBackPlantService(Context context,Plant plant){
+        Log.d("开始","服务");
+        Intent intent=new Intent(context,PlantDetailService.class);
+        intent.putExtra("plant",new Gson().toJson(plant));
+        //Log.d("这里是开始服务的生日",plant.getPlantBirthday());
+        context.startService(intent);
+    }
+    public void stopBackPlantService(Context context){
+        Log.d("暂停","服务");
+        Intent intent=new Intent(context,PlantDetailService.class);
+        context.stopService(intent);
+    }
 }

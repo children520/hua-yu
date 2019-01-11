@@ -17,13 +17,14 @@ import com.example.xiaojun.huayu.HuaYuan.RemindSettingFragment;
 
 public class PlantDetailActivity extends AppCompatActivity {
     private LinearLayout mLinearLayout;
+    private String PlantBirthday;
+    private static final String PLANTBIRTHDAY="plantbirthday";
     private RemindSettingFragment mRemindSettingFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent =new Intent(this,PlantDetailService.class);
-        startService(intent);
+
         setContentView(R.layout.activity_plant_detail);
         FragmentManager fragmentManager=getSupportFragmentManager();
         Fragment fragment=fragmentManager.findFragmentById(R.id.plant_detail_fragment_container);

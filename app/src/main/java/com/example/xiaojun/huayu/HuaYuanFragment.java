@@ -202,6 +202,7 @@ public class HuaYuanFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                     break;
 
+
             }
         }
     };
@@ -223,13 +224,15 @@ public class HuaYuanFragment extends Fragment {
         intent.putExtra(PLANTFAMILYGENUS,PlantFamilyGenus);
         intent.putExtra(PLANTMORPHOLOGICALCHARACTERISTICS,PlantMorphologicalCharacteristics);
         intent.putExtra(PLANTSOIL,PlantSoil);
-
         intent.putExtra(PLANTBIRTHDAY,PlantBirthday);
         intent.putExtra(PLANTDRINKTIME,PlantDrinkTime);
         intent.putExtra(PLANTFERTILIZATIONTIME,PlantFertilizationTime);
         intent.putExtra(PLANTSCISSORTIME,PlantScissorTime);
         intent.putExtra(PLANTCHANGESOILTIME,PlantChangeSoilTime);
         intent.putExtra(PLANTBREEDTIME,PlantBreedTime);
+
+
+
         return intent;
     }
     private void updateUI(){

@@ -1,14 +1,19 @@
 package com.example.xiaojun.huayu.HuaYuan;
 
 
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,6 +32,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 
 public class PlantDetailFragment extends Fragment {
     private Plant mPlant;
@@ -38,6 +45,11 @@ public class PlantDetailFragment extends Fragment {
     private static final String PLANTSOIL="plantsoil";
 
     private static final String PLANTBIRTHDAY="plantbirthday";
+    private static final String PLANTDRINKTIME="plantdrinktime";
+    private static final String PLANTFERTILIZATIONTIME="plantfertilizationtime";
+    private static final String PLANTSCISSORTIME="plantscissortime";
+    private static final String PLANTCHANGESOILTIME="plantchangesoiltime";
+    private static final String PLANTBREEDTIME="plantbreedtime";
 
     private TextView plantChineseNameTextView;
     private TextView plantImageUrlTextView;
@@ -61,7 +73,7 @@ public class PlantDetailFragment extends Fragment {
     private Notification DrinkNotify,FertilizationNotify,ScissorNotify,ChangeSoilNotify,BreedNotify;
 
     @Override
-    public void onCreate( Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //mHuaYuanContent=HuaYuanContentLab.get(getActivity()).getHuaYuanContent(plantId,imageId,plantName);
@@ -86,6 +98,8 @@ public class PlantDetailFragment extends Fragment {
         String PlantFamilyGenus=getActivity().getIntent().getStringExtra(PLANTFAMILYGENUS);
         //String PlantMorphologicalCharacteristics=getActivity().getIntent().getStringExtra(PLANTMORPHOLOGICALCHARACTERISTICS);
         String PlantSoil=getActivity().getIntent().getStringExtra(PLANTSOIL);
+        PlantBirthday=getActivity().getIntent().getStringExtra(PLANTBIRTHDAY);
+        int PlantBreedTime=getActivity().getIntent().getIntExtra(PLANTBREEDTIME,1);
 
 
 
@@ -156,4 +170,5 @@ public class PlantDetailFragment extends Fragment {
 
     }
     */
+
 }

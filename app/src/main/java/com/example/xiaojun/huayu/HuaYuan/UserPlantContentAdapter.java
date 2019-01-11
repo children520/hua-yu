@@ -21,7 +21,7 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
     private List<Plant> mPlantList;
     private static final int LAYOUT_TYPE_ONE=1;
     private static final int LAYOUT_TYPE_TWO=2;
-
+    private static final String PLANTBIRTHDAY="plantbirthday";
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView mImageView;
         private TextView mChineseNameView;
@@ -54,7 +54,7 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
             mSoilView.setText(mPlant.getPlantSoil());
             deletePlantImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     AlertDialog alertDialog=null;
                     AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
                     alertDialog=builder.setTitle("温馨提示").setMessage("确定要将该种植物从我的植物删除么？")
@@ -68,6 +68,7 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     plantLab.deletePlant(mPlant);
+                                    plantLab.stopBackPlantService(v.getContext());
 
 
                                 }
@@ -81,14 +82,15 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
 
         @Override
         public void onClick(View v) {
-            Log.d("getPlantBreedTime()",mPlant.getPlantBreedTime()+"");
-            Log.d("getPlantFertilizateTime",mPlant.getPlantFertilizateTime()+"");
+
             Intent intent=HuaYuanFragment.newIntent(v.getContext(), mPlant.getImageUrl(),
                     mPlant.getPlantChineseName(), mPlant.getPlantLatinName(),
                     mPlant.getPlantFamilyGenus(), mPlant.getPlantMorphologicalCharacteristics(),
                     mPlant.getPlantSoil(),mPlant.getPlantBirthday(),  mPlant.getPlantDrinkTime(), mPlant.getPlantFertilizateTime(),
                     mPlant.getPlantScissorTime(), mPlant.getPlantChangeSoilTime(), mPlant.getPlantBreedTime());
             v.getContext().startActivity(intent);
+            plantLab.startBackPlantService(v.getContext(),mPlant);
+
         }
 
     }
