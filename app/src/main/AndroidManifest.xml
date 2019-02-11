@@ -70,7 +70,10 @@
         <receiver
             android:name=".HuaYuan.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+        <receiver android:name=".HuaYuan.PlantDetailFragment$PlantDetailReceiver"></receiver>
+
+        <activity android:name=".GoodsRecommendActivity"></activity>
     </application>
 
 </manifest>

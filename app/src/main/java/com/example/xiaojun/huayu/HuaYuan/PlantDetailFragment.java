@@ -31,6 +31,7 @@ import com.example.xiaojun.huayu.RemindSettingActivity;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Queue;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -70,12 +71,16 @@ public class PlantDetailFragment extends Fragment {
     private String ChineseName;
     private Bitmap AppBitmap;
     private NotificationManager notificationManager;
-    private Notification DrinkNotify,FertilizationNotify,ScissorNotify,ChangeSoilNotify,BreedNotify;
+    private PlantDetailReceiver plantDetailReceiver;
 
+    private static int PlantDrinkTime,PlantFertilizationTime,PlantScissorTime,PlantChangeSoilTime,PlantBreedTime;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        plantDetailReceiver =new PlantDetailReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction(".HuaYuan.PlantDetailFragment$PlantDetailReceiver");
+        getActivity().registerReceiver(plantDetailReceiver,intentFilter);
         //mHuaYuanContent=HuaYuanContentLab.get(getActivity()).getHuaYuanContent(plantId,imageId,plantName);
     }
     @Override
@@ -99,12 +104,16 @@ public class PlantDetailFragment extends Fragment {
         //String PlantMorphologicalCharacteristics=getActivity().getIntent().getStringExtra(PLANTMORPHOLOGICALCHARACTERISTICS);
         String PlantSoil=getActivity().getIntent().getStringExtra(PLANTSOIL);
         PlantBirthday=getActivity().getIntent().getStringExtra(PLANTBIRTHDAY);
-        int PlantBreedTime=getActivity().getIntent().getIntExtra(PLANTBREEDTIME,1);
-
-
+        /*
+        PlantBreedTime=getActivity().getIntent().getIntExtra(PLANTBREEDTIME,1);
+        PlantFertilizationTime=getActivity().getIntent().getIntExtra(PLANTFERTILIZATIONTIME,1);
+        PlantScissorTime=getActivity().getIntent().getIntExtra(PLANTSCISSORTIME,1);
+        PlantChangeSoilTime=getActivity().getIntent().getIntExtra(PLANTCHANGESOILTIME,1);
+        PlantDrinkTime=getActivity().getIntent().getIntExtra(PLANTDRINKTIME,1);
+        */
+        Log.d("PlantDrinkTime",PlantDrinkTime+"");
 
         bindView(view);
-
 
         plantChineseNameTextView.setText(ChineseName);
         plantLatinNameTextView.setText(PlantLatinName);
@@ -118,10 +127,20 @@ public class PlantDetailFragment extends Fragment {
     }
     @Override
     public void onResume(){
+        Log.d("提示","onResume");
+        plantDrinkTimeTextView.setText(PlantDrinkTime+"小时后");
+        plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
+        plantScissorTimeTextView.setText(PlantScissorTime+"天后");
+        plantChangeSoilTimeTextView.setText(PlantChangeSoilTime+"天后");
+        plantBreedTimeTextView.setText(PlantBreedTime+"天后");
         super.onResume();
 
-        updateUI();
-
+    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d("提示","onDestroy");
+        getActivity().unregisterReceiver(plantDetailReceiver);
     }
 
     private void updateUI(){
@@ -170,5 +189,28 @@ public class PlantDetailFragment extends Fragment {
 
     }
     */
+    public class PlantDetailReceiver extends BroadcastReceiver{
+        public PlantDetailReceiver(){
 
+        }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PlantBreedTime=intent.getIntExtra(PLANTBREEDTIME,1);
+            PlantFertilizationTime=intent.getIntExtra(PLANTFERTILIZATIONTIME,1);
+            PlantScissorTime=intent.getIntExtra(PLANTSCISSORTIME,1);
+            PlantDrinkTime=intent.getIntExtra(PLANTDRINKTIME,1);
+            PlantChangeSoilTime=intent.getIntExtra(PLANTCHANGESOILTIME,1);
+            Log.d("DrinkTime",PlantDrinkTime+"");
+            Log.d("FertilizationTime",PlantFertilizationTime+"");
+            Log.d("ScissorTime",PlantScissorTime+"");
+            Log.d("ChangeSoilTime",PlantChangeSoilTime+"");
+            Log.d("BreedTime",PlantBreedTime+"");
+            Log.d("----------------","--------------------------------");
+            plantDrinkTimeTextView.setText(PlantDrinkTime+"小时后");
+            plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
+            plantScissorTimeTextView.setText(PlantScissorTime+"天后");
+            plantChangeSoilTimeTextView.setText(PlantChangeSoilTime+"天后");
+            plantBreedTimeTextView.setText(PlantBreedTime+"天后");
+        }
+    }
 }

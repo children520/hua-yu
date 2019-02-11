@@ -294,6 +294,7 @@ public class HuaYuanFragment extends Fragment {
     public void onDestroyView(){
         super.onDestroyView();
         mlocationClient.stopLocation();
+        mPlantLab.stopBackPlantService(getActivity());
     }
 
 

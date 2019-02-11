@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/goods_title"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好物推荐页面"/>
+
+    <ImageView
+        android:id="@+id/goods_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goods_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:src="@mipmap/zhongzizhiwu" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/goods_price"
+        android:text="商品价格: 90 RMB"
+        android:textSize="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/goods_details"/>
+
+    <TextView
+        android:id="@+id/goods_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="商品详情:"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/goods_image"
+        android:layout_marginRight="10dp"
+        android:textSize="18dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/goods_seller"
+        android:text="店铺：xx旗舰店"
+        android:layout_below="@id/goods_price"
+        android:layout_margin="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/goods_use"
+        android:text="作用:........................."
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/goods_seller"/>
+    <Button
+        android:id="@+id/buy_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="立即购买" />
+
+    <Button
+        android:id="@+id/connect_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:text="联系我们" />
+</RelativeLayout>

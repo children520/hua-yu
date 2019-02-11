@@ -26,7 +26,7 @@ public class HuaHuFragment  extends Fragment implements View.OnClickListener {
     private MyFocusOnFragment mMyFocusOnFragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.huahu_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_huahu, container, false);
         BindView(view);
         return view;
     }

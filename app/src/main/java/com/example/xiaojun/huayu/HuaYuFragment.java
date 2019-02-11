@@ -246,7 +246,7 @@ public class HuaYuFragment extends Fragment {
                     for (WebInformation webInformation : WebInformationList) {
                         if(!urlList.contains(webInformation.getUrl())) {
                             urlList.add(webInformation.getUrl());
-                        }
+                    }
                     }
                     Log.d("urlList",urlList.toString());
                     for(int i=0;i<urlList.size();i++){

@@ -30,9 +30,7 @@ public class PlantLab {
 
     public PlantLab(Context context){
             mContext=context.getApplicationContext();
-
             mDatabase=new PlantBaseHelper(mContext).getWritableDatabase();
-
     }
     private static ContentValues getContentValues(Plant plant){
         ContentValues values=new ContentValues();
@@ -59,6 +57,7 @@ public class PlantLab {
                 String plantchinesename=cursor.getString(cursor.getColumnIndex(PlantDbSchema.PlantTable.Cols.PLANTCHINESENAME));
                 if(!p.getPlantChineseName().equals(plantchinesename)){
                     mDatabase.insert(PlantDbSchema.PlantTable.Name,null,values);
+                    mDatabase.close();
                     break;
                 }
             }while (cursor.moveToNext());
@@ -68,6 +67,7 @@ public class PlantLab {
     }
     public void deletePlant(Plant p){
         mDatabase.delete("Plant","plantchinesename=?",new String[]{p.getPlantChineseName()} );
+        mDatabase.close();
 
 }
     public void updatePlant(Plant plant){

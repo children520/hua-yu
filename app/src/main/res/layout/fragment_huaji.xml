@@ -51,17 +51,18 @@
             android:layout_centerInParent="true">
 
             <TextView
+                android:id="@+id/seed_plant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/huaji_round_selector"
                 android:gravity="center_horizontal"
                 android:text="种子植物"
-                android:textStyle="bold"
-                android:background="@drawable/round_background"
-                />
+                android:textStyle="bold" />
             <TextView
+                android:id="@+id/polynutrient_fertilizer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,10 +71,11 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/round_background"
+                android:background="@drawable/huaji_round_selector"
 
                 />
             <TextView
+                android:id="@+id/soil_media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -82,7 +84,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/round_background"
+                android:background="@drawable/huaji_round_selector"
                 />
 
         </LinearLayout>
@@ -127,17 +129,19 @@
             android:layout_centerInParent="true">
 
             <TextView
+                android:id="@+id/disease_agents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:gravity="center_horizontal"
-                android:text="种子植物"
+                android:text="病害药剂"
                 android:textStyle="bold"
-                android:background="@drawable/round_background"
+                android:background="@drawable/huaji_round_selector"
                 />
             <TextView
+                android:id="@+id/plant_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,10 +150,10 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/round_background"
-
+                android:background="@drawable/huaji_round_selector"
                 />
             <TextView
+                android:id="@+id/plant_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -158,7 +162,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/round_background"
+                android:background="@drawable/huaji_round_selector"
                 />
 
         </LinearLayout>
