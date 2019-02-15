@@ -1,11 +1,8 @@
-package com.example.xiaojun.huayu.HuaYu;
+package com.example.xiaojun.huayu.HuaYu.Bean;
 
 public class BaiBaoShuContent {
     private String imageUrl;
     private String title;
-
-
-
 
     private String content;
     public String getImageUrl() {
@@ -15,7 +12,6 @@ public class BaiBaoShuContent {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
     public String getTitle() {
         return title;
     }
@@ -34,7 +30,7 @@ public class BaiBaoShuContent {
 
     private String url;
 
-    public BaiBaoShuContent(String imageUrl,String title,String url){
+    public BaiBaoShuContent(String imageUrl, String title, String url){
         this.imageUrl=imageUrl;
         this.title=title;
 

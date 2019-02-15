@@ -5,8 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.xiaojun.huayu.HuaYuan.PlantDetailFragment;
-import com.example.xiaojun.huayu.HuaYuan.RemindSettingFragment;
+import com.example.xiaojun.huayu.HuaYuan.Fragment.RemindSettingFragment;
 
 public class RemindSettingActivity extends AppCompatActivity {
 

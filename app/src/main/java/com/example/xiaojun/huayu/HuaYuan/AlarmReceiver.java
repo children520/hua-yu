@@ -15,6 +15,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.xiaojun.huayu.HuaYuan.Fragment.PlantDetailFragment;
 import com.example.xiaojun.huayu.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;

@@ -1,12 +1,10 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.UserLogin;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,9 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HuaYu.HomeActivity;
+import com.example.xiaojun.huayu.R;
+import com.example.xiaojun.huayu.UserLab;
 
 
-public class LogIn extends Activity {
+public class LoginActivity extends Activity {
     private static final String USERNAME="username";
     private TextView mNewUserRegist;
     private Button mLoginButton;
@@ -31,11 +32,12 @@ public class LogIn extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
+
         mSharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         boolean isAutoLogin=mSharedPreferences.getBoolean("auto_login",false);
         if(isAutoLogin){
-            Intent intent=new Intent(LogIn.this,HomeActivity.class);
+            Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
             startActivity(intent);
         }
         autoLogin=(CheckBox)findViewById(R.id.auto_login);
@@ -52,7 +54,7 @@ public class LogIn extends Activity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LogIn.this,HomeActivity.class);
+                Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
                 intent.putExtra(USERNAME,"xiaojun");
                 startActivity(intent);//此处需要到最后
 
@@ -61,9 +63,9 @@ public class LogIn extends Activity {
                 long flag=mUserLab.queryUser(userName,passWord);
 
                 if(flag==-1){
-                    Toast.makeText(LogIn.this,"输入的用户名或者密码不正确",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"输入的用户名或者密码不正确",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(LogIn.this,"登录成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                     mEditor=mSharedPreferences.edit();
                     if(autoLogin.isChecked()){
                         mEditor.putBoolean("auto_login",true);
@@ -78,11 +80,11 @@ public class LogIn extends Activity {
         });
     }
     public void NewUserRegist(View v){
-        Intent intent=new Intent(LogIn.this,NewUserRegist.class);
+        Intent intent=new Intent(LoginActivity.this,NewUserRegistActivity.class);
         startActivity(intent);
     }
     public void UnableLogin(View v){
-        Intent intent=new Intent(LogIn.this,UnableLogin.class);
+        Intent intent=new Intent(LoginActivity.this,UnableLoginActivity.class);
         startActivity(intent);
     }
 

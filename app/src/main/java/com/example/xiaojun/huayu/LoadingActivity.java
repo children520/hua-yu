@@ -10,8 +10,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.example.xiaojun.huayu.UserLogin.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class LoadingActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    Intent intent =new Intent(LoadingActivity.this, LogIn.class);
+                    Intent intent =new Intent(LoadingActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }

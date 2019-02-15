@@ -1,17 +1,15 @@
-package com.example.xiaojun.huayu.HuaYuan;
+package com.example.xiaojun.huayu.HuaYuan.Fragment;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-
 
 import com.example.xiaojun.huayu.R;
 

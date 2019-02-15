@@ -1,10 +1,8 @@
-package com.example.xiaojun.huayu.HuaYuan;
+package com.example.xiaojun.huayu.HuaYuan.Adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HomeActivity;
-import com.example.xiaojun.huayu.HuaYuanFragment;
-import com.example.xiaojun.huayu.NewUserRegist;
+import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
+import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
+import com.example.xiaojun.huayu.HuaYuan.PlantLab;
 import com.example.xiaojun.huayu.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapter.ViewHolder> {

@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -15,19 +14,12 @@ import android.widget.TextView;
 
 import com.example.xiaojun.huayu.HuaJi.HuaJiContent;
 import com.example.xiaojun.huayu.HuaJi.HuaJiContentAdapter;
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuContent;
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuContentAdapter;
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuInformation;
-import com.example.xiaojun.huayu.HuaYu.HuaYouHuiContent;
-import com.example.xiaojun.huayu.HuaYuan.UserPlantContentAdapter;
-
-import org.w3c.dom.Text;
+import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;

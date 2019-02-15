@@ -38,26 +38,24 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="7ffd54ac58f77b66183763311c88c235" />
-
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HuaYu.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserLogin.LoginActivity">
 
+        </activity>
         <service android:name="com.amap.api.location.APSService" />
-
-        <activity android:name=".NewUserRegist" />
-        <activity android:name=".UnableLogin" />
-        <activity android:name=".LogIn" />
-        <activity android:name=".UnableRegistActivity" />
+        <activity android:name=".UserLogin.UnableRegistActivity"/>
         <activity android:name=".HuaHuActivity" />
         <activity android:name=".PlantDetailActivity" />
         <activity android:name=".ArticleDetailActivity" />
         <activity android:name=".RemindSettingActivity" />
-
+        <activity android:name=".UserLogin.UnableLoginActivity"></activity>
+        <activity android:name=".UserLogin.NewUserRegistActivity"></activity>
         <service
             android:name=".HuaYuan.PlantDetailService"
             android:enabled="true"
@@ -75,5 +73,4 @@
 
         <activity android:name=".GoodsRecommendActivity"></activity>
     </application>
-
 </manifest>

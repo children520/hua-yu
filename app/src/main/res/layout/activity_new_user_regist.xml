@@ -13,27 +13,13 @@
         android:layout_marginTop="0dp"
         android:background="@android:color/white">
 
-        <Button
-            android:id="@+id/regist_btn"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/regist_edit_pwd"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/button_shape"
-            android:text="注册"
-            android:textColor="#ffffff"
-            android:textSize="20dp"/>
-
 
         <ImageView
-            android:id="@+id/regist_xu"
+            android:id="@+id/regist_empty"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@mipmap/login_xu"/>
+            android:layout_alignParentTop="true"
+            android:background="@mipmap/login_xu" />
 
         <ImageView
             android:id="@+id/regist"
@@ -42,39 +28,63 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="108dp"
             android:src="@mipmap/login"/>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_marginTop="40dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/regist_empty"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="手机号码"
+                android:inputType="number"/>
 
-        <EditText
-            android:id="@+id/regist_edit_pwd"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/regist_username"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp"
-            android:ems="15"
-            android:hint="请设置密码"
-            android:inputType="textPassword"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/regist_edit_two_pwd"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/regist_edit_pwd"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
-            android:ems="15"
-            android:hint="请再次输入密码"
-            android:inputType="textPassword"/>
+                <EditText
+                    android:id="@+id/edt_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="2"
+                    android:hint="验证码"
+                    android:inputType="number"/>
 
-        <EditText
-            android:id="@+id/regist_username"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="250dp"
-            android:hint="请设置用户名"
-            android:inputType="textPersonName"
-            android:theme="@style/AppTheme"/>
+                <Button
+                    android:id="@+id/btn_send"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="发送验证码"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_verify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="验证"/>
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"/>
+        </LinearLayout>
+
+
+
+
 
 
         <TextView

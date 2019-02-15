@@ -3,7 +3,9 @@ package com.example.xiaojun.huayu.HuaYu;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.xiaojun.huayu.HuaYuFragment;
+import com.example.xiaojun.huayu.HuaYu.Adapter.HuaYuContentAdapter;
+import com.example.xiaojun.huayu.HuaYu.Bean.HuaYuContent;
+import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYuFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class HuaYuContentLab {
     private List<String> TitleList;
     private List<String> urlList=new ArrayList<>();
 
-    private HuaYuFragment.HuaYuContentAdapter mAdapter;
+    private HuaYuContentAdapter mAdapter;
     private RecyclerView mRecyclerView;
     public static HuaYuContentLab get(Context context){
         if(sHuaYuContentLab ==null){
@@ -47,14 +49,7 @@ public class HuaYuContentLab {
     public List<HuaYuContent> getHuaYuContentList(){
         return mHuaYuContentList;
     }
-    public HuaYuContent getHuaYuContent(UUID id, String imageId, String title,String content){
-        for (HuaYuContent huaYuContent:mHuaYuContentList){
-            if (huaYuContent.getId().equals(id)&&(huaYuContent.getImageId()==imageId)&&(huaYuContent.getTitle().equals(title))){
-                return huaYuContent;
-            }
-        }
-        return null;
-    }
+
 
     public void addPlant(HuaYuContent huaYuContent){
         mHuaYuContentList.add(huaYuContent);

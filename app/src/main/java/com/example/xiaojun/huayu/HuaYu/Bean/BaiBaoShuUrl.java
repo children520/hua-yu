@@ -1,8 +1,8 @@
-package com.example.xiaojun.huayu.HuaYu;
+package com.example.xiaojun.huayu.HuaYu.Bean;
 
 import cn.bmob.v3.BmobObject;
 
-public class BaiBaoShuInformation extends BmobObject {
+public class BaiBaoShuUrl extends BmobObject {
     public String getBaiBaoShuUrl() {
         return BaiBaoShuUrl;
     }

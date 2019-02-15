@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaYu.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -17,8 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.HuaYouHuiContent;
-import com.example.xiaojun.huayu.HuaYu.HuaYouHuiContentAdapter;
+import com.example.xiaojun.huayu.HuaYu.Adapter.HuaYouHuiContentAdapter;
+import com.example.xiaojun.huayu.HuaYu.Bean.HuaYouHuiContent;
+import com.example.xiaojun.huayu.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,10 +50,8 @@ public class HuaYouHuiFragment extends Fragment {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss //获取当前时间
     Date date = new Date(System.currentTimeMillis());
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view=inflater.inflate(R.layout.fragment_huayouhui,container,false);
         mSwipeRefreshLayout=view.findViewById(R.id.huayouhui_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

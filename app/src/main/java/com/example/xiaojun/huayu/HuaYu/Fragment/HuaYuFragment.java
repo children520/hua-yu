@@ -1,19 +1,14 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaYu.Fragment;
 
 
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.graphics.Point;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -21,14 +16,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuContentAdapter;
-import com.example.xiaojun.huayu.HuaYu.HuaYuContent;
-import com.example.xiaojun.huayu.HuaYu.WebInformation;
+import com.example.xiaojun.huayu.ArticleDetailActivity;
+import com.example.xiaojun.huayu.HuaYu.Adapter.HuaYuContentAdapter;
+import com.example.xiaojun.huayu.HuaYu.Bean.HuaYuContent;
+import com.example.xiaojun.huayu.HuaYu.Bean.HuaYuUrl;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
+import com.example.xiaojun.huayu.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,14 +64,7 @@ public class HuaYuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view=inflater.inflate(R.layout.fragment_huayu,container,false);
-
-        StrictMode.setThreadPolicy(new
-                StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(
-                new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
-
-        mSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_layout);
-
+        bindView(view);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -84,12 +73,8 @@ public class HuaYuFragment extends Fragment {
 
             }
         });
-        mRecyclerView=(RecyclerView)view.findViewById(R.id.recycler_content);
-        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
 
-        AcquireUrl();
-        HomeSearchView=(SearchView)view.findViewById(R.id.home_searchView);
+        Tools.WipeSearchViewUnderLine(HomeSearchView);
         HomeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -124,6 +109,9 @@ public class HuaYuFragment extends Fragment {
                 return false;
             }
         });
+        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        AcquireUrl();
         return view;
     }
     private Handler handler=new Handler(){
@@ -157,7 +145,6 @@ public class HuaYuFragment extends Fragment {
     public void onResume(){
         super.onResume();
         HomeSearchView.clearFocus();
-
     }
 
     public static Intent newIntent(Context packageContext,String url){
@@ -165,88 +152,25 @@ public class HuaYuFragment extends Fragment {
         intent.putExtra(URL,url);
         return intent;
     }
-
-    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private ImageView mImageView;
-        private TextView mTitleView;
-        private TextView mContentView;
-        private HuaYuContent mHuaYuContent;
-
-        public ViewHolder(View view) {
-            super(view);
-            view.setOnClickListener(this);
-            mImageView = (ImageView) view.findViewById(R.id.huayu_content_image);
-            mTitleView = (TextView) view.findViewById(R.id.huayu_content_title);
-            mContentView=(TextView)view.findViewById(R.id.huayu_content_content);
-
-        }
-        public void bindHuaYuContent(HuaYuContent huaYuContent){
-            mHuaYuContent=huaYuContent;
-            try{
-               DownloadImageTask downloadImageTask=new DownloadImageTask();
-                Bitmap bitmap=downloadImageTask.doInBackground(mHuaYuContent.getImageId());
-                mImageView.setImageBitmap(bitmap);
-                mTitleView.setText(mHuaYuContent.getTitle().split("\\|\\|")[0]);
-                mContentView.setText(mHuaYuContent.getTitle().split("\\|\\|")[1]);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent=newIntent(getActivity(),mHuaYuContent.getUrl());
-            startActivity(intent);
-        }
-
+    private void bindView(View view){
+        mSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.huayu_swipe_refresh_layout);
+        mRecyclerView=(RecyclerView)view.findViewById(R.id.huayu_recycler_content);
+        HomeSearchView=(SearchView)view.findViewById(R.id.huayu_searchView);
     }
 
-    public class HuaYuContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private List<HuaYuContent> mHuaYuContentsList;
-        private List<String> mImageUrlList;
-        private List<String> mTitleList;
-
-        public HuaYuContentAdapter(List<HuaYuContent> HuaYuContentsList,List<String> ImageUrlList,List<String> TitleList) {
-            mHuaYuContentsList = HuaYuContentsList;
-            mImageUrlList=ImageUrlList;
-            mTitleList=TitleList;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.huayu_content, parent, false);
-            return new ViewHolder(view);
-        }
-
-
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            HuaYuContent HuaYuContent = mHuaYuContentsList.get(position);
-            holder.bindHuaYuContent(HuaYuContent);
-
-        }
-
-
-        @Override
-        public int getItemCount() {
-            return mHuaYuContentsList.size();
-        }
-    }
 
     private void AcquireUrl() {
-        BmobQuery<WebInformation> bmobQuery = new BmobQuery<WebInformation>();
+        BmobQuery<HuaYuUrl> bmobQuery = new BmobQuery<HuaYuUrl>();
         bmobQuery.setLimit(50);
-        bmobQuery.findObjects(new FindListener<WebInformation>() {
+        bmobQuery.findObjects(new FindListener<HuaYuUrl>() {
             @Override
-            public void done(List<WebInformation> WebInformationList, BmobException e) {
+            public void done(List<HuaYuUrl> huaYuUrlList, BmobException e) {
                 if (e == null) {
                     List<String> urlList=new ArrayList<>();
-                    for (WebInformation webInformation : WebInformationList) {
-                        if(!urlList.contains(webInformation.getUrl())) {
-                            urlList.add(webInformation.getUrl());
-                    }
+                    for (HuaYuUrl huaYuUrl : huaYuUrlList) {
+                        if(!urlList.contains(huaYuUrl.getUrl())) {
+                            urlList.add(huaYuUrl.getUrl());
+                        }
                     }
                     Log.d("urlList",urlList.toString());
                     for(int i=0;i<urlList.size();i++){
@@ -255,6 +179,7 @@ public class HuaYuFragment extends Fragment {
 
                 } else {
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+
                 }
 
 
@@ -265,27 +190,7 @@ public class HuaYuFragment extends Fragment {
     }
 
 
-    public class DownloadImageTask extends AsyncTask<String,Integer,Bitmap>{
-        Bitmap bitmap;
-        @Override
-        public Bitmap doInBackground(String... strings) {
-            try {
-                URL url = new URL(strings[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setConnectTimeout(5000);
-                conn.setRequestMethod("GET");
-                if (conn.getResponseCode() == 200) {
-                    InputStream inputStream = conn.getInputStream();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
 
-                }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-    }
 
     public void sendRequestWithHttpURLConnection(final String Url) {
         new Thread(new Runnable() {
@@ -381,4 +286,6 @@ public class HuaYuFragment extends Fragment {
         }
         return ImgSrc;
     }
+
+
 }

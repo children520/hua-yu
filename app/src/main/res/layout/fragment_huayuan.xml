@@ -4,18 +4,18 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
+        android:alpha="0.6"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/weather_info"
-
-        android:background="#4095e8">
+        android:id="@+id/weather_info">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/weather_city"
             android:textSize="25dp"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="成都市"/>
         <TextView
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             android:text="实时"
             android:layout_marginLeft="20dp"
             android:layout_below="@id/weather_city"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
         <TextView
             android:id="@+id/weather_time"
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/weather_city"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
         <TextView
             android:id="@+id/weather"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:layout_marginLeft="60dp"
             android:textSize="40dp"
             android:layout_below="@id/weather_time"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
         <TextView
             android:id="@+id/weather_temp"
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_marginRight="60dp"
             android:textSize="40dp"
             android:layout_below="@id/weather_time"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
         <TextView
         android:id="@+id/weather_wind"
         android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
         android:layout_marginLeft="60dp"
         android:textSize="20dp"
         android:layout_below="@id/weather"
-        android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_marginBottom="5dp"
@@ -73,12 +73,13 @@
             android:layout_marginRight="60dp"
             android:textSize="20dp"
             android:layout_below="@id/weather_temp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@+id/weather_info"
         android:id="@+id/my_plant"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView

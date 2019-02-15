@@ -3,59 +3,63 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/huayu"
                 android:background="@mipmap/background"
                 >
     <LinearLayout
+        android:alpha="0.6"
+        android:layout_alignParentTop="true"
         android:id="@+id/top_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/huayu_top_menu_border">
         <TextView
+            android:background="@drawable/huayu_top_menu_selector"
             android:id="@+id/top_title_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/top_title_background"
             android:gravity="center_horizontal"
-            android:padding="10dp"
+            android:padding="7dp"
             android:text="首页"
             android:textColor="#000000"
-            android:textSize="22dp"/>
+            android:textSize="22dp" />
 
         <TextView
+            android:background="@drawable/huayu_top_menu_selector"
+            android:id="@+id/top_title_huayouhu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/top_title_background"
             android:gravity="center_horizontal"
-            android:padding="10dp"
-            android:id="@+id/top_title_huayouhu"
+            android:padding="7dp"
             android:text="花友汇"
             android:textColor="#000000"
-            android:textSize="22dp"/>
+            android:textSize="22dp" />
 
         <TextView
+            android:background="@drawable/huayu_top_menu_selector"
             android:id="@+id/top_title_baibaoshu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/top_title_background"
             android:gravity="center_horizontal"
-            android:padding="10dp"
+            android:padding="7dp"
             android:text="百宝书"
             android:textColor="#000000"
             android:textSize="22dp"/>
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/tab_menu"
+        android:alpha="0.6"
+        android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="#E0E0E0">
+        android:background="@drawable/huayu_bottom_menu_border"
+        android:layout_alignParentBottom="true">
         <LinearLayout
             android:id="@+id/huayu_menu"
             android:layout_width="match_parent"
@@ -157,7 +161,7 @@
         android:id="@+id/activity_home_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tab_menu"
+        android:layout_above="@id/bottom_menu"
         android:layout_below="@id/top_title"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="-1dp">

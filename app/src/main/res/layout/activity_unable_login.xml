@@ -3,8 +3,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.example.xiaojun.huayu.LogIn">
+                android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/unable_login_view"
@@ -15,36 +14,50 @@
         android:background="@android:color/white">
 
         <TextView
-            android:id="@+id/solve_information_title"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:id="@+id/solve_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/regist_xu"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginTop="43dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="方法："
-            android:textColor="#000000"
-            android:textSize="30dp"/>
-
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:text="解决方法："
+            android:textSize="25dp" />
+        <LinearLayout
+            android:id="@+id/line_solve_method"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/solve_method">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/one_solve_method"
+                android:text="1，检查你的网络是否打开"/>
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/two_solve_method"
+                android:layout_marginTop="10dp"
+                android:text="2，该账号已被注册"/>
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/three_solve_method"
+                android:layout_marginTop="10dp"
+                android:text="3，资料填写不全或者错误"/>
+        </LinearLayout>
         <TextView
-            android:id="@+id/solve_information"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/solve_information_title"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="-132dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息，这里是解决信息"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="如果问题尚未解决，请联系花屿管理后台"
+            android:layout_below="@id/line_solve_method"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="18dp"/>
 
 
         <ImageView

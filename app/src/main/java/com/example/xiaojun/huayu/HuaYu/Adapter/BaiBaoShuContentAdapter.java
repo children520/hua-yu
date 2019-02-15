@@ -1,10 +1,8 @@
-package com.example.xiaojun.huayu.HuaYu;
+package com.example.xiaojun.huayu.HuaYu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xiaojun.huayu.ArticleDetailActivity;
-import com.example.xiaojun.huayu.BaiBaoShuFragment;
-import com.example.xiaojun.huayu.HuaYuFragment;
+import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
+import com.example.xiaojun.huayu.HuaYu.Fragment.BaiBaoShuFragment;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;
-
 
 
 public class BaiBaoShuContentAdapter  extends RecyclerView.Adapter<BaiBaoShuContentAdapter.ViewHolder> {
@@ -31,18 +29,15 @@ public class BaiBaoShuContentAdapter  extends RecyclerView.Adapter<BaiBaoShuCont
         BaiBaoShuFragment baiBaoShuFragment=new BaiBaoShuFragment();
         public ViewHolder(View view) {
             super(view);
+            mContext=view.getContext();
             view.setOnClickListener(this);
             mImageView=(ImageView)view.findViewById(R.id.baibaoshu_content_image);
-
             mTitleView=(TextView)view.findViewById(R.id.baibaoshu_content_title);
         }
         public void BindBaiBaoShuContent(BaiBaoShuContent baiBaoShuContent){
             mBaiBaoShuContent=baiBaoShuContent;
             try{
-                HuaYuFragment huaYuFragment=new HuaYuFragment();
-                HuaYuFragment.DownloadImageTask downloadImageTask=huaYuFragment.new DownloadImageTask();
-                Bitmap bitmap=downloadImageTask.doInBackground(mBaiBaoShuContent.getImageUrl());
-                mImageView.setImageBitmap(bitmap);
+                Tools.LoadImage(mImageView,baiBaoShuContent.getImageUrl());
                 mTitleView.setText(baiBaoShuContent.getTitle().split("\\|\\|")[0]);
 
             }catch (Exception e){
@@ -51,7 +46,6 @@ public class BaiBaoShuContentAdapter  extends RecyclerView.Adapter<BaiBaoShuCont
         }
         @Override
         public void onClick(View v) {
-
             Intent intent=new Intent(v.getContext(),ArticleDetailActivity.class);
             intent.putExtra(URL,mBaiBaoShuContent.getUrl());
             v.getContext().startActivity(intent);

@@ -1,17 +1,22 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaYu;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-
-
 import android.support.v7.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.xiaojun.huayu.HuaHuFragment;
+import com.example.xiaojun.huayu.HuaJiFragment;
+import com.example.xiaojun.huayu.HuaYu.Fragment.BaiBaoShuFragment;
+import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYouHuiFragment;
+import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYuFragment;
+import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
+import com.example.xiaojun.huayu.R;
 
 import cn.bmob.v3.Bmob;
 
@@ -30,14 +35,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView BaiBaoShuTextView;
     private FrameLayout FLcontent,FLWcontent;
     private LinearLayout mLinearLayout;
-
     private HuaYuFragment mHuaYuFragment;
     private HuaYouHuiFragment mHuaYouHuFragment;
     private BaiBaoShuFragment baibaoshuFragment;
     private HuaYuanFragment huayuanFragment;
     private HuaJiFragment huajiFragment;
-
     private HuaHuFragment huahuFragment;
+    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -45,8 +49,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Bmob.initialize(this, "c16bef06a867de181070610c9681e9c0");
         bindView();
         TopTitleBindView();
-
-
 
     }
     private void TopTitleBindView(){
@@ -124,12 +126,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View v) {
-        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction = getFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         hideTopFragment(transaction);
         switch(v.getId()) {
             case (R.id.huayu_image):
                 selected();
+                TopTitleSelected();
                 HuaYuImageView.setSelected(true);
                 HuaYuTextView.setSelected(true);
                 mLinearLayout.setVisibility(View.VISIBLE);
@@ -189,7 +192,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.top_title_huayouhu:
                 TopTitleSelected();
                 HuaYouHuTextView.setSelected(true);
-
                 if(mHuaYouHuFragment==null){
                     mHuaYouHuFragment=new HuaYouHuiFragment();
                     transaction.add(R.id.activity_home_container,mHuaYouHuFragment);

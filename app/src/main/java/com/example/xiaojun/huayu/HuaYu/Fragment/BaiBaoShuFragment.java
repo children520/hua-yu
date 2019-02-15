@@ -1,26 +1,28 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaYu.Fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuContent;
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuContentAdapter;
-import com.example.xiaojun.huayu.HuaYu.BaiBaoShuInformation;
-import com.example.xiaojun.huayu.HuaYu.HuaYuContent;
+import com.example.xiaojun.huayu.ArticleDetailActivity;
+import com.example.xiaojun.huayu.HuaYu.Adapter.BaiBaoShuContentAdapter;
+import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
+import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuUrl;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
+import com.example.xiaojun.huayu.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,6 +70,7 @@ public class BaiBaoShuFragment extends Fragment {
 
             }
         });
+        Tools.WipeSearchViewUnderLine(BaiBaoShuSearchView);
         BaiBaoShuSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -104,10 +107,6 @@ public class BaiBaoShuFragment extends Fragment {
                 return false;
             }
         });
-        StrictMode.setThreadPolicy(new
-                StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(
-                new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         mRecyclerView=(RecyclerView)view.findViewById(R.id.baibaoshu_recycler_content);
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -144,16 +143,16 @@ public class BaiBaoShuFragment extends Fragment {
     }
 
     private void AcquireUrl() {
-        BmobQuery<BaiBaoShuInformation> bmobQuery = new BmobQuery<BaiBaoShuInformation>();
+        BmobQuery<BaiBaoShuUrl> bmobQuery = new BmobQuery<BaiBaoShuUrl>();
         bmobQuery.setLimit(50);
-        bmobQuery.findObjects(new FindListener<BaiBaoShuInformation>() {
+        bmobQuery.findObjects(new FindListener<BaiBaoShuUrl>() {
             @Override
-            public void done(List<BaiBaoShuInformation> BaiBaoShuInformationList, BmobException e) {
+            public void done(List<BaiBaoShuUrl> baiBaoShuUrlList, BmobException e) {
                 if (e == null) {
                     List<String> urlList=new ArrayList<>();
-                    for (BaiBaoShuInformation baiBaoShuInformation : BaiBaoShuInformationList) {
-                        if (!urlList.contains(baiBaoShuInformation.getBaiBaoShuUrl())) {
-                            urlList.add(baiBaoShuInformation.getBaiBaoShuUrl());
+                    for (BaiBaoShuUrl baiBaoShuUrl : baiBaoShuUrlList) {
+                        if (!urlList.contains(baiBaoShuUrl.getBaiBaoShuUrl())) {
+                            urlList.add(baiBaoShuUrl.getBaiBaoShuUrl());
                         }
                     }
                     Log.d("urlList",urlList.toString());
@@ -171,7 +170,7 @@ public class BaiBaoShuFragment extends Fragment {
         });
 
     }
-    public void newIntent( String url){
+    public void newIntent(String url){
         Intent intent=new Intent(getActivity(),ArticleDetailActivity.class);
         Log.d("url",url);
         intent.putExtra(URL,url);

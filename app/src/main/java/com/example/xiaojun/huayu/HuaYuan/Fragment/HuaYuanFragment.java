@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaYuan.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -24,16 +24,17 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-
 import com.amap.api.services.weather.LocalWeatherForecastResult;
 import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.example.xiaojun.huayu.HuaYuan.Plant;
-import com.example.xiaojun.huayu.HuaYuan.PlantContentAdapter;
+import com.example.xiaojun.huayu.HuaYuan.Adapter.PlantContentAdapter;
+import com.example.xiaojun.huayu.HuaYuan.Adapter.UserPlantContentAdapter;
+import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.example.xiaojun.huayu.HuaYuan.PlantLab;
-import com.example.xiaojun.huayu.HuaYuan.UserPlantContentAdapter;
+import com.example.xiaojun.huayu.PlantDetailActivity;
+import com.example.xiaojun.huayu.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;

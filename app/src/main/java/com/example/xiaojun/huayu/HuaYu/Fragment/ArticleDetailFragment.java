@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaYu;
+package com.example.xiaojun.huayu.HuaYu.Fragment;
 
 
 import android.content.Context;
@@ -22,7 +22,6 @@ public class ArticleDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        enableStrictMode(getActivity());
         View view = inflater.inflate(R.layout.fragment_article_detail, container, false);
         String url=getActivity().getIntent().getStringExtra(URL);
         Log.d("url",url);
@@ -33,18 +32,5 @@ public class ArticleDetailFragment extends Fragment {
         return view;
 
     }
-    public static void enableStrictMode(Context context) {
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder()
-                        .detectDiskReads()
-                        .detectDiskWrites()
-                        .detectNetwork()
-                        .penaltyLog()
-                        .build());
-        StrictMode.setVmPolicy(
-                new StrictMode.VmPolicy.Builder()
-                        .detectLeakedSqlLiteObjects()
-                        .penaltyLog()
-                        .build());
-    }
+
 }

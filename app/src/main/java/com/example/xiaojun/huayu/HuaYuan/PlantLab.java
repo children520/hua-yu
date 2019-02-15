@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ import java.util.List;
 
 
 public class PlantLab {
-    private final  Plant plant=new Plant();
+    private final Plant plant=new Plant();
 
 
     private static PlantLab mPlantLab;

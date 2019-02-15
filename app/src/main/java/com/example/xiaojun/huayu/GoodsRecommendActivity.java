@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.xiaojun.huayu.HuaJi.GoodsRecommendFragment;
-import com.example.xiaojun.huayu.HuaYuan.PlantDetailFragment;
 
 public class GoodsRecommendActivity extends AppCompatActivity {
 

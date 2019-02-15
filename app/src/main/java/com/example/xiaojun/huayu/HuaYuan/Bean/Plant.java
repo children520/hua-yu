@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaYuan;
+package com.example.xiaojun.huayu.HuaYuan.Bean;
 
 import java.util.UUID;
 

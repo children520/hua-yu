@@ -2,7 +2,6 @@ package com.example.xiaojun.huayu.HuaJi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.xiaojun.huayu.GoodsRecommendActivity;
 import com.example.xiaojun.huayu.HuaJiFragment;
-import com.example.xiaojun.huayu.HuaYuFragment;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;

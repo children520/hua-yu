@@ -1,9 +1,11 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.UserLogin;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-public class UnableLogin extends AppCompatActivity {
+import com.example.xiaojun.huayu.R;
+
+public class UnableLoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
