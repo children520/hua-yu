@@ -1,7 +1,9 @@
 package com.example.xiaojun.huayu.HuaYu;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,7 +18,12 @@ import com.example.xiaojun.huayu.HuaYu.Fragment.BaiBaoShuFragment;
 import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYouHuiFragment;
 import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYuFragment;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
+import com.example.xiaojun.huayu.LoadingActivity;
 import com.example.xiaojun.huayu.R;
+import com.example.xiaojun.huayu.UserLogin.LoginActivity;
+
+import java.sql.Time;
+import java.util.Timer;
 
 import cn.bmob.v3.Bmob;
 
@@ -49,6 +56,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Bmob.initialize(this, "c16bef06a867de181070610c9681e9c0");
         bindView();
         TopTitleBindView();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                HuaYuImageView.performClick();
+
+            }
+        },500);
 
     }
     private void TopTitleBindView(){
@@ -65,17 +80,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         HuaYouHuTextView.setSelected(false);
         BaiBaoShuTextView.setSelected(false);
     }
-    private void hideTopFragment(FragmentTransaction transaction){
-        if(mHuaYuFragment!=null){
-            transaction.hide(mHuaYuFragment);
-        }
-        if(mHuaYouHuFragment!=null){
-            transaction.hide(mHuaYouHuFragment);
-        }
-        if(baibaoshuFragment!=null){
-            transaction.hide(baibaoshuFragment);
-        }
-    }
+
 
     private void bindView(){
         HuaYuImageView=(ImageView)findViewById(R.id.huayu_image);
@@ -122,13 +127,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(huahuFragment!=null){
             transaction.hide(huahuFragment);
         }
+        if(mHuaYuFragment!=null){
+            transaction.hide(mHuaYuFragment);
+        }
+        if(mHuaYouHuFragment!=null){
+            transaction.hide(mHuaYouHuFragment);
+        }
+        if(baibaoshuFragment!=null){
+            transaction.hide(baibaoshuFragment);
+        }
 
     }
     @Override
     public void onClick(View v) {
         transaction = getFragmentManager().beginTransaction();
         hideAllFragment(transaction);
-        hideTopFragment(transaction);
         switch(v.getId()) {
             case (R.id.huayu_image):
                 selected();

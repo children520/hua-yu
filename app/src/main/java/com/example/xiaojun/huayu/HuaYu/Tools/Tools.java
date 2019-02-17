@@ -1,6 +1,7 @@
 package com.example.xiaojun.huayu.HuaYu.Tools;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -94,6 +95,18 @@ public class Tools {
         Display display=manager.getDefaultDisplay();
         display.getSize(point);
         return point.y;
+    }
+    public static void writeIsRegistToSharedPreference(boolean isRegist,String nickName,Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences("isregist",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putBoolean("isregist",isRegist);
+        editor.putString("nickname",nickName);
+        editor.commit();
+    }
+    public static boolean readIsReigistStatusSharedPreference(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences("isregist",Context.MODE_PRIVATE);
+        boolean IsRegist=sharedPreferences.getBoolean("isregist",false);
+        return IsRegist;
     }
 
 

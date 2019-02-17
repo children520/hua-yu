@@ -38,24 +38,32 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="7ffd54ac58f77b66183763311c88c235" />
+
         <activity android:name=".HuaYu.HomeActivity">
+
+        </activity>
+        <activity android:name=".UserLogin.LoginActivity">
+
+        </activity>
+
+        <service android:name="com.amap.api.location.APSService" />
+        <activity android:name=".LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserLogin.LoginActivity">
-
-        </activity>
-        <service android:name="com.amap.api.location.APSService" />
-        <activity android:name=".UserLogin.UnableRegistActivity"/>
+        <activity android:name=".UserLogin.UnableRegistActivity" />
         <activity android:name=".HuaHuActivity" />
         <activity android:name=".PlantDetailActivity" />
         <activity android:name=".ArticleDetailActivity" />
         <activity android:name=".RemindSettingActivity" />
-        <activity android:name=".UserLogin.UnableLoginActivity"></activity>
-        <activity android:name=".UserLogin.NewUserRegistActivity"></activity>
+        <activity android:name=".UserLogin.UnableLoginActivity" />
+        <activity android:name=".UserLogin.NewUserRegistActivity">
+
+        </activity>
+
         <service
             android:name=".HuaYuan.PlantDetailService"
             android:enabled="true"
@@ -69,8 +77,10 @@
             android:name=".HuaYuan.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
-        <receiver android:name=".HuaYuan.PlantDetailFragment$PlantDetailReceiver"></receiver>
+        <receiver android:name=".HuaYuan.Fragment.PlantDetailFragment$PlantDetailReceiver" />
 
-        <activity android:name=".GoodsRecommendActivity"></activity>
+        <activity android:name=".GoodsRecommendActivity" />
+        <activity android:name=".UserLogin.UserMainActivity"></activity>
     </application>
+
 </manifest>

@@ -5,22 +5,30 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HuaYu.HomeActivity;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
 import com.example.xiaojun.huayu.UserLab;
+import com.example.xiaojun.huayu.UserLogin.Bean.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
@@ -31,12 +39,15 @@ public class NewUserRegistActivity extends AppCompatActivity {
     EditText mEdtCode;
     @BindView(R.id.tv_info)
     TextView mTvInfo;
+    @BindView(R.id.edt_nickname)
+    EditText mEdtNickName;
     private EditText mUserName;
     private EditText mTwoPassword;
     private EditText mPassword;
     private Button mRegistButton;
     private SQLiteDatabase mDatabase;
     private UserLab mUserLab;
+    private boolean IsRegist=false;
     private static final String USERNAME="username";
     private static final String ARG_CRIME_ID="crime_id";
     @Override
@@ -45,13 +56,14 @@ public class NewUserRegistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_user_regist);
         ButterKnife.bind(this);
         Bmob.initialize(this, "c16bef06a867de181070610c9681e9c0");
-        Bmob.resetDomain("http://open-vip.bmob.cn/8/");
-
-
+        if(Tools.readIsReigistStatusSharedPreference(this)){
+            startActivity(new Intent(this,HomeActivity.class));
+        }
+        /*
         if(mUserLab==null){
              mUserLab=new UserLab(this);
         }
-        /*
+
         mRegistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,20 +98,19 @@ public class NewUserRegistActivity extends AppCompatActivity {
         });
         */
     }
-    @OnClick({R.id.btn_send, R.id.btn_verify})
+
+
+    @OnClick({R.id.btn_send, R.id.btn_signup_or_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send: {
                 String phone = mEdtPhone.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "HuaYu", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 /**
                  * TODO template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；如果没有对应的自定义短信模板，则使用默认短信模板。
-                 *
-                 * TODO 应用名称以及自定义短信内容，请使用不会被和谐的文字，防止发送短信验证码失败。
-                 *
                  */
                 BmobSMS.requestSMSCode(phone, "HuaYu", new QueryListener<Integer>() {
                     @Override
@@ -113,7 +124,7 @@ public class NewUserRegistActivity extends AppCompatActivity {
                 });
                 break;
             }
-            case R.id.btn_verify: {
+            case R.id.btn_signup_or_login: {
                 String phone = mEdtPhone.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)) {
                     Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
@@ -124,11 +135,21 @@ public class NewUserRegistActivity extends AppCompatActivity {
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                final String nickname = mEdtNickName.getText().toString().trim();
+                if (TextUtils.isEmpty(nickname)) {
+                    Toast.makeText(this, "请输入昵称", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 BmobSMS.verifySmsCode(phone, code, new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            mTvInfo.append("验证码验证成功，您可以在此时进行重要操作！\n");
+                            IsRegist=true;
+                            Tools.writeIsRegistToSharedPreference(IsRegist,nickname,getApplicationContext());
+                            Intent intent=new Intent(NewUserRegistActivity.this, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                         } else {
                             mTvInfo.append("验证码验证失败：" + e.getErrorCode() + "-" + e.getMessage() + "\n");
                         }
@@ -166,6 +187,8 @@ public class NewUserRegistActivity extends AppCompatActivity {
         Intent intent=new Intent(NewUserRegistActivity.this,UnableRegistActivity.class);
         startActivity(intent);
     }
+
+
 
 
 

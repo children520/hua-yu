@@ -10,9 +10,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HuaYu.HomeActivity;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.UserLogin.LoginActivity;
+import com.example.xiaojun.huayu.UserLogin.NewUserRegistActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +25,14 @@ import java.util.List;
 import static java.lang.Thread.sleep;
 
 public class LoadingActivity extends AppCompatActivity {
-
+    private TextView WelcomeTextView;
+    private TextView HitEnterTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        WelcomeTextView=findViewById(R.id.welcome_huayu);
+        HitEnterTextView=findViewById(R.id.hit_enter);
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -41,17 +49,29 @@ public class LoadingActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissions, 1);
 
         } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            if(Tools.readIsReigistStatusSharedPreference(this)){
+                WelcomeTextView.setVisibility(View.GONE);
+                HitEnterTextView.setVisibility(View.GONE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent =new Intent(LoadingActivity.this,HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                },1000);
+            }else{
 
-                    Intent intent =new Intent(LoadingActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            },1000);
+            }
+
 
         }
+        WelcomeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoadingActivity.this,NewUserRegistActivity.class));
+            }
+        });
     }
 
 
