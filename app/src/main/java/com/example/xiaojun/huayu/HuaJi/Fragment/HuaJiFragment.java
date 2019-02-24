@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaJi.Fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,11 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.example.xiaojun.huayu.HuaJi.HuaJiContent;
-import com.example.xiaojun.huayu.HuaJi.HuaJiContentAdapter;
+import com.example.xiaojun.huayu.HuaJi.Adapter.HuaJiContentAdapter;
+import com.example.xiaojun.huayu.HuaJi.Bean.HuaJiContent;
 import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
+import com.example.xiaojun.huayu.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,12 +48,12 @@ public class HuaJiFragment extends Fragment implements View.OnClickListener{
     private static final char DISEASEAGENTS='d';
     private static final char PLANTPRODUCT='p';
     private static final char PLANTGUIDE='g';
-
+    private SearchView HuaJiSearchView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_huaji, container, false);
         bindView(view);
+        Tools.WipeSearchViewUnderLine(HuaJiSearchView);
         recyclerView=(RecyclerView)view.findViewById(R.id.huaji_recycler_content);
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -79,6 +82,7 @@ public class HuaJiFragment extends Fragment implements View.OnClickListener{
         DiseaseAgentsTextView=view.findViewById(R.id.disease_agents);
         PlantProductTextView=view.findViewById(R.id.plant_product);
         PlantGuideTextView=view.findViewById(R.id.plant_guide);
+        HuaJiSearchView=view.findViewById(R.id.huaji_searchView);
         SeedPlantTextView.setOnClickListener(this);
         PolynutrientFertilizerTextView.setOnClickListener(this);
         SoilMediaTextView.setOnClickListener(this);
@@ -99,7 +103,6 @@ public class HuaJiFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case (R.id.seed_plant):
                 AcquireUrl(SEEDPLANT,SEED_PLANT_UPDATE);
-
                 break;
             case (R.id.polynutrient_fertilizer):
                 AcquireUrl(POLYNUTRIENTFERTILIZER,POLYNUTRIENTFERTIZIZER_UPDATE);
@@ -148,7 +151,6 @@ public class HuaJiFragment extends Fragment implements View.OnClickListener{
                             set.add(huaJiContent);
                         }
                     }
-
                     Iterator<HuaJiContent> it=set.iterator();
                     FineGoodLists.clear();
                     while(it.hasNext()){

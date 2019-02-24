@@ -1,8 +1,6 @@
-package com.example.xiaojun.huayu.HuaJi;
+package com.example.xiaojun.huayu.HuaJi.Fragment;
 
 
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import com.example.xiaojun.huayu.R;
 
 
-
 public class GoodsRecommendFragment extends Fragment {
     private Button BuyNowButton;
     private Button ConnectUsButton;
@@ -23,9 +20,11 @@ public class GoodsRecommendFragment extends Fragment {
     private static final String PRICE="price";
     private static final String SELLER="seller";
     private static final String IMAGEURL="imageurl";
+    private static final String USE="use";
     private TextView TitleTextView;
     private TextView PriceTextView;
     private TextView SellerTextView;
+    private TextView UseTextView;
     private String ImageUrl;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,13 +34,16 @@ public class GoodsRecommendFragment extends Fragment {
         TitleTextView=view.findViewById(R.id.goods_title);
         PriceTextView=view.findViewById(R.id.goods_price);
         SellerTextView=view.findViewById(R.id.goods_seller);
+        UseTextView=view.findViewById(R.id.goods_use);
         String Title=getActivity().getIntent().getStringExtra(TITLE);
         double Price=getActivity().getIntent().getDoubleExtra(PRICE,1);
         String Seller=getActivity().getIntent().getStringExtra(SELLER);
         String ImageUrl=getActivity().getIntent().getStringExtra(IMAGEURL);
+        String Use=getActivity().getIntent().getStringExtra(USE);
         TitleTextView.setText(Title);
         PriceTextView.setText("商品价格:"+Price+"");
         SellerTextView.setText("店铺:"+Seller);
+        UseTextView.setText("作用:"+Use);
         BuyNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

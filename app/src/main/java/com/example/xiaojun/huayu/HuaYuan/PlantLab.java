@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
+import com.example.xiaojun.huayu.HuaYuan.Service.PlantDetailService;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -122,14 +123,14 @@ public class PlantLab {
         String s=simpleDateFormat.format(date);
         return s;
     }
-    public void startBackPlantService(Context context,Plant plant){
+    public static void startBackPlantService(Context context,Plant plant){
         Log.d("开始","服务");
         Intent intent=new Intent(context,PlantDetailService.class);
         intent.putExtra("plant",new Gson().toJson(plant));
         //Log.d("这里是开始服务的生日",plant.getPlantBirthday());
         context.startService(intent);
     }
-    public void stopBackPlantService(Context context){
+    public static void stopBackPlantService(Context context){
         Log.d("暂停","服务");
         Intent intent=new Intent(context,PlantDetailService.class);
         context.stopService(intent);

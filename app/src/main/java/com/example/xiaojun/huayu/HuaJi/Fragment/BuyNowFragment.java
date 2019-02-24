@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaJi;
+package com.example.xiaojun.huayu.HuaJi.Fragment;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HuaJi.Bean.Order;
 import com.example.xiaojun.huayu.R;
 
 import cn.bmob.v3.exception.BmobException;

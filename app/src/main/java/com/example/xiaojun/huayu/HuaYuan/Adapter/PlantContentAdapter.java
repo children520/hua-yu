@@ -2,6 +2,7 @@ package com.example.xiaojun.huayu.HuaYuan.Adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
 import com.example.xiaojun.huayu.HuaYuan.PlantLab;
+import com.example.xiaojun.huayu.HuaYuan.Service.PollingService;
+import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;
@@ -66,12 +69,12 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                 public void onClick(DialogInterface dialog, int which) {
                                     if(HuaYuanFragment.getUserPlantContentList().size()==0){
                                         long flag=  mPlantLab.addPlant(plant);
+                                        v.getContext().sendBroadcast(new Intent("myBroadCast"));
                                         if(flag==-1){
                                             Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
                                         }else {
-
-
                                             Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                                            PollingUtils.startPollingService(v.getContext(),2,PollingService.class,plant,PollingService.ACTION);
                                         }
 
 
@@ -87,6 +90,7 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                                 }else {
 
                                                     Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                                                    PollingUtils.startPollingService(v.getContext(),2,PollingService.class,plant,PollingService.ACTION);
                                                 }
                                                 break;
                                             }

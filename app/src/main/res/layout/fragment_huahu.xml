@@ -28,28 +28,29 @@
                 android:layout_margin="10dp"
                 android:text="username"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="30dp"
                 android:layout_gravity="left"/>
             <TextView
-                android:id="@+id/huahu_user_focus_count"
+                android:id="@+id/huahu_user_plant_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="关注数 10"/>
+                android:text="植株数 10"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/huahu_first_button"
         android:layout_below="@+id/user_information">
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/my_focus_on"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/huayu_content_style">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -62,10 +63,11 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:id="@+id/my_dynamic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/huayu_content_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -79,10 +81,11 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:id="@+id/my_collection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/huayu_content_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -96,10 +99,11 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:id="@+id/browsing_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/huayu_content_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -113,10 +117,11 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:id="@+id/my_shopping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/huayu_content_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -131,65 +136,71 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/huahu_twice_button"
         android:layout_below="@+id/huahu_first_button">
         <TextView
             android:id="@+id/about_huayu"
             android:layout_width="match_parent"
-            android:background="@drawable/baibaoshu_border"
+            android:background="@drawable/huayu_content_style"
             android:text="关于花屿"
             android:textSize="20dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"
             android:layout_height="wrap_content"/>
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/help_feedback"
             android:layout_width="match_parent"
-            android:background="@drawable/baibaoshu_border"
+            android:background="@drawable/huayu_content_style"
             android:text="帮助与反馈"
             android:textSize="20dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/huahu_third_button"
         android:layout_below="@+id/huahu_twice_button">
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/change_password"
             android:layout_width="match_parent"
-            android:background="@drawable/baibaoshu_border"
+            android:background="@drawable/huayu_content_style"
             android:text="更改密码"
             android:textSize="20dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"
             android:layout_height="wrap_content"/>
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/switch_account"
             android:layout_width="match_parent"
-            android:background="@drawable/baibaoshu_border"
+            android:background="@drawable/huayu_content_style"
             android:text="切换账号"
             android:textSize="20dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"
             android:layout_height="wrap_content"/>
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/exit"
             android:layout_width="match_parent"
-            android:background="@drawable/baibaoshu_border"
+            android:background="@drawable/huayu_content_style"
             android:text="退出"
             android:textSize="20dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"
             android:layout_height="wrap_content"/>
     </LinearLayout>

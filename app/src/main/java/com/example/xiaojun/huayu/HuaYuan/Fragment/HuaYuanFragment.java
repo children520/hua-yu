@@ -2,8 +2,13 @@ package com.example.xiaojun.huayu.HuaYuan.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -189,6 +194,14 @@ public class HuaYuanFragment extends Fragment {
                 HuanYuanSwipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        UpdateUIBroadcastReceiver updateUIBroadcastReceiver=new UpdateUIBroadcastReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("myBroadCast");
+        getActivity().registerReceiver(updateUIBroadcastReceiver,intentFilter);
+
+
+
         return view;
     }
     private Handler handler=new Handler(){
@@ -273,21 +286,21 @@ public class HuaYuanFragment extends Fragment {
     }
     private void initLocation(){
         mlocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-
         mLocationOption = new AMapLocationClientOption();
         //设置定位监听
         mlocationClient.setLocationListener(new MyLocationListener());
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Transport);
         if(mlocationClient!=null){
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.stopLocation();
             mlocationClient.startLocation();
         }
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
         //设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setInterval(5000);
         mLocationOption.setNeedAddress(true);
+        mLocationOption.setMockEnable(true);
         //设置定位参数
         mlocationClient.setLocationOption(mLocationOption);
     }
@@ -316,7 +329,7 @@ public class HuaYuanFragment extends Fragment {
 
                 }
             }else{
-
+                Log.d("code",rCode+"");
                 Toast.makeText(getActivity(),"获取天气信息失败"+rCode,Toast.LENGTH_SHORT).show();
             }
         }
@@ -336,11 +349,13 @@ public class HuaYuanFragment extends Fragment {
                 if (amapLocation.getErrorCode() == 0) {
                     //定位成功回调信息，设置相关消息
                     String cityName = amapLocation.getCity().replace("市", "");
+                    String country =amapLocation.getCountry();
+                    Log.d("coutry",country);
                     Log.d("city",cityName);
-                    requestWeatherInformation(cityName);
+                    //requestWeatherInformation("佛山");
 
                 } else {
-                    Toast.makeText(getActivity(),"获取定位信息失败",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),"获取定位信息失败",Toast.LENGTH_SHORT).show();
                     Log.e("AmapError","location Error, ErrCode:"
                             + amapLocation.getErrorCode() + ", errInfo:"
                             + amapLocation.getErrorInfo());
@@ -352,7 +367,20 @@ public class HuaYuanFragment extends Fragment {
     public static List<Plant> getUserPlantContentList() {
         return mUserPlantList;
     }
-
+    public class UpdateUIBroadcastReceiver extends BroadcastReceiver {
+        private final String ACTION_BOOT ="myBroadCast";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(ACTION_BOOT.equals(intent.getAction())){
+                plantLab.displayPlantList(mUserPlantList);
+                Log.d("mUserPlantList",mUserPlantList.toString());
+                mAdapter = new UserPlantContentAdapter(mUserPlantList);
+                Log.d("adapter",mAdapter.toString());
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
 
 
 }

@@ -1,30 +1,23 @@
-package com.example.xiaojun.huayu.HuaYuan;
+package com.example.xiaojun.huayu.HuaYuan.Service;
 
 import android.app.AlarmManager;
-import android.app.Fragment;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
-import com.example.xiaojun.huayu.R;
+import com.example.xiaojun.huayu.HuaYuan.BroadcastReceiver.AlarmReceiver;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 //service不能停止的bug
 public class PlantDetailService extends Service {
-
-
     private static int PlantDrinkTime;
     private  static int PlantFertilizationTime;
     private static  int PlantScissorTime;
@@ -39,21 +32,16 @@ public class PlantDetailService extends Service {
     private static final String PLANTCHANGESOILTIME="plantchangesoiltime";
     private static final String PLANTBREEDTIME="plantbreedtime";
     private Intent intentToActivity;
-
-
     private static int vPlantDrinkTime,vPlantFertilizationTime,vPlantScissorTime,vPlantChangeSoilTime,vPlantBreedTime;
     public PlantDetailService() {
     }
     @Override
     public void onCreate() {
-        Log.d("提示","服务已经开始");
-
         super.onCreate();
 
     }
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-
         new Thread(new Runnable() {
             @Override
             public void run() {

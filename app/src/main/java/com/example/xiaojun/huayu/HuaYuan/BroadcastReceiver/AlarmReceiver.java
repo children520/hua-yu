@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaYuan;
+package com.example.xiaojun.huayu.HuaYuan.BroadcastReceiver;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -8,7 +8,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.xiaojun.huayu.HuaYuan.Fragment.PlantDetailFragment;
+import com.example.xiaojun.huayu.HuaYuan.Service.PlantDetailService;
 import com.example.xiaojun.huayu.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;

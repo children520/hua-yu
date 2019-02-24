@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.xiaojun.huayu">
-
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 用于访问GPS定位 -->
@@ -39,14 +41,15 @@
             android:name="com.amap.api.v2.apikey"
             android:value="7ffd54ac58f77b66183763311c88c235" />
 
-        <activity android:name=".HuaYu.HomeActivity">
-
-        </activity>
-        <activity android:name=".UserLogin.LoginActivity">
-
-        </activity>
+        <activity android:name=".HuaYu.HomeActivity"></activity>
+        <activity android:name=".UserLogin.LoginActivity"></activity>
 
         <service android:name="com.amap.api.location.APSService" />
+        <service android:name=".HuaYuan.Service.PollingService">
+            <intent-filter>
+                <action android:name="com.example.xiaojun.huayu.PollingService"></action>
+            </intent-filter>
+        </service>
         <activity android:name=".LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,32 +58,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserLogin.UnableRegistActivity" />
-        <activity android:name=".HuaHuActivity" />
         <activity android:name=".PlantDetailActivity" />
         <activity android:name=".ArticleDetailActivity" />
         <activity android:name=".RemindSettingActivity" />
+        <activity android:name=".HuaHu.HuaHuActivity" />
         <activity android:name=".UserLogin.UnableLoginActivity" />
-        <activity android:name=".UserLogin.NewUserRegistActivity">
+        <activity android:name=".UserLogin.NewUserRegistActivity"></activity>
 
-        </activity>
+        <receiver android:name=".HuaYuan.Fragment.HuaYuanFragment$UpdateUIBroadcastReceiver">
 
-        <service
-            android:name=".HuaYuan.PlantDetailService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.example.xiaojun.huayu.HuaYuan.PlantDetailService" />
-            </intent-filter>
-        </service>
-
-        <receiver
-            android:name=".HuaYuan.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true" />
+        </receiver>
         <receiver android:name=".HuaYuan.Fragment.PlantDetailFragment$PlantDetailReceiver" />
 
         <activity android:name=".GoodsRecommendActivity" />
-        <activity android:name=".UserLogin.UserMainActivity"></activity>
+        <activity android:name=".UserLogin.UserMainActivity" />
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.example.xiaojun.huayu.BmobContentProvider">
+        </provider>
     </application>
 
 </manifest>

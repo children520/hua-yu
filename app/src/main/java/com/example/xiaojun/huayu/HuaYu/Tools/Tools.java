@@ -108,7 +108,11 @@ public class Tools {
         boolean IsRegist=sharedPreferences.getBoolean("isregist",false);
         return IsRegist;
     }
-
+    public static String readNickNameStatusSharedPreference(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences("isregist",Context.MODE_PRIVATE);
+        String nickname=sharedPreferences.getString("nickname","username");
+        return nickname;
+    }
 
 
 

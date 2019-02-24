@@ -4,12 +4,15 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <SearchView
+        android:alpha="0.6"
         android:id="@+id/huaji_searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:queryHint="请输入要查询的内容"
         android:iconifiedByDefault="false"
         android:background="@drawable/baibaoshu_border"/>
     <RelativeLayout
@@ -20,7 +23,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,6 +178,7 @@
         android:layout_margin="10dp"
         android:textSize="18dp"/>
     <android.support.v7.widget.RecyclerView
+        android:layout_margin="5dp"
         android:id="@+id/huaji_recycler_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

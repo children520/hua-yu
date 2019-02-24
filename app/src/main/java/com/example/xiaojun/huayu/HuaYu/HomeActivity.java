@@ -1,7 +1,6 @@
 package com.example.xiaojun.huayu.HuaYu;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,18 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaHuFragment;
-import com.example.xiaojun.huayu.HuaJiFragment;
+import com.example.xiaojun.huayu.HuaHu.HuaHuFragment;
+import com.example.xiaojun.huayu.HuaJi.Fragment.HuaJiFragment;
 import com.example.xiaojun.huayu.HuaYu.Fragment.BaiBaoShuFragment;
 import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYouHuiFragment;
 import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYuFragment;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
-import com.example.xiaojun.huayu.LoadingActivity;
 import com.example.xiaojun.huayu.R;
-import com.example.xiaojun.huayu.UserLogin.LoginActivity;
-
-import java.sql.Time;
-import java.util.Timer;
 
 import cn.bmob.v3.Bmob;
 

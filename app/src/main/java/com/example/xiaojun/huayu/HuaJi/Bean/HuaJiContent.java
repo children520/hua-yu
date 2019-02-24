@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaJi;
+package com.example.xiaojun.huayu.HuaJi.Bean;
 
 import cn.bmob.v3.BmobObject;
 
@@ -8,6 +8,15 @@ public class HuaJiContent extends BmobObject {
     private double Price;
     private String Seller;
 
+    public String getUse() {
+        return Use;
+    }
+
+    public void setUse(String use) {
+        Use = use;
+    }
+
+    private String Use;
     public char getGoodsSort() {
         return GoodsSort;
     }

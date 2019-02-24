@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.xiaojun.huayu.HuaJi.GoodsRecommendFragment;
+import com.example.xiaojun.huayu.HuaJi.Fragment.GoodsRecommendFragment;
 
 public class GoodsRecommendActivity extends AppCompatActivity {
 

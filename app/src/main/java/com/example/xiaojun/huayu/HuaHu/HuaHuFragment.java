@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.HuaHu;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -11,8 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.xiaojun.huayu.HuaHu.MyFocusOnFragment;
+import com.example.xiaojun.huayu.HuaHu.Fragment.ChangePassordFragment;
 import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
+import com.example.xiaojun.huayu.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +26,13 @@ public class HuaHuFragment  extends Fragment implements View.OnClickListener {
     private LinearLayout TopTitleLinearLayout;
     private RelativeLayout HuaHuRelativeLayout;
     private MyFocusOnFragment mMyFocusOnFragment;
+    private TextView UserNameTextView;
+    private TextView ChangePwdTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_huahu, container, false);
         BindView(view);
+        UserNameTextView.setText(Tools.readNickNameStatusSharedPreference(getActivity()));
         return view;
     }
     public void BindView(View view){
@@ -36,6 +41,9 @@ public class HuaHuFragment  extends Fragment implements View.OnClickListener {
         MyDynamic=(LinearLayout)view.findViewById(R.id.my_dynamic);
         BrowsingHistory=(LinearLayout)view.findViewById(R.id.browsing_history);
         MyShopping=(LinearLayout)view.findViewById(R.id.my_shopping);
+        UserNameTextView=(TextView)view.findViewById(R.id.huahu_user_name);
+        ChangePwdTextView=(TextView)view.findViewById(R.id.change_password);
+        ChangePwdTextView.setOnClickListener(this);
         MyFocusOn.setOnClickListener(this);
         MyDynamic.setOnClickListener(this);
         BrowsingHistory.setOnClickListener(this);
@@ -49,14 +57,19 @@ public class HuaHuFragment  extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         switch(v.getId()){
             case R.id.my_focus_on:
                 Intent intent=new Intent(getActivity(),HuaHuActivity.class);
-                intent.putExtra("MyFocusOn",1);
+                intent.putExtra("code",1);
                 startActivity(intent);
-
+                break;
+            case R.id.change_password:
+                Intent changePwdIntent=new Intent(getActivity(),HuaHuActivity.class);
+                changePwdIntent.putExtra("code",2);
+                startActivity(changePwdIntent);
+                break;
         }
     }
 }

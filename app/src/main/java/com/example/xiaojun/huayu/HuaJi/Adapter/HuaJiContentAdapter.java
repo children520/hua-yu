@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaJi;
+package com.example.xiaojun.huayu.HuaJi.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,18 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xiaojun.huayu.GoodsRecommendActivity;
-import com.example.xiaojun.huayu.HuaJiFragment;
+import com.example.xiaojun.huayu.HuaJi.Bean.HuaJiContent;
+import com.example.xiaojun.huayu.HuaJi.Fragment.HuaJiFragment;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;
 
-public class HuaJiContentAdapter  extends RecyclerView.Adapter<com.example.xiaojun.huayu.HuaJi.HuaJiContentAdapter.ViewHolder> {
+public class HuaJiContentAdapter extends RecyclerView.Adapter<HuaJiContentAdapter.ViewHolder> {
     private List<HuaJiContent> mHuaJiContentsList;
     private static final String URL="url";
     private static final String TITLE="title";
     private static final String PRICE="price";
     private static final String SELLER="seller";
     private static final String IMAGEURL="imageurl";
+    private static final String USE="use";
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView mImageView;
         private TextView mTitleView;
@@ -44,7 +46,7 @@ public class HuaJiContentAdapter  extends RecyclerView.Adapter<com.example.xiaoj
 
                 mImageView.setImageResource(R.mipmap.apple);
                 mTitleView.setText(mHuaJiContent.getTitle());
-                mPriceView.setText(mHuaJiContent.getPrice()+"");
+                mPriceView.setText("$"+mHuaJiContent.getPrice());
                 mSellerView.setText(mHuaJiContent.getSeller());
 
             }catch (Exception e){
@@ -58,6 +60,7 @@ public class HuaJiContentAdapter  extends RecyclerView.Adapter<com.example.xiaoj
             intent.putExtra(PRICE,mHuaJiContent.getPrice());
             intent.putExtra(IMAGEURL,mHuaJiContent.getImageUrl());
             intent.putExtra(SELLER,mHuaJiContent.getSeller());
+            intent.putExtra(USE,mHuaJiContent.getUse());
             v.getContext().startActivity(intent);
         }
     }

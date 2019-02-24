@@ -98,7 +98,7 @@ public class PlantDetailFragment extends Fragment {
         PlantChangeSoilTime=getActivity().getIntent().getIntExtra(PLANTCHANGESOILTIME,1);
         PlantDrinkTime=getActivity().getIntent().getIntExtra(PLANTDRINKTIME,1);
         */
-        Log.d("PlantDrinkTime",PlantDrinkTime+"");
+
 
         bindView(view);
 
@@ -114,7 +114,6 @@ public class PlantDetailFragment extends Fragment {
     }
     @Override
     public void onResume(){
-        Log.d("提示","onResume");
         plantDrinkTimeTextView.setText(PlantDrinkTime+"小时后");
         plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
         plantScissorTimeTextView.setText(PlantScissorTime+"天后");
@@ -126,7 +125,7 @@ public class PlantDetailFragment extends Fragment {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Log.d("提示","onDestroy");
+
         getActivity().unregisterReceiver(plantDetailReceiver);
     }
 

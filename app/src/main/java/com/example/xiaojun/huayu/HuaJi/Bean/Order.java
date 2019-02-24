@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.HuaJi;
+package com.example.xiaojun.huayu.HuaJi.Bean;
 
 import cn.bmob.v3.BmobObject;
 
