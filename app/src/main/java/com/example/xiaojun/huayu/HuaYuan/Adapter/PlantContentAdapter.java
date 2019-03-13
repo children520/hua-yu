@@ -12,9 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
+import com.example.xiaojun.huayu.HuaYuan.DataBase.PlantLab;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
-import com.example.xiaojun.huayu.HuaYuan.PlantLab;
-import com.example.xiaojun.huayu.HuaYuan.Service.PollingService;
 import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 import com.example.xiaojun.huayu.R;
 
@@ -74,7 +73,9 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                             Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
                                         }else {
                                             Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
-                                            PollingUtils.startPollingService(v.getContext(),2,PollingService.class,plant,PollingService.ACTION);
+                                            PollingUtils.startAllService(v.getContext(),plant);
+
+
                                         }
 
 
@@ -88,9 +89,8 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                                 if(flag==-1){
                                                     Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
                                                 }else {
-
                                                     Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
-                                                    PollingUtils.startPollingService(v.getContext(),2,PollingService.class,plant,PollingService.ACTION);
+                                                    PollingUtils.startAllService(v.getContext(),plant);
                                                 }
                                                 break;
                                             }

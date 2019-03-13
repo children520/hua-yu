@@ -10,11 +10,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.HomeActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.HomeActivity;
 import com.example.xiaojun.huayu.R;
-import com.example.xiaojun.huayu.UserLab;
 
 
 public class LoginActivity extends Activity {
@@ -23,7 +21,6 @@ public class LoginActivity extends Activity {
     private Button mLoginButton;
     private EditText mUserName;
     private EditText mPassword;
-    private UserLab mUserLab;
     private String BackUserName;
     private CheckBox autoLogin;
     private SharedPreferences mSharedPreferences;
@@ -48,36 +45,7 @@ public class LoginActivity extends Activity {
             mUserName.setText(BackUserName);
         }
         mPassword=(EditText)findViewById(R.id.login_pwd);
-        if(mUserLab==null){
-            mUserLab=new UserLab(this);
-        }
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
-                intent.putExtra(USERNAME,"xiaojun");
-                startActivity(intent);//此处需要到最后
 
-                String userName=mUserName.getText().toString();
-                String passWord=mPassword.getText().toString();
-                long flag=mUserLab.queryUser(userName,passWord);
-
-                if(flag==-1){
-                    Toast.makeText(LoginActivity.this,"输入的用户名或者密码不正确",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                    mEditor=mSharedPreferences.edit();
-                    if(autoLogin.isChecked()){
-                        mEditor.putBoolean("auto_login",true);
-                    }else {
-                        mEditor.clear();
-                    }
-                    mEditor.apply();
-
-                }
-
-            }
-        });
     }
     public void NewUserRegist(View v){
         Intent intent=new Intent(LoginActivity.this,NewUserRegistActivity.class);

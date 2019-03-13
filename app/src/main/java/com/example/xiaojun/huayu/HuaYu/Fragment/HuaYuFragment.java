@@ -4,7 +4,6 @@ package com.example.xiaojun.huayu.HuaYu.Fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.ArticleDetailActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.ArticleDetailActivity;
 import com.example.xiaojun.huayu.HuaYu.Adapter.HuaYuContentAdapter;
 import com.example.xiaojun.huayu.HuaYu.Bean.HuaYuContent;
 import com.example.xiaojun.huayu.HuaYu.Bean.HuaYuUrl;
@@ -65,6 +64,7 @@ public class HuaYuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view=inflater.inflate(R.layout.fragment_huayu,container,false);
         bindView(view);
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -75,6 +75,7 @@ public class HuaYuFragment extends Fragment {
         });
 
         Tools.WipeSearchViewUnderLine(HomeSearchView);
+
         HomeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -109,6 +110,7 @@ public class HuaYuFragment extends Fragment {
                 return false;
             }
         });
+
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         AcquireUrl();
@@ -145,6 +147,7 @@ public class HuaYuFragment extends Fragment {
     public void onResume(){
         super.onResume();
         HomeSearchView.clearFocus();
+
     }
 
     public static Intent newIntent(Context packageContext,String url){

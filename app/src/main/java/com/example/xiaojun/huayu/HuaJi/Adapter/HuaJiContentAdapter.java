@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.xiaojun.huayu.GoodsRecommendActivity;
+import com.example.xiaojun.huayu.HuaJi.Activity.GoodsRecommendActivity;
 import com.example.xiaojun.huayu.HuaJi.Bean.HuaJiContent;
 import com.example.xiaojun.huayu.HuaJi.Fragment.HuaJiFragment;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;
@@ -43,10 +44,9 @@ public class HuaJiContentAdapter extends RecyclerView.Adapter<HuaJiContentAdapte
         public void BindHuaJiContent(HuaJiContent huajiContent){
             mHuaJiContent=huajiContent;
             try{
-
-                mImageView.setImageResource(R.mipmap.apple);
+                Tools.LoadImage(mImageView,mHuaJiContent.getImageUrl());
                 mTitleView.setText(mHuaJiContent.getTitle());
-                mPriceView.setText("$"+mHuaJiContent.getPrice());
+                mPriceView.setText("￥"+mHuaJiContent.getPrice());
                 mSellerView.setText(mHuaJiContent.getSeller());
 
             }catch (Exception e){

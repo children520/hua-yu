@@ -6,9 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,8 +34,9 @@ import com.amap.api.services.weather.WeatherSearchQuery;
 import com.example.xiaojun.huayu.HuaYuan.Adapter.PlantContentAdapter;
 import com.example.xiaojun.huayu.HuaYuan.Adapter.UserPlantContentAdapter;
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
-import com.example.xiaojun.huayu.HuaYuan.PlantLab;
-import com.example.xiaojun.huayu.PlantDetailActivity;
+import com.example.xiaojun.huayu.HuaYuan.DataBase.PlantLab;
+import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
+import com.example.xiaojun.huayu.HuaYuan.Activity.PlantDetailActivity;
 import com.example.xiaojun.huayu.R;
 
 import java.util.ArrayList;
@@ -69,8 +67,6 @@ public class HuaYuanFragment extends Fragment {
     private static final int UPDATE_VIEW=3;
     private static final int UPDATE_PLANT_VIEW=2;
     private static List<Plant> mUserPlantList =new ArrayList<>();
-
-    private List<String> singleList=new ArrayList<>();
     private List<Plant> plantList=new ArrayList<>();
     private TextView cityText, timeText, weatherText, tempText, windText, wetText;
     private WeatherSearchQuery query;
@@ -101,9 +97,13 @@ public class HuaYuanFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.huayuan_recycler_content);
         StaggeredGridLayoutManager LayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(LayoutManager);
-
         updateUI();
+        if(!mUserPlantList.isEmpty()){
+            for(Plant plant:mUserPlantList){
+                PollingUtils.startAllService(getActivity(),plant);
+            }
 
+        }
         addPlant=(ImageView)view.findViewById(R.id.add_plant);
         cityText = (TextView) view.findViewById(R.id.weather_city);
         timeText = (TextView) view.findViewById(R.id.weather_time);
@@ -224,7 +224,7 @@ public class HuaYuanFragment extends Fragment {
     public void onResume(){
         super.onResume();
         updateUI();
-
+        requestLocation();
     }
     public static Intent newIntent(Context packageContext,String ImageUrl,String PlantChineseName,
                                    String PlantLatinName,String PlantFamilyGenus,
@@ -260,17 +260,7 @@ public class HuaYuanFragment extends Fragment {
            mAdapter.notifyDataSetChanged();
        }
     }
-    private void AddPlantUpdateUI(){
 
-        if(mAdapter==null) {
-
-            mAdapter = new UserPlantContentAdapter(mUserPlantList);
-            Log.d("adapter",mAdapter.toString());
-            mRecyclerView.setAdapter(mAdapter);
-        }else {
-            mAdapter.notifyDataSetChanged();
-        }
-    }
     private void requestWeatherInformation(String cityName){
         Log.d("city",cityName);
         query = new WeatherSearchQuery(cityName, WeatherSearchQuery.WEATHER_TYPE_LIVE);
@@ -296,20 +286,28 @@ public class HuaYuanFragment extends Fragment {
             mlocationClient.stopLocation();
             mlocationClient.startLocation();
         }
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(5000);
-        mLocationOption.setNeedAddress(true);
-        mLocationOption.setMockEnable(true);
+        mLocationOption.setOnceLocation(true);
+
+        //获取最近3s内精度最高的一次定位结果：
+        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+        mLocationOption.setOnceLocationLatest(true);
+        //mLocationOption.setNeedAddress(true);
+       //mLocationOption.setMockEnable(true);
+        mLocationOption.setHttpTimeOut(20000);
         //设置定位参数
         mlocationClient.setLocationOption(mLocationOption);
     }
     @Override
-    public void onDestroyView(){
-        super.onDestroyView();
+    public void onDestroy(){
+        super.onDestroy();
+        PollingUtils.stopAllService(getActivity());
         mlocationClient.stopLocation();
-        mPlantLab.stopBackPlantService(getActivity());
+        mlocationClient.onDestroy();
     }
+
+
 
 
 
@@ -319,7 +317,6 @@ public class HuaYuanFragment extends Fragment {
             if (rCode == 1000) {
                 if (weatherLiveResult != null && weatherLiveResult.getLiveResult() != null) {
                     LocalWeatherLive weatherlive = weatherLiveResult.getLiveResult();
-                    Log.d("weather",weatherlive.toString());
                     timeText.setText(weatherlive.getReportTime() + "发布");
                     cityText.setText(weatherlive.getCity());
                     tempText.setText(weatherlive.getTemperature() + "°");
@@ -352,7 +349,7 @@ public class HuaYuanFragment extends Fragment {
                     String country =amapLocation.getCountry();
                     Log.d("coutry",country);
                     Log.d("city",cityName);
-                    //requestWeatherInformation("佛山");
+                    requestWeatherInformation(cityName);
 
                 } else {
                     //Toast.makeText(getActivity(),"获取定位信息失败",Toast.LENGTH_SHORT).show();

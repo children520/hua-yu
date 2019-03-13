@@ -5,30 +5,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.HomeActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.HomeActivity;
 import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
-import com.example.xiaojun.huayu.UserLab;
-import com.example.xiaojun.huayu.UserLogin.Bean.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
@@ -46,7 +39,7 @@ public class NewUserRegistActivity extends AppCompatActivity {
     private EditText mPassword;
     private Button mRegistButton;
     private SQLiteDatabase mDatabase;
-    private UserLab mUserLab;
+
     private boolean IsRegist=false;
     private static final String USERNAME="username";
     private static final String ARG_CRIME_ID="crime_id";

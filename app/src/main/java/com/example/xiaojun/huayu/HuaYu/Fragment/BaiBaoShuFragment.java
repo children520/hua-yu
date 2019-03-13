@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.ArticleDetailActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.ArticleDetailActivity;
 import com.example.xiaojun.huayu.HuaYu.Adapter.BaiBaoShuContentAdapter;
 import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
 import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuUrl;

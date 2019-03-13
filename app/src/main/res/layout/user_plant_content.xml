@@ -42,11 +42,11 @@
             android:id="@+id/plant_family_genus"
             android:layout_gravity="center_horizontal"/>
         <ImageView
+            android:layout_below="@id/plant_latin_name"
             android:id="@+id/delete_plant"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:src="@drawable/huanyuan_delete_plant"
-            android:layout_margin="20dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"/>
         <TextView

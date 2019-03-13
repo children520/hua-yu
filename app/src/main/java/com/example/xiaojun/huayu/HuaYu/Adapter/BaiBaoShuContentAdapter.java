@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.xiaojun.huayu.ArticleDetailActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.ArticleDetailActivity;
 import com.example.xiaojun.huayu.HuaYu.Bean.BaiBaoShuContent;
 import com.example.xiaojun.huayu.HuaYu.Fragment.BaiBaoShuFragment;
 import com.example.xiaojun.huayu.HuaYu.Tools.Tools;

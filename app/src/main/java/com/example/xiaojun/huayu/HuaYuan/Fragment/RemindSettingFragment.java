@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.example.xiaojun.huayu.HuaYuan.Service.DrinkService;
+import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 import com.example.xiaojun.huayu.R;
 
 public class RemindSettingFragment extends Fragment {
@@ -24,11 +26,11 @@ public class RemindSettingFragment extends Fragment {
     private static boolean IsFertilizationOpen;
     private static boolean IsChangeSoilOpen;
     private static boolean IsBreedOpen;
-    private static final String ISDRINKOPEN="IsDrinkOpen";
-    private static final String ISSCISSOROPEN="IsDrinkOpen";
-    private static final String ISFERTILIZATIONOPEN="IsFertilizationOpen";
-    private static final String ISCHANGESOILOPEN="IsChangeSoilOpen";
-    private static final String ISBREEDOPEN="IsBreedOpen";
+    public static final String ISDRINKOPEN="IsDrinkOpen";
+    public static final String ISSCISSOROPEN="IsDrinkOpen";
+    public static final String ISFERTILIZATIONOPEN="IsFertilizationOpen";
+    public static final String ISCHANGESOILOPEN="IsChangeSoilOpen";
+    public static final String ISBREEDOPEN="IsBreedOpen";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_remind_setting, container, false);
@@ -101,17 +103,23 @@ public class RemindSettingFragment extends Fragment {
         ChangeSoilSwitch=view.findViewById(R.id.change_soil_switch);
         BreedSwitch=view.findViewById(R.id.breed_switch);
     }
+    public static boolean getSwitchState(Context context,String key){
+        boolean SwitchState;
+        SharedPreferences sharedPreferences=context.getSharedPreferences("remindSetting",Context.MODE_PRIVATE);
+        SwitchState=sharedPreferences.getBoolean(key,true);
+        return SwitchState;
+    }
     public void checkSwitchState(){
         SharedPreferences sharedPreferences=getActivity().getSharedPreferences("remindSetting",Context.MODE_PRIVATE);
-        IsDrinkOpen=sharedPreferences.getBoolean(ISDRINKOPEN,false);
+        IsDrinkOpen=sharedPreferences.getBoolean(ISDRINKOPEN,true);
         DrinkSwitch.setChecked(IsDrinkOpen);
-        IsBreedOpen=sharedPreferences.getBoolean(ISBREEDOPEN,false);
+        IsBreedOpen=sharedPreferences.getBoolean(ISBREEDOPEN,true);
         BreedSwitch.setChecked(IsBreedOpen);
-        IsChangeSoilOpen=sharedPreferences.getBoolean(ISCHANGESOILOPEN,false);
+        IsChangeSoilOpen=sharedPreferences.getBoolean(ISCHANGESOILOPEN,true);
         ChangeSoilSwitch.setChecked(IsChangeSoilOpen);
-        IsFertilizationOpen=sharedPreferences.getBoolean(ISFERTILIZATIONOPEN,false);
+        IsFertilizationOpen=sharedPreferences.getBoolean(ISFERTILIZATIONOPEN,true);
         FertilizationSwitch.setChecked(IsFertilizationOpen);
-        IsScissorOpen=sharedPreferences.getBoolean(ISSCISSOROPEN,false);
+        IsScissorOpen=sharedPreferences.getBoolean(ISSCISSOROPEN,true);
         ScissorSwitch.setChecked(IsScissorOpen);
     }
 

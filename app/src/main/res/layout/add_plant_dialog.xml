@@ -7,15 +7,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:alpha="0.6"
+
             android:padding="5dp"
             android:textColor="@color/white"
-            android:background="@color/black"
-
+            android:background="@color/green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="搜索并添加植物"
-            android:textStyle="bold"
             android:textSize="20dp"/>
         <ImageView
             android:id="@+id/add_plant_image"

@@ -14,9 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.HomeActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.HomeActivity;
 import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
-import com.example.xiaojun.huayu.UserLogin.LoginActivity;
 import com.example.xiaojun.huayu.UserLogin.NewUserRegistActivity;
 
 import java.util.ArrayList;

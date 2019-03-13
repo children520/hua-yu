@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.xiaojun.huayu.HuaYu.Adapter.HuaYouHuiContentAdapter;
 import com.example.xiaojun.huayu.HuaYu.Bean.HuaYouHuiContent;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
 
 import java.text.SimpleDateFormat;
@@ -90,9 +92,11 @@ public class HuaYouHuiFragment extends Fragment {
         PublicDynamicView.findViewById(R.id.public_dynamic_ensure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName=getActivity().getIntent().getStringExtra(USERNAME);
-                Log.d("userName",userName);
-                PublicDynamic(userName,TitleEditText.getText().toString(),ContentEditText.getText().toString());
+                if(TextUtils.isEmpty(TitleEditText.getText())&&TextUtils.isEmpty(ContentEditText.getText())){
+                    Toast.makeText(getActivity(),"你未填写信息哦",Toast.LENGTH_SHORT).show();
+                }else{
+                    PublicDynamic(Tools.readNickNameStatusSharedPreference(getActivity()),TitleEditText.getText().toString(),ContentEditText.getText().toString());
+                }
             }
         });
         PublicDynamicImageView=(ImageView)view.findViewById(R.id.public_dynamic);
@@ -185,7 +189,7 @@ public class HuaYouHuiFragment extends Fragment {
         huaYouHuiContent.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
-                if(e!=null){
+                if(e==null){
                     Toast.makeText(getActivity(),"发布成功",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getActivity(),"发布失败",Toast.LENGTH_SHORT).show();

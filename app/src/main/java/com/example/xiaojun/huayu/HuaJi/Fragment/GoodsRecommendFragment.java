@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
 
 
@@ -25,12 +27,13 @@ public class GoodsRecommendFragment extends Fragment {
     private TextView PriceTextView;
     private TextView SellerTextView;
     private TextView UseTextView;
+    private ImageView GoodsImage;
     private String ImageUrl;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_goods_recommend, container, false);
         BuyNowButton=view.findViewById(R.id.buy_now);
-        ConnectUsButton=view.findViewById(R.id.connect_us);
+        GoodsImage=view.findViewById(R.id.goods_image);
         TitleTextView=view.findViewById(R.id.goods_title);
         PriceTextView=view.findViewById(R.id.goods_price);
         SellerTextView=view.findViewById(R.id.goods_seller);
@@ -41,9 +44,10 @@ public class GoodsRecommendFragment extends Fragment {
         String ImageUrl=getActivity().getIntent().getStringExtra(IMAGEURL);
         String Use=getActivity().getIntent().getStringExtra(USE);
         TitleTextView.setText(Title);
-        PriceTextView.setText("商品价格:"+Price+"");
+        PriceTextView.setText("商品价格:"+Price+" RMB");
         SellerTextView.setText("店铺:"+Seller);
-        UseTextView.setText("作用:"+Use);
+        UseTextView.setText(Use);
+        Tools.LoadImage(GoodsImage,ImageUrl);
         BuyNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,12 +58,7 @@ public class GoodsRecommendFragment extends Fragment {
 
             }
         });
-        ConnectUsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         return view;
     }
 }

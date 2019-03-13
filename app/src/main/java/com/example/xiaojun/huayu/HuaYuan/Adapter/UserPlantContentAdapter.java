@@ -12,15 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
+import com.example.xiaojun.huayu.HuaYuan.DataBase.PlantLab;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
-import com.example.xiaojun.huayu.HuaYuan.PlantLab;
-import com.example.xiaojun.huayu.HuaYuan.Service.PollingService;
 import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 import com.example.xiaojun.huayu.R;
 
 import java.util.List;
-
-import okhttp3.internal.Util;
 
 public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantContentAdapter.ViewHolder> {
     private List<Plant> mPlantList;
@@ -74,7 +71,7 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
                                 public void onClick(DialogInterface dialog, int which) {
                                     plantLab.deletePlant(mPlant);
                                     v.getContext().sendBroadcast(new Intent("myBroadCast"));
-                                    PollingUtils.stopPollingService(v.getContext(),PollingService.class,PollingService.ACTION);
+                                    PollingUtils.stopAllService(v.getContext());
 
 
                                 }

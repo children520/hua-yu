@@ -42,11 +42,11 @@
                 android:id="@+id/plant_family_genus"
                 android:layout_gravity="center_horizontal"/>
             <ImageView
+                android:layout_below="@id/plant_latin_name"
                 android:id="@+id/is_not_add_plant"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/is_choice_add_plant"
-                android:layout_margin="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"/>
             <TextView

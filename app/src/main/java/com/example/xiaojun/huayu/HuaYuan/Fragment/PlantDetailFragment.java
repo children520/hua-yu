@@ -2,15 +2,12 @@ package com.example.xiaojun.huayu.HuaYuan.Fragment;
 
 
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
+import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 import com.example.xiaojun.huayu.R;
-import com.example.xiaojun.huayu.RemindSettingActivity;
+import com.example.xiaojun.huayu.HuaYuan.Activity.RemindSettingActivity;
 
 
 public class PlantDetailFragment extends Fragment {
@@ -58,16 +56,12 @@ public class PlantDetailFragment extends Fragment {
     private String ChineseName;
     private Bitmap AppBitmap;
     private NotificationManager notificationManager;
-    private PlantDetailReceiver plantDetailReceiver;
+
 
     private static int PlantDrinkTime,PlantFertilizationTime,PlantScissorTime,PlantChangeSoilTime,PlantBreedTime;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        plantDetailReceiver =new PlantDetailReceiver();
-        IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction(".HuaYuan.PlantDetailFragment$PlantDetailReceiver");
-        getActivity().registerReceiver(plantDetailReceiver,intentFilter);
         //mHuaYuanContent=HuaYuanContentLab.get(getActivity()).getHuaYuanContent(plantId,imageId,plantName);
     }
     @Override
@@ -91,52 +85,62 @@ public class PlantDetailFragment extends Fragment {
         //String PlantMorphologicalCharacteristics=getActivity().getIntent().getStringExtra(PLANTMORPHOLOGICALCHARACTERISTICS);
         String PlantSoil=getActivity().getIntent().getStringExtra(PLANTSOIL);
         PlantBirthday=getActivity().getIntent().getStringExtra(PLANTBIRTHDAY);
-        /*
+
         PlantBreedTime=getActivity().getIntent().getIntExtra(PLANTBREEDTIME,1);
         PlantFertilizationTime=getActivity().getIntent().getIntExtra(PLANTFERTILIZATIONTIME,1);
         PlantScissorTime=getActivity().getIntent().getIntExtra(PLANTSCISSORTIME,1);
         PlantChangeSoilTime=getActivity().getIntent().getIntExtra(PLANTCHANGESOILTIME,1);
         PlantDrinkTime=getActivity().getIntent().getIntExtra(PLANTDRINKTIME,1);
-        */
-
 
         bindView(view);
-
         plantChineseNameTextView.setText(ChineseName);
         plantLatinNameTextView.setText(PlantLatinName);
         plantFamilyGenusTextView.setText(PlantFamilyGenus);
         plantSoilView.setText(PlantSoil);
         plantBirthdayTextView.setText(PlantBirthday);
-
         updateUI();
-
         return view;
     }
     @Override
     public void onResume(){
-        plantDrinkTimeTextView.setText(PlantDrinkTime+"小时后");
-        plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
-        plantScissorTimeTextView.setText(PlantScissorTime+"天后");
-        plantChangeSoilTimeTextView.setText(PlantChangeSoilTime+"天后");
-        plantBreedTimeTextView.setText(PlantBreedTime+"天后");
         super.onResume();
-
+        updateUI();
     }
     @Override
     public void onDestroy(){
         super.onDestroy();
-
-        getActivity().unregisterReceiver(plantDetailReceiver);
     }
 
+
     private void updateUI(){
-        /*
-        plantDrinkTimeTextView.setText(vPlantDrinkTime+"小时后");
-        plantFertilizationTimeTextView.setText(vPlantFertilizationTime+"小时后");
-        plantScissorTimeTextView.setText(vPlantScissorTime+"天后");
-        plantChangeSoilTimeTextView.setText(vPlantChangeSoilTime+"天后");
-        plantBreedTimeTextView.setText(vPlantBreedTime+"天后");
-        */
+        int timediff=(int)PollingUtils.timeDiff(PlantBirthday);
+        if(timediff%PlantDrinkTime==0){
+            plantDrinkTimeTextView.setText(PlantDrinkTime+"小时后");
+        }else{
+            plantDrinkTimeTextView.setText(PlantDrinkTime-(timediff%PlantDrinkTime)+"小时后");
+        }
+        if(timediff%PlantFertilizationTime==0){
+            plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
+        }else{
+            plantFertilizationTimeTextView.setText(PlantFertilizationTime-timediff%PlantFertilizationTime+"小时后");
+        }
+        if(timediff%PlantScissorTime==0){
+            plantScissorTimeTextView.setText(PlantScissorTime+"小时后");
+        }else{
+            plantScissorTimeTextView.setText(PlantScissorTime-timediff%PlantScissorTime+"小时后");
+        }
+        if(timediff%PlantChangeSoilTime==0){
+            plantChangeSoilTimeTextView.setText(PlantChangeSoilTime+"小时后");
+        }else{
+            plantChangeSoilTimeTextView.setText(PlantChangeSoilTime-timediff%PlantChangeSoilTime+"小时后");
+        }
+        if(timediff%PlantChangeSoilTime==0){
+            plantBreedTimeTextView.setText(PlantBreedTime+"小时后");
+        }else{
+            plantBreedTimeTextView.setText(PlantBreedTime-timediff%PlantBreedTime+"小时后");
+        }
+
+
     }
     private void bindView(View view){
         plantChineseNameTextView=view.findViewById(R.id.plant_detail_chinese_name);
@@ -152,51 +156,7 @@ public class PlantDetailFragment extends Fragment {
         plantChangeSoilTimeTextView=view.findViewById(R.id.plant_detail_change_soil);
         plantBreedTimeTextView=view.findViewById(R.id.plant_detail_breed);
     }
-    /*
-    private void  CheckDrinkNotificate(){
-        SharedPreferences sharedPreferences=getActivity().getSharedPreferences("remindSetting",Context.MODE_PRIVATE);
-        boolean IsDrinkOpen=sharedPreferences.getBoolean("IsDrinkOpen",false);
-        if(vPlantBreedTime==8&&IsDrinkOpen){
-            Intent intent=new Intent(getActivity(),PlantDetailFragment.class);
-            PendingIntent pendingIntent=PendingIntent.getActivity(getActivity(),0,intent,0);
-            Notification.Builder builder=new Notification.Builder(getActivity());
-            builder.setContentTitle("花屿通知")
-                    .setContentText("您的"+ChineseName+"植物需要浇水啦！")
-                    .setTicker("来自花屿的通知信息")
-                    .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.mipmap.apple)
-                    .setLargeIcon(AppBitmap)
-                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent);
-            DrinkNotify=builder.build();
-            notificationManager.notify(1,DrinkNotify);
-        }
 
-    }
-    */
-    public class PlantDetailReceiver extends BroadcastReceiver{
-        public PlantDetailReceiver(){
 
-        }
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            PlantBreedTime=intent.getIntExtra(PLANTBREEDTIME,1);
-            PlantFertilizationTime=intent.getIntExtra(PLANTFERTILIZATIONTIME,1);
-            PlantScissorTime=intent.getIntExtra(PLANTSCISSORTIME,1);
-            PlantDrinkTime=intent.getIntExtra(PLANTDRINKTIME,1);
-            PlantChangeSoilTime=intent.getIntExtra(PLANTCHANGESOILTIME,1);
-            Log.d("DrinkTime",PlantDrinkTime+"");
-            Log.d("FertilizationTime",PlantFertilizationTime+"");
-            Log.d("ScissorTime",PlantScissorTime+"");
-            Log.d("ChangeSoilTime",PlantChangeSoilTime+"");
-            Log.d("BreedTime",PlantBreedTime+"");
-            Log.d("----------------","--------------------------------");
-            plantDrinkTimeTextView.setText(PlantDrinkTime+"小时后");
-            plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
-            plantScissorTimeTextView.setText(PlantScissorTime+"天后");
-            plantChangeSoilTimeTextView.setText(PlantChangeSoilTime+"天后");
-            plantBreedTimeTextView.setText(PlantBreedTime+"天后");
-        }
-    }
+
 }
