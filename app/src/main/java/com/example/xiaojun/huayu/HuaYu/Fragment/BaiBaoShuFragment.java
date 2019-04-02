@@ -229,7 +229,7 @@ public class BaiBaoShuFragment extends Fragment {
 
                     return ;
                 } catch (Exception e) {
-                    Log.d("error",e.getMessage());
+
                 } finally {
                     if (reader != null) {
                         try {

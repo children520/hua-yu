@@ -240,9 +240,6 @@ public class HuaYuFragment extends Fragment {
                     Message message=new Message();
                     message.what=UPDATE_VIEW;
                     handler.sendMessage(message);
-
-
-                    return ;
                 } catch (Exception e) {
                     Log.d("error",e.getMessage());
                 } finally {

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.example.xiaojun.huayu.HuaYuan.DataBase.PlantLab;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
@@ -46,7 +47,7 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
             }
         }
         public void bindPlantContent(final Plant plant){
-            mImageView.setImageResource(R.mipmap.apple);
+            Tools.LoadImage(mImageView,plant.getImageUrl());
             mChineseNameView.setText(plant.getPlantChineseName());
             mLatinNameView.setText(plant.getPlantLatinName());
             mFamilyGenusView.setText(plant.getPlantFamilyGenus());

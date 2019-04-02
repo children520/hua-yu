@@ -1,5 +1,4 @@
 package com.example.xiaojun.huayu.HuaHu.Fragment;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
