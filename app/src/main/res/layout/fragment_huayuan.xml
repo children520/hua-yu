@@ -3,80 +3,128 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
-        android:alpha="0.6"
-        android:background="@color/white"
+    <LinearLayout
+        android:background="@color/green"
+        android:id="@+id/title_info"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/weather_info">
-        <TextView
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:textSize="16dp"
+                android:id="@+id/now_envir_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前环境信息"/>
+            <TextView
+                android:paddingLeft="10dp"
+                android:layout_below="@id/blue_connect"
+                android:text="光照："
+                android:id="@+id/now_illumination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:paddingLeft="10dp"
+                android:layout_below="@id/now_illumination"
+                android:id="@+id/now_humidity"
+                android:text="湿度："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:paddingLeft="10dp"
+                android:id="@+id/now_temp"
+                android:layout_below="@id/now_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温度："/>
+            <Switch
+                android:paddingLeft="10dp"
+                android:layout_below="@+id/now_envir_info"
+                android:hint="蓝牙连接"
+                android:id="@+id/blue_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:alpha="0.6"
+            android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/weather_city"
-            android:textSize="25dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:text="成都市"/>
-        <TextView
+            android:id="@+id/weather_info">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/weather_city"
+                android:textSize="25dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:text="成都市"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实时"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/weather_city"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/weather_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/weather_city"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="多云"
+                android:layout_marginLeft="20dp"
+                android:textSize="40dp"
+                android:layout_below="@id/weather_time"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-6"
+                android:layout_alignParentRight="true"
+                android:textSize="40dp"
+                android:layout_below="@id/weather_time"
+                android:textColor="@color/black"/>
+            <TextView
+            android:id="@+id/weather_wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实时"
+            android:text="西北风 7级"
+            android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
-            android:layout_below="@id/weather_city"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/weather_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="时间"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/weather_city"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/weather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="多云"
-            android:layout_marginLeft="60dp"
-            android:textSize="40dp"
-            android:layout_below="@id/weather_time"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/weather_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-6"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="60dp"
-            android:textSize="40dp"
-            android:layout_below="@id/weather_time"
-            android:textColor="@color/black"/>
-        <TextView
-        android:id="@+id/weather_wind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="西北风 7级"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="60dp"
-        android:textSize="20dp"
-        android:layout_below="@id/weather"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_marginBottom="5dp"
-            android:id="@+id/weather_wet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="湿度 34%"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="60dp"
             android:textSize="20dp"
-            android:layout_below="@id/weather_temp"
-            android:textColor="@color/black"/>
-    </RelativeLayout>
+            android:layout_below="@id/weather"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/weather_wet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="湿度 34%"
+                android:layout_alignParentRight="true"
+                android:textSize="20dp"
+                android:layout_below="@id/weather_temp"
+                android:textColor="@color/black"/>
+        </RelativeLayout>
+    </LinearLayout>
     <RelativeLayout
-        android:layout_below="@+id/weather_info"
+        android:layout_below="@+id/title_info"
         android:id="@+id/my_plant"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

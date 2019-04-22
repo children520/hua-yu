@@ -1,5 +1,4 @@
 package com.example.xiaojun.huayu.HuaYu.Tools;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -72,30 +71,7 @@ public class Tools {
             }
         }.execute(imageUrl);
     }
-    public static Bitmap scaleMatrix(Bitmap bitmap, int width, int height){
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
-        float scaleW = width/w;
-        float scaleH = height/h;
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleW, scaleH); // 长和宽放大缩小的比例
-        return Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
-    }
 
-    public static int getSreenWidth(Context context){
-        Point point=new Point();
-        WindowManager manager=(WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        Display display=manager.getDefaultDisplay();
-        display.getSize(point);
-        return point.x;
-    }
-    public static int getSreenHeight(Context context){
-        Point point=new Point();
-        WindowManager manager=(WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        Display display=manager.getDefaultDisplay();
-        display.getSize(point);
-        return point.y;
-    }
     public static void writeIsRegistToSharedPreference(boolean isRegist,String nickName,Context context){
         SharedPreferences sharedPreferences=context.getSharedPreferences("isregist",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();

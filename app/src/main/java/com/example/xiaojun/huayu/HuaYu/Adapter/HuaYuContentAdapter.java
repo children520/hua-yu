@@ -2,6 +2,7 @@ package com.example.xiaojun.huayu.HuaYu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ public class HuaYuContentAdapter extends RecyclerView.Adapter<HuaYuContentAdapte
     private List<HuaYuContent> mHuaYuContentsList;
     private List<String> mImageUrlList;
     private List<String> mTitleList;
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView mImageView;
         private TextView mTitleView;
         private Context mContext;
@@ -41,13 +42,15 @@ public class HuaYuContentAdapter extends RecyclerView.Adapter<HuaYuContentAdapte
         public void bindHuaYuContent(HuaYuContent huaYuContent){
             mHuaYuContent=huaYuContent;
             try{
-                Tools.LoadImage(mImageView,mHuaYuContent.getImageUrl());
                 mTitleView.setText(mHuaYuContent.getTitle().split("\\|\\|")[0]);
                 mContentView.setText(mHuaYuContent.getTitle().split("\\|\\|")[1]);
             }catch (Exception e){
                 e.printStackTrace();
             }
 
+        }
+        public void bindDrawable(Drawable drawable){
+            mImageView.setImageDrawable(drawable);
         }
 
         @Override
@@ -75,6 +78,9 @@ public class HuaYuContentAdapter extends RecyclerView.Adapter<HuaYuContentAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         HuaYuContent HuaYuContent = mHuaYuContentsList.get(position);
         holder.bindHuaYuContent(HuaYuContent);
+        HuaYuFragment.getThumbnailDownloaderInstance().queneThumbnail(holder,HuaYuContent.getImageUrl());
+
+
 
     }
 

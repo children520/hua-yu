@@ -4,7 +4,7 @@
     package="com.example.xiaojun.huayu">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
@@ -26,6 +26,10 @@
         android:roundIcon="@mipmap/app"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <receiver
+            android:name=".HuaYuan.BroadCastReceiver.BlueToothBroadCastReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
 
         <service android:name="com.amap.api.location.APSService" />
 
@@ -58,25 +62,22 @@
                 <action android:name="com.example.xiaojun.huayu.ChangeSoilService" />
             </intent-filter>
         </service>
-
         <service
             android:name=".HuaYuan.Service.ScissorService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.example.xiaojun.huayu.ScissorService" />
             </intent-filter>
         </service>
-
         <service
             android:name=".HuaYuan.Service.FertilizateService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.example.xiaojun.huayu.FertilizateService" />
             </intent-filter>
         </service>
-
 
         <activity android:name=".LoadingActivity">
             <intent-filter>

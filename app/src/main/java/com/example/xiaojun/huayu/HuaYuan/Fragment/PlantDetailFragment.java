@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.xiaojun.huayu.HuaYu.Tools.BombFetchr;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 import com.example.xiaojun.huayu.R;
 import com.example.xiaojun.huayu.HuaYuan.Activity.RemindSettingActivity;
 
+import java.io.IOException;
+
 
 public class PlantDetailFragment extends Fragment {
     private Plant mPlant;
+    private static final String TAG="PlantDetailFragment";
     private static final String IMAGTURL="imageurl";
     private  static final String PLANTCHINESENAME="plantchinesename";
     private static final String PLANTLATINNAME="plantlatinname";
@@ -67,7 +73,7 @@ public class PlantDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plant_detail, container, false);
-        AppBitmap=BitmapFactory.decodeResource(getResources(),R.mipmap.app);
+
         notificationManager=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         mLinearLayout=(LinearLayout)view.findViewById(R.id.remind_setting);
         mLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +85,7 @@ public class PlantDetailFragment extends Fragment {
         });
 
         ChineseName=getActivity().getIntent().getStringExtra(PLANTCHINESENAME);
-        //String ImageUrl=getActivity().getIntent().getStringExtra(IMAGTURL);
+        String ImageUrl=getActivity().getIntent().getStringExtra(IMAGTURL);
         String PlantLatinName=getActivity().getIntent().getStringExtra(PLANTLATINNAME);
         String PlantFamilyGenus=getActivity().getIntent().getStringExtra(PLANTFAMILYGENUS);
         //String PlantMorphologicalCharacteristics=getActivity().getIntent().getStringExtra(PLANTMORPHOLOGICALCHARACTERISTICS);
@@ -93,6 +99,7 @@ public class PlantDetailFragment extends Fragment {
         PlantDrinkTime=getActivity().getIntent().getIntExtra(PLANTDRINKTIME,1);
 
         bindView(view);
+        Tools.LoadImage(plantImageView,ImageUrl);
         plantChineseNameTextView.setText(ChineseName);
         plantLatinNameTextView.setText(PlantLatinName);
         plantFamilyGenusTextView.setText(PlantFamilyGenus);

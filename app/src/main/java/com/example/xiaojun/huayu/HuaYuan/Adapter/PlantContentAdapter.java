@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.example.xiaojun.huayu.HuaYuan.DataBase.PlantLab;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.HuaYuanFragment;
@@ -21,7 +23,6 @@ import java.util.List;
 
 public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapter.ViewHolder> {
     private List<Plant> mPlantList;
-    private static final int UPDATE_VIEW=3;
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView mImageView;
@@ -31,7 +32,6 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
         private TextView mSoilView;
         private ImageView IsNotAddPlantImageView;
         private PlantLab mPlantLab;
-        private String NowTime;
         public ViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
@@ -46,7 +46,7 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
             }
         }
         public void bindPlantContent(final Plant plant){
-            mImageView.setImageResource(R.mipmap.apple);
+            Tools.LoadImage(mImageView,plant.getImageUrl());
             mChineseNameView.setText(plant.getPlantChineseName());
             mLatinNameView.setText(plant.getPlantLatinName());
             mFamilyGenusView.setText(plant.getPlantFamilyGenus());

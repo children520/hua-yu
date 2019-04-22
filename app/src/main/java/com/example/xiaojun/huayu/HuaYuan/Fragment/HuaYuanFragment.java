@@ -2,14 +2,20 @@ package com.example.xiaojun.huayu.HuaYuan.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -17,8 +23,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Button;
+import android.widget.CompoundButton;
+
 import android.widget.ImageView;
+
+
 import android.widget.SearchView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +44,10 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.example.xiaojun.huayu.HuaYuan.Adapter.MyBlueToothAdapter;
 import com.example.xiaojun.huayu.HuaYuan.Adapter.PlantContentAdapter;
 import com.example.xiaojun.huayu.HuaYuan.Adapter.UserPlantContentAdapter;
+import com.example.xiaojun.huayu.HuaYuan.Bean.BlueTooth;
 import com.example.xiaojun.huayu.HuaYuan.Bean.Plant;
 import com.example.xiaojun.huayu.HuaYuan.DataBase.PlantLab;
 import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
@@ -40,9 +55,12 @@ import com.example.xiaojun.huayu.HuaYuan.Activity.PlantDetailActivity;
 import com.example.xiaojun.huayu.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -65,28 +83,42 @@ public class HuaYuanFragment extends Fragment {
 
 
     private static final int UPDATE_VIEW=3;
-    private static final int UPDATE_PLANT_VIEW=2;
     private static List<Plant> mUserPlantList =new ArrayList<>();
     private List<Plant> plantList=new ArrayList<>();
     private TextView cityText, timeText, weatherText, tempText, windText, wetText;
     private WeatherSearchQuery query;
     private WeatherSearch weathersearch;
     private AMapLocationClient mlocationClient=null;
-    //声明mLocationOption对象
     private AMapLocationClientOption mLocationOption=null;
     private ImageView addPlant;
     private AlertDialog AddPlantAlertDialog;
-    private PlantLab mPlantLab;
+    private AlertDialog BlueToothDialog;
     private RecyclerView mRecyclerView;
     private UserPlantContentAdapter mAdapter;
     private View AddPlantView;
+    private View BlueToothView;
+    private TextView testView;
     private AlertDialog.Builder AddPlantBuilder;
+    private AlertDialog.Builder BlueToothBuilder;
     private SearchView AddPlantSearchView;
     private ImageView AddPlantImageView;
-    private ImageView IsNotAddPlantImageView;
+    private ImageView BlueToothCloseDialogImageView;
     private RecyclerView AddPlantRecyclerView;
+    private RecyclerView BlueToothRecyclerView;
     private PlantLab plantLab;
+    private Switch blueBoothSwitch;
     private SwipeRefreshLayout HuanYuanSwipeRefreshLayout;
+    private BluetoothAdapter bluetoothAdapter;
+    public static List<String> deviceNames = new ArrayList<>();
+    public static List<String> deviceAddress = new ArrayList<>();
+    public List<BlueTooth> blueToothList=new ArrayList<>();
+    private BluetoothDevice device;
+    private Button SearchBlueToothButton;
+    private MyBlueToothAdapter MyBlueToothAdapter;
+    @Override
+    public void onCreate(Bundle paramBundle){
+        super.onCreate(paramBundle);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_huayuan, container, false);
@@ -94,41 +126,194 @@ public class HuaYuanFragment extends Fragment {
             plantLab=new PlantLab(getActivity());
         }
         requestLocation();
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.huayuan_recycler_content);
+        bindView(view);
         StaggeredGridLayoutManager LayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(LayoutManager);
+
         updateUI();
         if(!mUserPlantList.isEmpty()){
             for(Plant plant:mUserPlantList){
                 PollingUtils.startAllService(getActivity(),plant);
             }
-
         }
-        addPlant=(ImageView)view.findViewById(R.id.add_plant);
-        cityText = (TextView) view.findViewById(R.id.weather_city);
-        timeText = (TextView) view.findViewById(R.id.weather_time);
-        weatherText = (TextView) view.findViewById(R.id.weather);
-        tempText = (TextView) view.findViewById(R.id.weather_temp);
-        wetText = (TextView) view.findViewById(R.id.weather_wet);
-        windText=(TextView)view.findViewById(R.id.weather_wind);
+        addPlantAndBlueToothDialog();
+        bindAddPlantView();
+        CloseBlueAndAddPlantDialog();
+        AddPlantSearch();
+        addPlant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plantList.clear();
+                AddPlantAlertDialog.show();
+                Message message=new Message();
+                message.what=UPDATE_VIEW;
+                handler.sendMessage(message);
+            }
+        });
+        SwipeSwipeRefreshPlantList();
+        SendBroadcast();
+        blueBoothConnect();
+        return view;
+    }
+    private void SwipeSwipeRefreshPlantList(){
+        HuanYuanSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                plantLab.displayPlantList(mUserPlantList);
+                Log.d("mUserPlantList",mUserPlantList.toString());
+                mAdapter = new UserPlantContentAdapter(mUserPlantList);
+                Log.d("adapter",mAdapter.toString());
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+                HuanYuanSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case UPDATE_VIEW:
+                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                    AddPlantRecyclerView.setLayoutManager(layoutManager);
+                    PlantContentAdapter adapter = new PlantContentAdapter(plantList);
+                    AddPlantRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    break;
+                case 2:
+                    LinearLayoutManager BlueToothlayoutManager=new LinearLayoutManager(getActivity());
+                    BlueToothRecyclerView.setLayoutManager(BlueToothlayoutManager);
+                    MyBlueToothAdapter=new MyBlueToothAdapter(blueToothList);
+                    BlueToothRecyclerView.setAdapter(MyBlueToothAdapter);
+                    Log.d("RecyclerView",BlueToothRecyclerView.toString());
+                    MyBlueToothAdapter.notifyDataSetChanged();
+                    break;
 
-        AddPlantBuilder=new AlertDialog.Builder(getActivity());
-        LayoutInflater layoutInflater=getActivity().getLayoutInflater();
-        AddPlantView=layoutInflater.inflate(R.layout.add_plant_dialog,null,false);
-
-        AddPlantSearchView=AddPlantView.findViewById(R.id.add_plant_search);
-        AddPlantImageView=AddPlantView.findViewById(R.id.add_plant_image);
-        AddPlantRecyclerView=AddPlantView.findViewById(R.id.add_plant_recycler_content);
-
-        AddPlantBuilder.setView(AddPlantView);
-        AddPlantBuilder.setCancelable(false);
-        AddPlantAlertDialog=AddPlantBuilder.create();
+            }
+        }
+    };
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+        requestLocation();
+    }
+    private void CloseBlueAndAddPlantDialog(){
         AddPlantImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddPlantAlertDialog.dismiss();
             }
         });
+        BlueToothCloseDialogImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BlueToothDialog.dismiss();
+            }
+        });
+    }
+    private void bindAddPlantView(){
+        AddPlantSearchView=AddPlantView.findViewById(R.id.add_plant_search);
+        AddPlantImageView=AddPlantView.findViewById(R.id.add_plant_image);
+        AddPlantRecyclerView=AddPlantView.findViewById(R.id.add_plant_recycler_content);
+        BlueToothCloseDialogImageView=BlueToothView.findViewById(R.id.blue_connect_image);
+        BlueToothRecyclerView=BlueToothView.findViewById(R.id.blue_connect_recycler);
+        SearchBlueToothButton=BlueToothView.findViewById(R.id.search_blue_tooth_button);
+        testView=BlueToothView.findViewById(R.id.blue_connect_test);
+    }
+    private void addPlantAndBlueToothDialog(){
+        AddPlantBuilder=new AlertDialog.Builder(getActivity());
+        BlueToothBuilder=new AlertDialog.Builder(getActivity());
+        LayoutInflater BlueToothInflater=getActivity().getLayoutInflater();
+        LayoutInflater layoutInflater=getActivity().getLayoutInflater();
+        BlueToothView=BlueToothInflater.inflate(R.layout.blue_booth_connect_dialog,null,false);
+        AddPlantView=layoutInflater.inflate(R.layout.add_plant_dialog,null,false);
+        BlueToothBuilder.setView(BlueToothView);
+        AddPlantBuilder.setView(AddPlantView);
+        BlueToothBuilder.setCancelable(false);
+        AddPlantBuilder.setCancelable(false);
+        AddPlantAlertDialog=AddPlantBuilder.create();
+        BlueToothDialog=BlueToothBuilder.create();
+
+    }
+    private void bindView(View view){
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.huayuan_recycler_content);
+        addPlant=(ImageView)view.findViewById(R.id.add_plant);
+        blueBoothSwitch=(Switch)view.findViewById(R.id.blue_connect);
+        cityText = (TextView) view.findViewById(R.id.weather_city);
+        timeText = (TextView) view.findViewById(R.id.weather_time);
+        weatherText = (TextView) view.findViewById(R.id.weather);
+        tempText = (TextView) view.findViewById(R.id.weather_temp);
+        wetText = (TextView) view.findViewById(R.id.weather_wet);
+        windText=(TextView)view.findViewById(R.id.weather_wind);
+        HuanYuanSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.huanyuan_swipe_refresh_layout);
+
+    }
+    private void blueBoothConnect(){
+        blueBoothSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (ContextCompat.checkSelfPermission(getActivity(), "android.permission.ACCESS_COARSE_LOCATION") != 0)
+                {
+                    ActivityCompat.requestPermissions(getActivity(), new String[] { "android.permission.ACCESS_COARSE_LOCATION" }, 200);
+                    return;
+                }
+                BlueToothDialog.show();
+                SearchBlueToothButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                        BlueToothBroadCastReceiver blueToothBroadCastReceiver=new BlueToothBroadCastReceiver();
+                        IntentFilter filter=new IntentFilter();
+                        filter.addAction(BluetoothDevice.ACTION_FOUND);
+                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+                        getActivity().registerReceiver(blueToothBroadCastReceiver,filter);
+                        if(!bluetoothAdapter.isEnabled()){
+                            bluetoothAdapter.enable();
+                        }
+                        bluetoothAdapter.startDiscovery();
+                    }
+                });
+
+
+            }
+        });
+    }
+    private void initBlueTooth(){
+
+        bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+    }
+    private void search() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (!adapter.isEnabled()) {
+            adapter.enable();
+        }
+        Intent enable = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        enable.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 3600); //3600为蓝牙设备可见时间
+
+
+    }
+    private void AddBoundDevice(BluetoothAdapter adapter){
+        Set<BluetoothDevice> set=adapter.getBondedDevices();
+        Log.d("set",set.size()+"");
+        for(BluetoothDevice device:set){
+            deviceNames.add(device.getName());
+            deviceAddress.add(device.getAddress());
+            BlueTooth blueTooth=new BlueTooth(device.getName(),device.getAddress());
+            blueToothList.add(blueTooth);
+
+        }
+
+
+
+    }
+    private void SendBroadcast(){
+        UpdateUIBroadcastReceiver updateUIBroadcastReceiver=new UpdateUIBroadcastReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("myBroadCast");
+        getActivity().registerReceiver(updateUIBroadcastReceiver,intentFilter);
+    }
+    private void  AddPlantSearch(){
         AddPlantSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -143,12 +328,12 @@ public class HuaYuanFragment extends Fragment {
                     public void done(List<Plant> list, BmobException e) {
                         if (e == null) {
                             HashSet<Plant> plantSet =new HashSet<>();
-                          for (Plant plant :list){
-                              Log.d("name", plant.getPlantChineseName());
-                              if (query.equals(plant.getPlantChineseName())){
-                                      plantSet.add(plant);
-                                  }
-                          }
+                            for (Plant plant :list){
+                                Log.d("name", plant.getPlantChineseName());
+                                if (query.equals(plant.getPlantChineseName())){
+                                    plantSet.add(plant);
+                                }
+                            }
                             plantList.clear();
                             Iterator<Plant> iterator=plantSet.iterator();
                             while (iterator.hasNext()){
@@ -170,61 +355,6 @@ public class HuaYuanFragment extends Fragment {
                 return false;
             }
         });
-
-        addPlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                plantList.clear();
-                AddPlantAlertDialog.show();
-                Message message=new Message();
-                message.what=UPDATE_VIEW;
-                handler.sendMessage(message);
-            }
-        });
-        HuanYuanSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.huanyuan_swipe_refresh_layout);
-        HuanYuanSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                plantLab.displayPlantList(mUserPlantList);
-                Log.d("mUserPlantList",mUserPlantList.toString());
-                mAdapter = new UserPlantContentAdapter(mUserPlantList);
-                Log.d("adapter",mAdapter.toString());
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
-                HuanYuanSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-        UpdateUIBroadcastReceiver updateUIBroadcastReceiver=new UpdateUIBroadcastReceiver();
-        IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("myBroadCast");
-        getActivity().registerReceiver(updateUIBroadcastReceiver,intentFilter);
-
-
-
-        return view;
-    }
-    private Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case UPDATE_VIEW:
-                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-                    AddPlantRecyclerView.setLayoutManager(layoutManager);
-                    PlantContentAdapter adapter = new PlantContentAdapter(plantList);
-                    AddPlantRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    break;
-
-
-            }
-        }
-    };
-    @Override
-    public void onResume(){
-        super.onResume();
-        updateUI();
-        requestLocation();
     }
     public static Intent newIntent(Context packageContext,String ImageUrl,String PlantChineseName,
                                    String PlantLatinName,String PlantFamilyGenus,
@@ -252,15 +382,21 @@ public class HuaYuanFragment extends Fragment {
     private void updateUI(){
        if(mAdapter==null) {
            plantLab.displayPlantList(mUserPlantList);
-           Log.d("mUserPlantList",mUserPlantList.toString());
            mAdapter = new UserPlantContentAdapter(mUserPlantList);
-           Log.d("adapter",mAdapter.toString());
+
            mRecyclerView.setAdapter(mAdapter);
        }else {
            mAdapter.notifyDataSetChanged();
        }
     }
-
+    private void updateBlueToothUI(){
+        if(MyBlueToothAdapter==null) {
+            MyBlueToothAdapter = new MyBlueToothAdapter(blueToothList);
+            BlueToothRecyclerView.setAdapter(MyBlueToothAdapter);
+        }else {
+            MyBlueToothAdapter.notifyDataSetChanged();
+        }
+    }
     private void requestWeatherInformation(String cityName){
         Log.d("city",cityName);
         query = new WeatherSearchQuery(cityName, WeatherSearchQuery.WEATHER_TYPE_LIVE);
@@ -271,6 +407,7 @@ public class HuaYuanFragment extends Fragment {
     }
     private void requestLocation(){
         initLocation();
+        Log.d("提示","获取地址位置");
         mlocationClient.startLocation();
 
     }
@@ -292,7 +429,7 @@ public class HuaYuanFragment extends Fragment {
 
         //获取最近3s内精度最高的一次定位结果：
         //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
+        //mLocationOption.setOnceLocationLatest(true);
         //mLocationOption.setNeedAddress(true);
        //mLocationOption.setMockEnable(true);
         mLocationOption.setHttpTimeOut(20000);
@@ -347,8 +484,7 @@ public class HuaYuanFragment extends Fragment {
                     //定位成功回调信息，设置相关消息
                     String cityName = amapLocation.getCity().replace("市", "");
                     String country =amapLocation.getCountry();
-                    Log.d("coutry",country);
-                    Log.d("city",cityName);
+
                     requestWeatherInformation(cityName);
 
                 } else {
@@ -379,5 +515,54 @@ public class HuaYuanFragment extends Fragment {
         }
     }
 
+    public class BlueToothBroadCastReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("Test",intent.getAction());
+            if(intent.getAction().equals(BluetoothDevice.ACTION_FOUND)){
+                device=(BluetoothDevice)intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                String name="";
+                if(device.getBondState()==BluetoothDevice.BOND_BONDED){
+                    if(device.getName()==null||device.getName().equals("")){
+                        name="无名";
+                    }else {
+                        name = device.getName();
+                    }
+                    if(!deviceAddress.contains(device.getAddress())){
+                        deviceAddress.add(device.getAddress());
+                        BlueTooth blueTooth=new BlueTooth(name+"(已连接)",device.getAddress());
+                        blueToothList.add(blueTooth);
+                    }
+                        Message message=new Message();
+                        message.what=2;
+                        handler.sendMessage(message);
+                    }
+
+                else if(device.getBondState()!=BluetoothDevice.BOND_BONDED)
+                {
+                    if(device.getName()==null||device.getName().equals("")){
+                        name="无名";
+                    }else {
+                        name = device.getName();
+                    }
+                        if(!deviceAddress.contains(device.getAddress())) {
+                            deviceAddress.add(device.getAddress());
+                            name = device.getName();
+                            BlueTooth blueTooth = new BlueTooth(name + "(未连接)", device.getAddress());
+                            blueToothList.add(blueTooth);
+
+                        }
+                    Message message = new Message();
+                    message.what = 2;
+                    handler.sendMessage(message);
+                    }
+
+
+                }
+                else if(intent.getAction().equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)){
+                    Toast.makeText(getActivity(),"搜索完成",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
