@@ -19,8 +19,20 @@ public class BlueTooth {
 
     private String Address;
     private String Name;
-    public BlueTooth(String name,String Address){
-        this.Name=name;
+
+
+    public int getState() {
+        return State;
+    }
+
+    public void setState(int state) {
+        State = state;
+    }
+
+    private int State;
+    public BlueTooth(String Name,String Address,int State){
+        this.Name=Name;
+        this.State=State;
         this.Address=Address;
     }
 }

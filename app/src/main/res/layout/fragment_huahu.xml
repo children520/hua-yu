@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/my_focus_on"
-            android:background="@drawable/huayu_content_style">
+            android:background="@drawable/button_style">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -68,7 +68,7 @@
             android:id="@+id/my_dynamic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/huayu_content_style">
+            android:background="@drawable/button_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
             android:id="@+id/my_collection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/huayu_content_style">
+            android:background="@drawable/button_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
             android:id="@+id/browsing_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/huayu_content_style">
+            android:background="@drawable/button_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
             android:id="@+id/my_shopping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/huayu_content_style">
+            android:background="@drawable/button_style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
         <TextView
             android:id="@+id/about_huayu"
             android:layout_width="match_parent"
-            android:background="@drawable/huayu_content_style"
+            android:background="@drawable/button_style"
             android:text="关于花屿"
             android:textSize="20dp"
             android:paddingLeft="30dp"
@@ -158,7 +158,7 @@
             android:layout_marginTop="5dp"
             android:id="@+id/help_feedback"
             android:layout_width="match_parent"
-            android:background="@drawable/huayu_content_style"
+            android:background="@drawable/button_style"
             android:text="帮助与反馈"
             android:textSize="20dp"
             android:paddingLeft="30dp"
@@ -178,7 +178,7 @@
             android:layout_marginTop="5dp"
             android:id="@+id/change_password"
             android:layout_width="match_parent"
-            android:background="@drawable/huayu_content_style"
+            android:background="@drawable/button_style"
             android:text="更改密码"
             android:textSize="20dp"
             android:paddingLeft="30dp"
@@ -188,7 +188,7 @@
             android:layout_marginTop="5dp"
             android:id="@+id/switch_account"
             android:layout_width="match_parent"
-            android:background="@drawable/huayu_content_style"
+            android:background="@drawable/button_style"
             android:text="切换账号"
             android:textSize="20dp"
             android:paddingLeft="30dp"
@@ -198,7 +198,7 @@
             android:layout_marginTop="5dp"
             android:id="@+id/exit"
             android:layout_width="match_parent"
-            android:background="@drawable/huayu_content_style"
+            android:background="@drawable/button_style"
             android:text="退出"
             android:textSize="20dp"
             android:paddingLeft="30dp"

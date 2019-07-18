@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
-        android:background="@mipmap/login_xu" />
+        android:background="@mipmap/background_vague" />
     <ImageView
         android:id="@+id/buy_now_image"
         android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
         android:layout_below="@id/part_line"/>
     <View
         android:layout_marginTop="10dp"
-        android:background="@color/gray"
+        android:background="@color/grey"
         android:layout_below="@id/buy_now_phone_edit"
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.xiaojun.huayu">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -26,10 +25,7 @@
         android:roundIcon="@mipmap/app"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <receiver
-            android:name=".HuaYuan.BroadCastReceiver.BlueToothBroadCastReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
+        <activity android:name=".HuaYuan.Activity.BlueToothActivity"></activity>
 
         <service android:name="com.amap.api.location.APSService" />
 
@@ -95,10 +91,9 @@
         <activity android:name=".UserLogin.NewUserRegistActivity" />
 
         <receiver android:name=".HuaYuan.Fragment.HuaYuanFragment$UpdateUIBroadcastReceiver" />
-        <receiver android:name=".HuaYuan.Fragment.PlantDetailFragment$PlantDetailReceiver" />
+        <receiver android:name=".HuaYuan.Fragment.HuaYuanFragment$UpdateUIBlueToothBroadCastReceiver" />
 
         <activity android:name=".HuaJi.Activity.GoodsRecommendActivity" />
-        <activity android:name=".UserLogin.UserMainActivity" />
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"

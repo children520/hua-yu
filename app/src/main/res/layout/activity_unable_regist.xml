@@ -64,7 +64,7 @@
             android:id="@+id/regist_xu"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@mipmap/login_xu"/>
+            android:background="@mipmap/background_vague"/>
 
         <ImageView
             android:id="@+id/regist"
@@ -72,7 +72,7 @@
             android:layout_height="216dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="108dp"
-            android:src="@mipmap/login"/>
+            android:src="@mipmap/huayu_background"/>
 
 
 

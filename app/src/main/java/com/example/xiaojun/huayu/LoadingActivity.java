@@ -25,14 +25,13 @@ import static java.lang.Thread.sleep;
 
 public class LoadingActivity extends AppCompatActivity {
     private TextView WelcomeTextView;
-    private TextView HitEnterTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
         WelcomeTextView=findViewById(R.id.welcome_huayu);
-        HitEnterTextView=findViewById(R.id.hit_enter);
-        List<String> permissionList = new ArrayList<>();
+        //List<String> permissionList = new ArrayList<>();
+        /*
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -48,9 +47,12 @@ public class LoadingActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissions, 1);
 
         } else {
+        */
+        /*
+        是否已经进行注册
+         */
             if(Tools.readIsReigistStatusSharedPreference(this)){
                 WelcomeTextView.setVisibility(View.GONE);
-                HitEnterTextView.setVisibility(View.GONE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -64,16 +66,16 @@ public class LoadingActivity extends AppCompatActivity {
             }
 
 
-        }
+        //}
         WelcomeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoadingActivity.this,NewUserRegistActivity.class));
             }
         });
-    }
+   //}
 
-
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -81,7 +83,7 @@ public class LoadingActivity extends AppCompatActivity {
                 if (grantResults.length > 0) {
                     for (int result : grantResults) {
                         if (result != PackageManager.PERMISSION_GRANTED) {
-                            Toast.makeText(this, "必须同意所有权限才能使用此程序", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "须同意权限才能使用此程序", Toast.LENGTH_SHORT).show();
                             finish();
                             return;
                         }
@@ -94,5 +96,7 @@ public class LoadingActivity extends AppCompatActivity {
                 break;
             default:
         }
+        */
     }
+
 }

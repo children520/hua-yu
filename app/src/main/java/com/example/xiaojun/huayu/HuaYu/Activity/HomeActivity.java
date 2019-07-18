@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HuaYuImageView.setSelected(true);
                 HuaYuTextView.setSelected(true);
                 mLinearLayout.setVisibility(View.VISIBLE);
-                Toast.makeText(this, "花屿", Toast.LENGTH_SHORT).show();
+
                 if (mHuaYuFragment == null) {
                     mHuaYuFragment = new HuaYuFragment();
                     transaction.add(R.id.activity_home_container, mHuaYuFragment);
@@ -150,7 +150,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HuaYuanImageView.setSelected(true);
                 HuaYuanTextView.setSelected(true);
                 mLinearLayout.setVisibility(View.GONE);
-                Toast.makeText(this, "花园", Toast.LENGTH_SHORT).show();
                 if (huayuanFragment == null) {
                     huayuanFragment = new HuaYuanFragment();
                     transaction.add(R.id.activity_home_container, huayuanFragment);
@@ -165,7 +164,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HuaJiImageView.setSelected(true);
                 HuaJiTextView.setSelected(true);
                 mLinearLayout.setVisibility(View.GONE);
-                Toast.makeText(this, "花集", Toast.LENGTH_SHORT).show();
                 if (huajiFragment == null) {
                     huajiFragment = new HuaJiFragment();
                     transaction.add(R.id.activity_home_container, huajiFragment);
@@ -180,7 +178,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HuaHuTextView.setSelected(true);
                 HuaHuImageView.setSelected(true);
                 mLinearLayout.setVisibility(View.GONE);
-                Toast.makeText(this, "花户", Toast.LENGTH_SHORT).show();
                 if (huahuFragment == null) {
                     huahuFragment = new HuaHuFragment();
                     transaction.add(R.id.activity_home_container, huahuFragment);

@@ -39,13 +39,13 @@
             android:id="@+id/login_image_xu"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@mipmap/login_xu"/>
+            android:background="@mipmap/background_vague"/>
         <ImageView
             android:id="@+id/login_image"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
             android:layout_marginTop="108dp"
-            android:src="@mipmap/login"/>
+            android:src="@mipmap/huayu_background"/>
 
 
         <EditText
