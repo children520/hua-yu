@@ -72,11 +72,10 @@ public class Tools {
         }.execute(imageUrl);
     }
 
-    public static void writeIsRegistToSharedPreference(boolean isRegist,String nickName,Context context){
+    public static void writeIsRegistToSharedPreference(boolean isRegist,Context context){
         SharedPreferences sharedPreferences=context.getSharedPreferences("isregist",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putBoolean("isregist",isRegist);
-        editor.putString("nickname",nickName);
         editor.commit();
     }
     public static boolean readIsReigistStatusSharedPreference(Context context){

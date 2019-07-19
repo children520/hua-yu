@@ -8,17 +8,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:iconifiedByDefault="false"
         android:queryHint="请输入想要搜索的百宝书内容"
-        android:background="@drawable/round_border"/>
+        android:background="@drawable/searchview_style"/>
     <TextView
         android:id="@+id/baibaoshu_pull_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="上拉刷新"
+        android:textSize="10dp"
         android:textColor="@color/grey"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/baibaoshu_searchView"/>

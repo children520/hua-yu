@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include layout="@layout/background_style"
+        android:id="@+id/background"></include>
     <RelativeLayout
+        android:layout_below="@id/background"
         android:id="@+id/unable_login_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/white">
 
         <TextView
             android:id="@+id/solve_method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/regist_xu"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="20dp"
             android:text="解决方法："
@@ -60,19 +59,7 @@
             android:textSize="18dp"/>
 
 
-        <ImageView
-            android:id="@+id/regist_xu"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@mipmap/background_vague"/>
 
-        <ImageView
-            android:id="@+id/regist"
-            android:layout_width="250dp"
-            android:layout_height="216dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="108dp"
-            android:src="@mipmap/huayu_background"/>
 
 
 

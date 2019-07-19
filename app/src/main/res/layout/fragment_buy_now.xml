@@ -40,7 +40,7 @@
         android:layout_toRightOf="@id/buy_now_name"
         android:layout_width="match_parent"
         android:layout_marginRight="10dp"
-        android:background="@drawable/buy_now_border"
+        android:background="@drawable/content_style"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -61,7 +61,7 @@
         android:layout_toRightOf="@id/buy_now_name"
         android:layout_width="match_parent"
         android:layout_marginRight="10dp"
-        android:background="@drawable/buy_now_border"
+        android:background="@drawable/content_style"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -82,7 +82,7 @@
         android:layout_toRightOf="@id/buy_now_name"
         android:layout_width="match_parent"
         android:layout_marginRight="10dp"
-        android:background="@drawable/buy_now_border"
+        android:background="@drawable/content_style"
         android:layout_height="wrap_content" />
 
     <TextView

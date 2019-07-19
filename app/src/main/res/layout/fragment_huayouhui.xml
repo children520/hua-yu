@@ -12,11 +12,11 @@
         <TextView
             android:alpha="0.6"
             android:padding="8dp"
-            android:background="@drawable/round_border"
+            android:background="@drawable/button_style"
             android:layout_centerVertical="true"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,6 +39,7 @@
         android:layout_below="@+id/huayouhui_square"
         android:layout_centerHorizontal="true"
         android:text="上拉刷新"
+        android:textSize="10dp"
         android:textColor="@color/grey" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="wrap_content"

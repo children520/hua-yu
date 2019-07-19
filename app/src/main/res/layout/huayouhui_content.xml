@@ -3,36 +3,34 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:layout_margin="5dp"
-    android:background="@drawable/button_style"
+    android:background="@drawable/content_style"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <RelativeLayout
         android:id="@+id/username_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:textColor="#E91E63"
+            android:textColor="@color/red"
             android:id="@+id/huayouhui_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:text="用户名"
-            android:layout_centerHorizontal="true"
-            android:textStyle="italic" />
+            android:layout_centerHorizontal="true" />
 
         <ImageView
-
             android:id="@+id/huayouhui_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:scaleType="fitXY"
             android:layout_below="@+id/huayouhui_username"
             android:layout_margin="10dp"
             android:src="@mipmap/app" />
 
     </RelativeLayout>
     <TextView
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_toRightOf="@id/username_image"
         android:textStyle="bold"
         android:layout_width="wrap_content"
@@ -42,7 +40,6 @@
     <TextView
         android:layout_toRightOf="@+id/username_image"
         android:layout_below="@id/huayouhui_title"
-
         android:textSize="20dp"
         android:id="@+id/huayouhui_content"
         android:layout_width="wrap_content"

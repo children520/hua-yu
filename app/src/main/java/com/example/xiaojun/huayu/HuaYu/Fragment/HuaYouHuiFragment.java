@@ -37,7 +37,6 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 public class HuaYouHuiFragment extends Fragment {
-    private static final String USERNAME="username";
     private List<HuaYouHuiContent> mHuaYouHuiContentList =new ArrayList<>();
     private ImageView PublicDynamicImageView;
     private AlertDialog PublicDynamicDialog;
@@ -49,26 +48,45 @@ public class HuaYouHuiFragment extends Fragment {
     private static final int UPDATE_VIEW=2;
     private RecyclerView recyclerView;
     private HuaYouHuiContentAdapter Adapter;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout SwipeRefreshLayout;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss //获取当前时间
     Date date = new Date(System.currentTimeMillis());
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_huayouhui,container,false);
-        mSwipeRefreshLayout=view.findViewById(R.id.huayouhui_swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        BindView(view);
+        SwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 AcquireDynamic();
             }
         });
-        recyclerView=(RecyclerView)view.findViewById(R.id.huayouhu_recycler_content);
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         AcquireDynamic();
 
         PublicDynamicBuilder=new AlertDialog.Builder(getActivity());
         final LayoutInflater layoutInflater=getActivity().getLayoutInflater();
+        CreatePublicDynamicDialog(layoutInflater);
+        PublicDynamicImageViewClick();
+
+
+        return view;
+    }
+    private void BindView(View view){
+        SwipeRefreshLayout=view.findViewById(R.id.huayouhui_swipe_refresh_layout);
+        recyclerView=(RecyclerView)view.findViewById(R.id.huayouhu_recycler_content);
+        PublicDynamicImageView=(ImageView)view.findViewById(R.id.public_dynamic);
+    }
+    private void PublicDynamicImageViewClick(){
+        PublicDynamicImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PublicDynamicDialog.show();
+            }
+        });
+    }
+    private void CreatePublicDynamicDialog(LayoutInflater layoutInflater){
         PublicDynamicView=layoutInflater.inflate(R.layout.public_dynamic_dialog,null,false);
         TitleEditText=(EditText)PublicDynamicView.findViewById(R.id.public_dynamic_input_title);
         ContentEditText=(EditText)PublicDynamicView.findViewById(R.id.public_dynamic_input_content);
@@ -77,6 +95,9 @@ public class HuaYouHuiFragment extends Fragment {
         PublicDynamicBuilder.setCancelable(false);
         PublicDynamicDialog=PublicDynamicBuilder.create();
         TimeTextView.setText(simpleDateFormat.format(date));
+        PublicDynamicDialogClick();
+    }
+    private void PublicDynamicDialogClick(){
         PublicDynamicView.findViewById(R.id.public_dynamic_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,15 +120,6 @@ public class HuaYouHuiFragment extends Fragment {
                 }
             }
         });
-        PublicDynamicImageView=(ImageView)view.findViewById(R.id.public_dynamic);
-        PublicDynamicImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PublicDynamicDialog.show();
-            }
-        });
-
-        return view;
     }
     private Handler handler=new Handler(){
         @Override
@@ -115,8 +127,8 @@ public class HuaYouHuiFragment extends Fragment {
             switch (msg.what){
                 case UPDATE_VIEW:
                     updateUI();
-                    if(mSwipeRefreshLayout.isRefreshing()){
-                        mSwipeRefreshLayout.setRefreshing(false);
+                    if(SwipeRefreshLayout.isRefreshing()){
+                        SwipeRefreshLayout.setRefreshing(false);
                         Adapter.notifyDataSetChanged();
                     }
 

@@ -1,19 +1,18 @@
 package com.example.xiaojun.huayu.UserLogin;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xiaojun.huayu.HuaYu.Activity.HomeActivity;
+import com.example.xiaojun.huayu.HuaYu.Activity.MainActivity;
 import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
+import com.example.xiaojun.huayu.UserLogin.Activity.UnableRegistActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +31,7 @@ public class NewUserRegistActivity extends AppCompatActivity {
     EditText mEdtCode;
     @BindView(R.id.tv_info)
     TextView mTvInfo;
-
+    private static boolean IsRegist=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +39,14 @@ public class NewUserRegistActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Bmob.initialize(this, "c16bef06a867de181070610c9681e9c0");
         if(Tools.readIsReigistStatusSharedPreference(this)){
-            startActivity(new Intent(this,HomeActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
     /*
     短信发送
      */
     @OnClick({R.id.btn_send, R.id.btn_signup_or_login})
-    public void onViewClicked(View view) {
+    public void onViewClicked(final View view) {
         switch (view.getId()) {
             case R.id.btn_send: {
                 String phone = mEdtPhone.getText().toString().trim();
@@ -83,12 +82,14 @@ public class NewUserRegistActivity extends AppCompatActivity {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            Intent intent=new Intent(NewUserRegistActivity.this, HomeActivity.class);
+                            Intent intent=new Intent(NewUserRegistActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            IsRegist=true;
+                            Tools.writeIsRegistToSharedPreference(IsRegist,view.getContext());
                             Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                         } else {
-                            mTvInfo.append("验证码验证失败：" + e.getErrorCode() + "-" + e.getMessage() + "\n");
+                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -106,7 +107,7 @@ public class NewUserRegistActivity extends AppCompatActivity {
     }
 
     public  void UnableRegist(View view){
-        Intent intent=new Intent(NewUserRegistActivity.this,UnableRegistActivity.class);
+        Intent intent=new Intent(NewUserRegistActivity.this, UnableRegistActivity.class);
         startActivity(intent);
     }
 

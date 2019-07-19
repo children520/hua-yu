@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,7 @@ import android.widget.TextView;
 import com.example.xiaojun.huayu.HuaYu.Bean.HuaYuContent;
 import com.example.xiaojun.huayu.HuaYu.Fragment.HuaYuFragment;
 ;
-import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.R;
-import com.example.xiaojun.huayu.UserLogin.LoginActivity;
 
 import java.util.List;
 

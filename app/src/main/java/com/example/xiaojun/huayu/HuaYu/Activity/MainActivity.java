@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.xiaojun.huayu.HuaHu.Fragment.HuaHuFragment;
 import com.example.xiaojun.huayu.HuaJi.Fragment.HuaJiFragment;
@@ -21,7 +20,7 @@ import com.example.xiaojun.huayu.R;
 import cn.bmob.v3.Bmob;
 
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView HuaYuImageView;
     private ImageView HuaYuanImageView;
     private ImageView HuaJiImageView;
@@ -33,7 +32,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView HomeTextView;
     private TextView HuaYouHuTextView;
     private TextView BaiBaoShuTextView;
-    private FrameLayout FLcontent,FLWcontent;
     private LinearLayout mLinearLayout;
     private HuaYuFragment mHuaYuFragment;
     private HuaYouHuiFragment mHuaYouHuFragment;
@@ -42,10 +40,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private HuaJiFragment huajiFragment;
     private HuaHuFragment huahuFragment;
     private FragmentTransaction transaction;
+    private FrameLayout containerFrameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
         Bmob.initialize(this, "c16bef06a867de181070610c9681e9c0");
         bindView();
         TopTitleBindView();
@@ -56,7 +55,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         HomeTextView=(TextView)findViewById(R.id.top_title_home);
         HuaYouHuTextView=(TextView)findViewById(R.id.top_title_huayouhu);
         BaiBaoShuTextView=(TextView)findViewById(R.id.top_title_baibaoshu);
-        FLWcontent=(FrameLayout)findViewById(R.id.activity_home_container);
         HomeTextView.setOnClickListener(this);
         HuaYouHuTextView.setOnClickListener(this);
         BaiBaoShuTextView.setOnClickListener(this);
@@ -77,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         HuaYuanTextView=(TextView)findViewById(R.id.huayuan_text);
         HuaJiTextView=(TextView)findViewById(R.id.huaji_text);
         HuaHuTextView=(TextView)findViewById(R.id.huahu_text);
-        FLcontent=(FrameLayout)findViewById(R.id.activity_home_container);
+       containerFrameLayout=(FrameLayout)findViewById(R.id.activity_home_container);
         mLinearLayout=(LinearLayout)findViewById(R.id.top_title);
         HuaHuImageView.setOnClickListener(this);
         HuaHuTextView.setOnClickListener(this);
@@ -135,7 +133,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HuaYuImageView.setSelected(true);
                 HuaYuTextView.setSelected(true);
                 mLinearLayout.setVisibility(View.VISIBLE);
-
                 if (mHuaYuFragment == null) {
                     mHuaYuFragment = new HuaYuFragment();
                     transaction.add(R.id.activity_home_container, mHuaYuFragment);

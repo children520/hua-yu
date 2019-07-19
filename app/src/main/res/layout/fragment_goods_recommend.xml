@@ -85,7 +85,7 @@
         android:textSize="20dp"
         android:padding="10dp"
         android:textColor="@color/white"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_selector"
         android:id="@+id/buy_now"
         android:layout_width="wrap_content"
         android:layout_margin="5dp"

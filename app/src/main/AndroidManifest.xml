@@ -33,8 +33,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="7ffd54ac58f77b66183763311c88c235" />
 
-        <activity android:name=".HuaYu.Activity.HomeActivity" />
-        <activity android:name=".UserLogin.LoginActivity" />
+        <activity android:name=".HuaYu.Activity.MainActivity" />
 
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".HuaYuan.Service.BreedService">
@@ -82,12 +81,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserLogin.UnableRegistActivity" />
+        <activity android:name=".UserLogin.Activity.UnableRegistActivity" />
         <activity android:name=".HuaYuan.Activity.PlantDetailActivity" />
         <activity android:name=".HuaYu.Activity.ArticleDetailActivity" />
         <activity android:name=".HuaYuan.Activity.RemindSettingActivity" />
         <activity android:name=".HuaHu.Activity.HuaHuActivity" />
-        <activity android:name=".UserLogin.UnableLoginActivity" />
+        <activity android:name=".UserLogin.Activity.UnableLoginActivity" />
         <activity android:name=".UserLogin.NewUserRegistActivity" />
 
         <receiver android:name=".HuaYuan.Fragment.HuaYuanFragment$UpdateUIBroadcastReceiver" />

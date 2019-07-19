@@ -14,7 +14,7 @@
         android:layout_marginLeft="5dp"
         android:queryHint="请输入要查询的内容"
         android:iconifiedByDefault="false"
-        android:background="@drawable/baibaoshu_border"/>
+        android:background="@drawable/searchview_style"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu.UserLogin;
+package com.example.xiaojun.huayu.UserLogin.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

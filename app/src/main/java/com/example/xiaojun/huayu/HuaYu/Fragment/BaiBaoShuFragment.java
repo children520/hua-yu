@@ -42,7 +42,7 @@ import cn.bmob.v3.listener.FindListener;
 public class BaiBaoShuFragment extends Fragment {
     private boolean IsPullRefresh;
     private BaiBaoShuContentAdapter mAdapter;
-    private RecyclerView mRecyclerView;
+    private RecyclerView RecyclerView;
     private List<String> ImageUrlList;
     private List<String> TitleList=new ArrayList<>();
     private  List<String> ImageList=new ArrayList<>();
@@ -94,7 +94,7 @@ public class BaiBaoShuFragment extends Fragment {
                         BaiBaoShuContentAdapter SearchAdapter;
                         SearchAdapter = new BaiBaoShuContentAdapter(SearchList);
                         Log.d("adapter",SearchAdapter.toString());
-                        mRecyclerView.setAdapter(SearchAdapter);
+                        RecyclerView.setAdapter(SearchAdapter);
                         SearchAdapter.notifyDataSetChanged();
 
                     }
@@ -107,9 +107,9 @@ public class BaiBaoShuFragment extends Fragment {
                 return false;
             }
         });
-        mRecyclerView=(RecyclerView)view.findViewById(R.id.baibaoshu_recycler_content);
+        RecyclerView=(RecyclerView)view.findViewById(R.id.baibaoshu_recycler_content);
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
+        RecyclerView.setLayoutManager(layoutManager);
         AcquireUrl();
         return view;
     }
@@ -134,7 +134,7 @@ public class BaiBaoShuFragment extends Fragment {
         if(mAdapter==null) {
             mAdapter = new BaiBaoShuContentAdapter(BaiBaoShuContentLists);
             Log.d("adapter",mAdapter.toString());
-            mRecyclerView.setAdapter(mAdapter);
+            RecyclerView.setAdapter(mAdapter);
         }else {
             mAdapter.notifyDataSetChanged();
         }

@@ -52,7 +52,7 @@ public class HuaYuFragment extends Fragment {
     private boolean IsPullRefresh;
     private List<String> ImageHtmlList;
     private HuaYuContentAdapter mAdapter;
-    private RecyclerView mRecyclerView;
+    private RecyclerView RecyclerView;
     List<HuaYuContent> mHuaYuContentList=new ArrayList<>();
     List<String> ImageUrlList=new ArrayList<>();
     List<String> TitleList=new ArrayList<>();
@@ -60,9 +60,6 @@ public class HuaYuFragment extends Fragment {
     private static final String URL="url";
     private static final String ECODING = "UTF-8";
     private static final int UPDATE_VIEW=1;
-
-
-
     private static  int URLLISTLENGTH=0;
     // 获取img标签正则
     private static final String Title_REG = "<h2 class=\"rich_media_title\" id=\"activity-name\">?(.*?)(\"|>|\\s+)</h2>";
@@ -71,7 +68,7 @@ public class HuaYuFragment extends Fragment {
     // 获取src路径的正则
     private static final String IMGSRC_REG = "http://mmbiz.qpic.cn/mmbiz_jpg/\"?(.*?)(\"|>|\\s+)";
     private SearchView HomeSearchView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout SwipeRefreshLayout;
     private ProgressBar progressBar;
     private TextView progressBarTextView;
     private static ThumbnailDownloader<HuaYuContentAdapter.ViewHolder> thumbnailDownloader;;
@@ -82,7 +79,7 @@ public class HuaYuFragment extends Fragment {
         SwipeRefresh();
         HuaYusearchContent();
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
+        RecyclerView.setLayoutManager(layoutManager);
         AcquireUrl();
 
         Handler responseHandler=new Handler();
@@ -104,14 +101,14 @@ public class HuaYuFragment extends Fragment {
         return view;
     }
     private void SwipeRefresh(){
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        SwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 AcquireUrl();
                 IsPullRefresh=true;
                 updateUI();
-                if(mSwipeRefreshLayout.isRefreshing()){
-                    mSwipeRefreshLayout.setRefreshing(false);
+                if(SwipeRefreshLayout.isRefreshing()){
+                    SwipeRefreshLayout.setRefreshing(false);
                     mAdapter.notifyDataSetChanged();
                 }
 
@@ -142,7 +139,7 @@ public class HuaYuFragment extends Fragment {
                         HuaYuContentAdapter SearchAdapter;
                         SearchAdapter = new HuaYuContentAdapter(SearchList,ImageUrlList,TitleList);
                         Log.d("adapter",SearchAdapter.toString());
-                        mRecyclerView.setAdapter(SearchAdapter);
+                        RecyclerView.setAdapter(SearchAdapter);
                         SearchAdapter.notifyDataSetChanged();
 
                     }
@@ -164,8 +161,8 @@ public class HuaYuFragment extends Fragment {
                     updateUI();
                     progressBar.setVisibility(View.GONE);
                     progressBarTextView.setVisibility(View.GONE);
-                    if(mSwipeRefreshLayout.isRefreshing()){
-                        mSwipeRefreshLayout.setRefreshing(false);
+                    if(SwipeRefreshLayout.isRefreshing()){
+                        SwipeRefreshLayout.setRefreshing(false);
                         mAdapter.notifyDataSetChanged();
                     }
 
@@ -177,7 +174,7 @@ public class HuaYuFragment extends Fragment {
         if(mAdapter==null) {
             mAdapter = new HuaYuContentAdapter(mHuaYuContentList,ImageUrlList,TitleList);
             Log.d("adapter",mAdapter.toString());
-            mRecyclerView.setAdapter(mAdapter);
+            RecyclerView.setAdapter(mAdapter);
         }else {
             mAdapter.notifyDataSetChanged();
         }
@@ -213,8 +210,8 @@ public class HuaYuFragment extends Fragment {
     private void bindView(View view){
         progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
         progressBarTextView=(TextView)view.findViewById(R.id.progress_bar_text);
-        mSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.huayu_swipe_refresh_layout);
-        mRecyclerView=(RecyclerView)view.findViewById(R.id.huayu_recycler_content);
+        SwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.huayu_swipe_refresh_layout);
+        RecyclerView=(RecyclerView)view.findViewById(R.id.huayu_recycler_content);
         HomeSearchView=(SearchView)view.findViewById(R.id.huayu_searchView);
     }
 

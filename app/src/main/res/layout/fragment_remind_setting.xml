@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:id="@+id/drink_image"
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:id="@+id/fertilization_image"
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:id="@+id/scissor_image"
@@ -135,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:id="@+id/change_soil_image"
@@ -170,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:id="@+id/breed_image"

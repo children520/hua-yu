@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
-        android:background="@drawable/baibaoshu_border"
+        android:background="@drawable/content_style"
         android:orientation="horizontal"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -75,7 +75,7 @@
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
             <ImageView
                 android:layout_gravity="bottom"
                 android:layout_width="40dp"
@@ -107,7 +107,7 @@
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:layout_width="40dp"
@@ -139,7 +139,7 @@
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:layout_gravity="bottom"
@@ -171,7 +171,7 @@
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:layout_gravity="bottom"
@@ -202,7 +202,7 @@
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:layout_gravity="bottom"
@@ -235,7 +235,7 @@
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:layout_gravity="bottom"
@@ -266,7 +266,7 @@
             android:id="@+id/remind_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baibaoshu_border">
+            android:background="@drawable/content_style">
 
             <ImageView
                 android:layout_gravity="center_vertical"

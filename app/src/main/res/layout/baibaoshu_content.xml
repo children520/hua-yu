@@ -12,7 +12,7 @@ android:weightSum="1">
     android:id="@+id/huayu_content"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/button_style"
+    android:background="@drawable/content_style"
     android:orientation="vertical">
     <ImageView
         android:layout_centerHorizontal="true"
@@ -20,6 +20,7 @@ android:weightSum="1">
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="5dp"
+        android:scaleType="fitXY"
         android:src="@mipmap/app"/>
     <TextView
         android:id="@+id/baibaoshu_content_title"
