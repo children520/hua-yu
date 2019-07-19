@@ -2,6 +2,7 @@ package com.example.xiaojun.huayu.HuaYu.Fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +71,14 @@ public class BaiBaoShuFragment extends Fragment {
 
             }
         });
+        SearchBaiBaoShu();
+        RecyclerView=(RecyclerView)view.findViewById(R.id.baibaoshu_recycler_content);
+        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView.setLayoutManager(layoutManager);
+        AcquireUrl();
+        return view;
+    }
+    private void SearchBaiBaoShu(){
         Tools.WipeSearchViewUnderLine(BaiBaoShuSearchView);
         BaiBaoShuSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -107,11 +116,6 @@ public class BaiBaoShuFragment extends Fragment {
                 return false;
             }
         });
-        RecyclerView=(RecyclerView)view.findViewById(R.id.baibaoshu_recycler_content);
-        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-        RecyclerView.setLayoutManager(layoutManager);
-        AcquireUrl();
-        return view;
     }
     private Handler handler=new Handler(){
         @Override
@@ -157,7 +161,7 @@ public class BaiBaoShuFragment extends Fragment {
                     }
                     Log.d("urlList",urlList.toString());
                     for(int i=0;i<urlList.size();i++){
-                        sendRequestWithHttpURLConnection(urlList.get(i));
+                        new BaiBaoShuRequestBomb().execute(urlList.get(i));
                     }
 
                 } else {
@@ -170,82 +174,72 @@ public class BaiBaoShuFragment extends Fragment {
         });
 
     }
-    public void newIntent(String url){
-        Intent intent=new Intent(getActivity(),ArticleDetailActivity.class);
-        Log.d("url",url);
-        intent.putExtra(URL,url);
-        startActivity(intent);
+    public class BaiBaoShuRequestBomb extends AsyncTask<String,Void,String> {
+        @Override
+        protected void onPreExecute(){
 
-    }
-    public void sendRequestWithHttpURLConnection(final String Url) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                BufferedReader reader = null;
-                try {
-                    Log.d("url",Url);
-                    URL url = new URL(Url);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setConnectTimeout(8000);
-                    connection.setReadTimeout(8000);
-                    InputStream in = connection.getInputStream();
-                    reader = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-                    String html = "" + response;
-
-                    ImageUrlList = getImageUrl(html);
-                    String Title=getTitle(html).trim();
-                    String ImageUrl=getImageSrc(ImageUrlList);
-
-                    Log.d("Image",ImageUrl);
-                    Log.d("Title", Title);
-                    if(IsPullRefresh){
-                        TitleList.clear();
-                        ImageList.clear();
-                        BaiBaoShuContentLists.clear();
-                        IsPullRefresh=false;
-                    }
-                    if(!TitleList.contains(Title)&&!ImageList.contains(ImageUrl)) {
-                        TitleList.add(Title);
-                        Log.d("TitleList", TitleList.toString());
-                        ImageList.add(ImageUrl);
-                        Log.d("ImageUrlList", ImageList.toString());
-                        BaiBaoShuContent baiBaoShuContent = new BaiBaoShuContent(ImageUrl, Title, Url);
-                        Log.d("BaiBaoShuContent", baiBaoShuContent.toString());
-                        BaiBaoShuContentLists.add(baiBaoShuContent);
-                        Log.d("List", BaiBaoShuContentLists.toString());
-                    }
-
-                    Message message=new Message();
-                    message.what=UPDATE_BAIBAOSHU_VIEW;
-                    handler.sendMessage(message);
-
-
-                    return ;
-                } catch (Exception e) {
-
-                } finally {
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (connection != null) {
-                        connection.disconnect();
+        }
+        @Override
+        protected String doInBackground(String... Url) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            try {
+                URL url = new URL(Url[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(8000);
+                connection.setReadTimeout(8000);
+                InputStream in = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(in));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                LoadBaiBaoShuList(Url[0],response.toString());
+                return response.toString();
+            } catch (Exception e) {
+                Log.d("error", e.getMessage());
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
-        }).start();
-    }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result){
 
+        }
+
+    }
+    private void LoadBaiBaoShuList(String url,String result){
+        ImageUrlList = getImageUrl(result);
+        String Title=getTitle(result).trim();
+        String ImageUrl=getImageSrc(ImageUrlList);
+        if(IsPullRefresh){
+            TitleList.clear();
+            ImageList.clear();
+            BaiBaoShuContentLists.clear();
+            IsPullRefresh=false;
+        }
+        if(!TitleList.contains(Title)&&!ImageList.contains(ImageUrl)) {
+            TitleList.add(Title);
+            ImageList.add(ImageUrl);
+            BaiBaoShuContent baiBaoShuContent = new BaiBaoShuContent(ImageUrl, Title, url);
+            BaiBaoShuContentLists.add(baiBaoShuContent);
+        }
+        Message message=new Message();
+        message.what=UPDATE_BAIBAOSHU_VIEW;
+        handler.sendMessage(message);
+    }
     private String getTitle(String HTML){
         String Title="";
         Matcher matcher=Pattern.compile(Title_REG).matcher(HTML);

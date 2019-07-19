@@ -1,4 +1,4 @@
-package com.example.xiaojun.huayu;
+package com.example.xiaojun.huayu.UserLogin.Activity;
 
 import android.content.Intent;
 
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.xiaojun.huayu.HuaYu.Activity.MainActivity;
 import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
+import com.example.xiaojun.huayu.R;
 import com.example.xiaojun.huayu.UserLogin.NewUserRegistActivity;
 
 import static java.lang.Thread.sleep;

@@ -164,28 +164,6 @@ public class HuaYouHuiFragment extends Fragment {
                         while(it.hasNext()){
                             mHuaYouHuiContentList.add(it.next());
                         }
-                        /*
-                        String userName= huaYouHuiContent.getUserName();
-                        String title= huaYouHuiContent.getDynamicTitle();
-                        String content= huaYouHuiContent.getDynamicContent();
-
-                        if(!TitleList.contains(title)&&!UserNameList.contains(userName)&&!ContentList.contains(content)){
-                            Log.d("TitleList",TitleList.toString());
-                            Log.d("UserNameList",UserNameList.toString());
-                            Log.d("ContentList",ContentList.toString());
-                            HuaYouHuiContent information=new HuaYouHuiContent(userName,title,content);
-                            TitleList.add(title);
-                            ContentList.add(content);
-                            UserNameList.add(userName);
-                            */
-
-
-
-
-
-
-
-
                     Message message=new Message();
                     message.what=UPDATE_VIEW;
                     handler.sendMessage(message);

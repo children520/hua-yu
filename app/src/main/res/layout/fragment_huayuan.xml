@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:background="@color/green"
+        android:background="@color/grey_light"
         android:id="@+id/title_info"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -12,7 +12,6 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-
             <TextView
                 android:layout_margin="10dp"
                 android:id="@+id/now_envir_info"
@@ -54,7 +53,6 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
         <RelativeLayout
-
             android:alpha="0.6"
             android:background="@color/white"
             android:layout_width="wrap_content"

@@ -71,18 +71,41 @@ public class HuaYuFragment extends Fragment {
     private SwipeRefreshLayout SwipeRefreshLayout;
     private ProgressBar progressBar;
     private TextView progressBarTextView;
+    private List<String> urlList;
+    private Handler responseHandler;
+    private boolean IsSearch=false;
     private static ThumbnailDownloader<HuaYuContentAdapter.ViewHolder> thumbnailDownloader;;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view=inflater.inflate(R.layout.fragment_huayu,container,false);
         bindView(view);
         SwipeRefresh();
-        HuaYusearchContent();
+        HuaYusearch();
         StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         RecyclerView.setLayoutManager(layoutManager);
         AcquireUrl();
-
-        Handler responseHandler=new Handler();
+        responseHandler=new Handler();
+        InitThumbnailDownloader(responseHandler);
+        StartThumbnailDownloader();
+        return view;
+    }
+    private void SwipeRefresh(){
+        SwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                    SearchList.clear();
+                    urlList.clear();
+                    ImageUrlList.clear();
+                    TitleList.clear();
+                    AcquireUrl();
+                    //StartThumbnailDownloader();
+            }
+        });
+    }
+    /*
+    开始后台服务
+     */
+    private void InitThumbnailDownloader(Handler responseHandler){
         thumbnailDownloader=new ThumbnailDownloader<>(responseHandler);
         thumbnailDownloader.setThumbnailDownloadListener(
                 new ThumbnailDownloader.ThumbnailDownloadListener<HuaYuContentAdapter.ViewHolder>() {
@@ -94,29 +117,19 @@ public class HuaYuFragment extends Fragment {
                 }
         );
 
+
+    }
+    private void StartThumbnailDownloader(){
         thumbnailDownloader.start();
         thumbnailDownloader.getLooper();
         Log.i(TAG,"background thread start");
-
-        return view;
     }
-    private void SwipeRefresh(){
-        SwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                AcquireUrl();
-                IsPullRefresh=true;
-                updateUI();
-                if(SwipeRefreshLayout.isRefreshing()){
-                    SwipeRefreshLayout.setRefreshing(false);
-                    mAdapter.notifyDataSetChanged();
-                }
-
-            }
-        });
+    private void StopThumbnailDownloader(){
+        thumbnailDownloader.quit();
+        thumbnailDownloader.getLooper();
+        Log.i(TAG,"background thread start");
     }
-
-    private void HuaYusearchContent(){
+    private void HuaYusearch(){
         Tools.WipeSearchViewUnderLine(HomeSearchView);
         HomeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -136,11 +149,13 @@ public class HuaYuFragment extends Fragment {
                         Toast.makeText(getActivity(),"你查找的内容不在列表中",Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(),"查找成功",Toast.LENGTH_SHORT).show();
+                        IsSearch=true;
                         HuaYuContentAdapter SearchAdapter;
                         SearchAdapter = new HuaYuContentAdapter(SearchList,ImageUrlList,TitleList);
                         Log.d("adapter",SearchAdapter.toString());
                         RecyclerView.setAdapter(SearchAdapter);
                         SearchAdapter.notifyDataSetChanged();
+                        StopThumbnailDownloader();
 
                     }
                 }
@@ -158,14 +173,15 @@ public class HuaYuFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case UPDATE_VIEW:
-                    updateUI();
+                    Log.d("msg",msg.toString());
+
                     progressBar.setVisibility(View.GONE);
                     progressBarTextView.setVisibility(View.GONE);
                     if(SwipeRefreshLayout.isRefreshing()){
                         SwipeRefreshLayout.setRefreshing(false);
                         mAdapter.notifyDataSetChanged();
                     }
-
+                    updateUI();
                     break;
             }
         }
@@ -218,19 +234,17 @@ public class HuaYuFragment extends Fragment {
 
     private void AcquireUrl() {
         BmobQuery<HuaYuUrl> bmobQuery = new BmobQuery<HuaYuUrl>();
-        bmobQuery.setLimit(50);
         bmobQuery.findObjects(new FindListener<HuaYuUrl>() {
             @Override
             public void done(List<HuaYuUrl> huaYuUrlList, BmobException e) {
                 if (e == null) {
-                    List<String> urlList=new ArrayList<>();
+                    urlList=new ArrayList<>();
                     for (HuaYuUrl huaYuUrl : huaYuUrlList) {
                         if(!urlList.contains(huaYuUrl.getUrl())) {
                             urlList.add(huaYuUrl.getUrl());
+                            Log.d(TAG,huaYuUrl.getUrl());
                         }
                     }
-                    URLLISTLENGTH=urlList.size();
-                    Log.d(TAG,URLLISTLENGTH+"");
                     for(int i=0;i<urlList.size();i++){
                         new RequestBomb().execute(urlList.get(i));
                     }
@@ -242,30 +256,24 @@ public class HuaYuFragment extends Fragment {
 
         });
 
+
     }
-    private void FetchHuaYuList(String url,String result){
+    private void LoadHuaYuList(String url,String result){
         ImageHtmlList = getImageUrl(result);
         String Title=getTitle(result).trim();
         String ImageUrl=getImageSrc(ImageHtmlList);
-
-        if(IsPullRefresh){
-            TitleList.clear();
-            ImageUrlList.clear();
-            mHuaYuContentList.clear();
-            IsPullRefresh=false;
-        }
         if(!TitleList.contains(Title)&&!ImageUrlList.contains(ImageUrl)) {
-            ArrayList<String> urlList=new ArrayList<>();
             TitleList.add(Title);
             ImageUrlList.add(ImageUrl);
             HuaYuContent huaYuContent = new HuaYuContent(Title,ImageUrl,url);
             mHuaYuContentList.add(huaYuContent);
-            if(ImageUrlList.size()==URLLISTLENGTH-1){
-                Message message=new Message();
-                message.what=UPDATE_VIEW;
-                handler.sendMessage(message);
 
-            }
+        }
+        if(ImageUrlList.size()==urlList.size()-1){
+            Message message=new Message();
+            message.what=UPDATE_VIEW;
+            handler.sendMessage(message);
+
         }
     }
 
@@ -300,7 +308,7 @@ public class HuaYuFragment extends Fragment {
     public class RequestBomb extends AsyncTask<String,Void,String> {
         @Override
         protected void onPreExecute(){
-            progressBar.setVisibility(View.VISIBLE);
+
         }
         @Override
         protected String doInBackground(String... Url) {
@@ -319,7 +327,7 @@ public class HuaYuFragment extends Fragment {
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
-                FetchHuaYuList(Url[0],response.toString());
+                LoadHuaYuList(Url[0],response.toString());
                 return response.toString();
             } catch (Exception e) {
                 Log.d("error", e.getMessage());

@@ -20,8 +20,7 @@ android:weightSum="1">
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="5dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/app"/>
+        android:scaleType="fitXY" />
     <TextView
         android:id="@+id/baibaoshu_content_title"
         android:layout_width="wrap_content"

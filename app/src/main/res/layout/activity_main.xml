@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/huayu_bottom_menu_border"
+        android:background="@drawable/huayu_bottom_menu_style"
         android:layout_alignParentBottom="true">
         <LinearLayout
             android:id="@+id/huayu_menu"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="花屿"
-                android:textColor="@drawable/tab_menu_huayu_text"
+                android:textColor="@drawable/tab_menu_text_selector"
                 android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="花园"
-                android:textColor="@drawable/tab_menu_huayuan_text"
+                android:textColor="@drawable/tab_menu_text_selector"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
         <LinearLayout
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="花集"
-                android:textColor="@drawable/tab_menu_huaji_text"
+                android:textColor="@drawable/tab_menu_text_selector"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
     <LinearLayout
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="花户"
-            android:textColor="@drawable/tab_menu_huahu_text"
+            android:textColor="@drawable/tab_menu_text_selector"
             android:layout_gravity="center_horizontal"/>
         </LinearLayout>
 

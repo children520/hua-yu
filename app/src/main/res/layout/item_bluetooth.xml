@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_margin="5dp"
-    android:background="@drawable/blue_tooth_border">
+    android:background="@drawable/button_selector">
     <TextView
         android:padding="5dp"
         android:id="@+id/tv_blue_name"

@@ -24,7 +24,7 @@
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/huayouhui_cancel_color_selector"
+            android:src="@drawable/huayouhui_cancel_icon_selector"
             android:layout_width="25dp"
             android:layout_height="25dp"/>
     </RelativeLayout>

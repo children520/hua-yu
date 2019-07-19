@@ -75,8 +75,6 @@ public class HuaYuanFragment extends Fragment {
     private static final String PLANTSCISSORTIME="plantscissortime";
     private static final String PLANTCHANGESOILTIME="plantchangesoiltime";
     private static final String PLANTBREEDTIME="plantbreedtime";
-
-
     private static final int UPDATE_VIEW=3;
     private static List<Plant> mUserPlantList =new ArrayList<>();
     private List<Plant> plantList=new ArrayList<>();

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/loading"
-    tools:context=".LoadingActivity">
+    tools:context=".UserLogin.Activity.LoadingActivity">
     <TextView
         android:id="@+id/welcome_huayu"
         android:text="欢迎来到花屿"

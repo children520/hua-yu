@@ -59,7 +59,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/huaji_round_selector"
+                android:background="@drawable/white_button_selector"
                 android:gravity="center_horizontal"
                 android:text="种子植物"
                 android:textStyle="bold" />
@@ -73,7 +73,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/huaji_round_selector"
+                android:background="@drawable/white_button_selector"
 
                 />
             <TextView
@@ -86,7 +86,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/huaji_round_selector"
+                android:background="@drawable/white_button_selector"
                 />
 
         </LinearLayout>
@@ -140,7 +140,7 @@
                 android:gravity="center_horizontal"
                 android:text="病害药剂"
                 android:textStyle="bold"
-                android:background="@drawable/huaji_round_selector"
+                android:background="@drawable/white_button_selector"
                 />
             <TextView
                 android:id="@+id/plant_product"
@@ -152,7 +152,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/huaji_round_selector"
+                android:background="@drawable/white_button_selector"
                 />
             <TextView
                 android:id="@+id/plant_guide"
@@ -164,7 +164,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/huaji_round_selector"
+                android:background="@drawable/white_button_selector"
                 />
 
         </LinearLayout>
