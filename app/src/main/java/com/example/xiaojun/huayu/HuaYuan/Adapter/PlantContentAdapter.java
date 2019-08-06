@@ -68,13 +68,11 @@ public class PlantContentAdapter extends RecyclerView.Adapter<PlantContentAdapte
                                 public void onClick(DialogInterface dialog, int which) {
                                     if(HuaYuanFragment.getUserPlantContentList().size()==0){
                                         long flag=  mPlantLab.addPlant(plant);
-                                        v.getContext().sendBroadcast(new Intent("myBroadCast"));
+                                        v.getContext().sendBroadcast(new Intent("addplant"));
                                         if(flag==-1){
                                             Toast.makeText(v.getContext(),"添加失败",Toast.LENGTH_SHORT).show();
                                         }else {
                                             Toast.makeText(v.getContext(),"添加成功",Toast.LENGTH_SHORT).show();
-                                            PollingUtils.startAllService(v.getContext(),plant);
-
 
                                         }
 

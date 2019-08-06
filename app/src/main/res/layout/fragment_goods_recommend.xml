@@ -3,95 +3,98 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:background="@mipmap/background_vague" />
+        android:id="@+id/title_info"
+        android:layout_height="wrap_content">
+        <include layout="@layout/background_style"
+            android:id="@+id/background"></include>
+
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/goods_image"
+            android:layout_below="@id/background"
+            android:id="@+id/goods_title"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物品名称"/>
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/goods_image"
+            android:layout_width="160dp"
+            android:layout_height="90dp"
+            android:layout_below="@+id/background"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goods_price"
+            android:text="商品价格: 90 RMB"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/goods_details"/>
+
+        <TextView
+            android:id="@+id/goods_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品详情:"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/goods_title"
+            android:layout_marginRight="10dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goods_seller"
+            android:text="店铺：xx旗舰店"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/goods_price"
+            android:layout_marginLeft="10dp" />
+
+    </RelativeLayout>
     <ImageView
-        android:id="@+id/goods_top_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/app"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="50dp"/>
-
-    <TextView
-        android:layout_below="@id/goods_top_image"
-        android:id="@+id/goods_title"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="物品名称"/>
-
-    <ImageView
-        android:scaleType="fitXY"
-        android:id="@+id/goods_image"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
-        android:layout_below="@+id/goods_title"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
-        android:src="@mipmap/zhongzizhiwu" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/goods_price"
-        android:text="商品价格: 90 RMB"
-        android:textSize="18dp"
-        android:layout_margin="10dp"
-
-        android:layout_below="@id/goods_details"/>
-
-    <TextView
-        android:id="@+id/goods_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="商品详情:"
-        android:layout_margin="10dp"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@id/goods_title"
-        android:layout_marginRight="10dp"
-        android:textSize="18dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/goods_seller"
-        android:text="店铺：xx旗舰店"
-        android:textSize="18dp"
-        android:layout_below="@id/goods_image"
-        android:layout_margin="10dp" />
-    <ImageView
+        android:layout_marginTop="5dp"
         android:id="@+id/divider"
-        android:layout_below="@id/goods_seller"
+        android:layout_below="@id/title_info"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"/>
-    <TextView
-        android:textColor="#DD000000"
-        android:textSize="15dp"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/goods_use"
-        android:lineSpacingMultiplier="1.2"
-        android:text="作用:........................."
-        android:layout_margin="10dp"
-        android:layout_below="@id/divider"/>
-    <Button
-        android:textSize="20dp"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:background="@drawable/button_selector"
-        android:id="@+id/buy_now"
-        android:layout_width="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:text="立即购买" />
+        android:layout_below="@id/divider">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#DD000000"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goods_use"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_margin="10dp" />
 
+            <Button
+                android:id="@+id/buy_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_selector"
+                android:padding="10dp"
+                android:text="立即购买"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

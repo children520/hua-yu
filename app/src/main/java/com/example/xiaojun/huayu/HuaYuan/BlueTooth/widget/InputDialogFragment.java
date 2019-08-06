@@ -63,7 +63,7 @@ public class InputDialogFragment extends DialogFragment {
         Builder popupBuilder = new Builder(getActivity());
         popupBuilder.setView(root);
         //popupBuilder.setMessage(mMessage);
-        popupBuilder.setPositiveButton("确  定",
+        popupBuilder.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Log.d(TAG, "onClick ssid=" + mSSID + ",password=" + et_input.getText().toString() + ",type=" + mType);

@@ -22,9 +22,7 @@ import java.util.List;
 
 public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantContentAdapter.ViewHolder> {
     private List<Plant> mPlantList;
-    private static final int LAYOUT_TYPE_ONE=1;
-    private static final int LAYOUT_TYPE_TWO=2;
-    private static final String PLANTBIRTHDAY="plantbirthday";
+
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView mImageView;
         private TextView mChineseNameView;
@@ -33,7 +31,6 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
         private TextView mSoilView;
         private Plant mPlant;
         private ImageView deletePlantImageView;
-        private ImageView IsNotAddPlantImageView;
         private PlantLab plantLab;
         public ViewHolder(View view) {
             super(view);
@@ -71,8 +68,7 @@ public class UserPlantContentAdapter extends RecyclerView.Adapter<UserPlantConte
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     plantLab.deletePlant(mPlant);
-                                    v.getContext().sendBroadcast(new Intent("myBroadCast"));
-                                    PollingUtils.stopAllService(v.getContext());
+                                    v.getContext().sendBroadcast(new Intent("deleteplant"));
 
 
                                 }

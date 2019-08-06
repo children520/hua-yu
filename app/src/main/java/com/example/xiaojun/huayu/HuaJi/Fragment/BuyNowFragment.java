@@ -37,17 +37,10 @@ public class BuyNowFragment extends Fragment {
         NameEditText=view.findViewById(R.id.buy_now_name_edit);
         AddressEditText=view.findViewById(R.id.buy_now_address_edit);
         PhoneEditText=view.findViewById(R.id.buy_now_phone_edit);
-        WechatPayButton=view.findViewById(R.id.wechat_pay_btn);
         Price=getActivity().getIntent().getDoubleExtra(PRICE,1);
         double TotalPrice=Price+5;
         PriceTextView.setText("$"+Price);
         TotalTextView.setText("$"+TotalPrice);
-        WechatPayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestOrder();
-            }
-        });
         return view;
     }
     private void requestOrder(){

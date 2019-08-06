@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xiaojun.huayu.HuaYu.Tools.BombFetchr;
@@ -44,13 +45,11 @@ public class PlantDetailFragment extends Fragment {
     private static final String PLANTBREEDTIME="plantbreedtime";
 
     private TextView plantChineseNameTextView;
-    private TextView plantImageUrlTextView;
     private ImageView plantImageView;
     private TextView plantLatinNameTextView;
     private TextView plantFamilyGenusTextView;
-    private TextView plantMorphologicalCharacteristicsTextView;
     private TextView plantSoilView;
-    private LinearLayout mLinearLayout;
+    private RelativeLayout remindRelativeLayout;
     private TextView plantBirthdayTextView;
     private TextView plantDrinkTimeTextView;
     private TextView plantFertilizationTimeTextView;
@@ -59,8 +58,7 @@ public class PlantDetailFragment extends Fragment {
     private TextView plantBreedTimeTextView;
     private String PlantBirthday;
 
-    private String ChineseName;
-    private Bitmap AppBitmap;
+    private String ChineseName,ImageUrl,PlantLatinName,PlantFamilyGenus,PlantSoil;
     private NotificationManager notificationManager;
 
 
@@ -75,43 +73,49 @@ public class PlantDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_plant_detail, container, false);
 
         notificationManager=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        mLinearLayout=(LinearLayout)view.findViewById(R.id.remind_setting);
-        mLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              Intent intent=new Intent(getActivity(),RemindSettingActivity.class);
-              startActivity(intent);
-            }
-        });
-
-        ChineseName=getActivity().getIntent().getStringExtra(PLANTCHINESENAME);
-        String ImageUrl=getActivity().getIntent().getStringExtra(IMAGTURL);
-        String PlantLatinName=getActivity().getIntent().getStringExtra(PLANTLATINNAME);
-        String PlantFamilyGenus=getActivity().getIntent().getStringExtra(PLANTFAMILYGENUS);
-        //String PlantMorphologicalCharacteristics=getActivity().getIntent().getStringExtra(PLANTMORPHOLOGICALCHARACTERISTICS);
-        String PlantSoil=getActivity().getIntent().getStringExtra(PLANTSOIL);
-        PlantBirthday=getActivity().getIntent().getStringExtra(PLANTBIRTHDAY);
-
-        PlantBreedTime=getActivity().getIntent().getIntExtra(PLANTBREEDTIME,1);
-        PlantFertilizationTime=getActivity().getIntent().getIntExtra(PLANTFERTILIZATIONTIME,1);
-        PlantScissorTime=getActivity().getIntent().getIntExtra(PLANTSCISSORTIME,1);
-        PlantChangeSoilTime=getActivity().getIntent().getIntExtra(PLANTCHANGESOILTIME,1);
-        PlantDrinkTime=getActivity().getIntent().getIntExtra(PLANTDRINKTIME,1);
-
         bindView(view);
+        GetExtra();
+
         Tools.LoadImage(plantImageView,ImageUrl);
-        plantChineseNameTextView.setText(ChineseName);
-        plantLatinNameTextView.setText(PlantLatinName);
-        plantFamilyGenusTextView.setText(PlantFamilyGenus);
-        plantSoilView.setText(PlantSoil);
-        plantBirthdayTextView.setText(PlantBirthday);
+        SetText();
         updateUI();
+        RemindRelativeLayoutClick();
         return view;
     }
     @Override
     public void onResume(){
         super.onResume();
         updateUI();
+    }
+    private void SetText(){
+        plantChineseNameTextView.setText(ChineseName);
+        plantLatinNameTextView.setText(PlantLatinName);
+        plantFamilyGenusTextView.setText(PlantFamilyGenus);
+        plantSoilView.setText(PlantSoil);
+        plantBirthdayTextView.setText(PlantBirthday);
+    }
+    private void RemindRelativeLayoutClick(){
+        remindRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),RemindSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    private void GetExtra(){
+        ChineseName=getActivity().getIntent().getStringExtra(PLANTCHINESENAME);
+        ImageUrl=getActivity().getIntent().getStringExtra(IMAGTURL);
+        PlantLatinName=getActivity().getIntent().getStringExtra(PLANTLATINNAME);
+        PlantFamilyGenus=getActivity().getIntent().getStringExtra(PLANTFAMILYGENUS);
+        //String PlantMorphologicalCharacteristics=getActivity().getIntent().getStringExtra(PLANTMORPHOLOGICALCHARACTERISTICS);
+        PlantSoil=getActivity().getIntent().getStringExtra(PLANTSOIL);
+        PlantBirthday=getActivity().getIntent().getStringExtra(PLANTBIRTHDAY);
+        PlantBreedTime=getActivity().getIntent().getIntExtra(PLANTBREEDTIME,1);
+        PlantFertilizationTime=getActivity().getIntent().getIntExtra(PLANTFERTILIZATIONTIME,1);
+        PlantScissorTime=getActivity().getIntent().getIntExtra(PLANTSCISSORTIME,1);
+        PlantChangeSoilTime=getActivity().getIntent().getIntExtra(PLANTCHANGESOILTIME,1);
+        PlantDrinkTime=getActivity().getIntent().getIntExtra(PLANTDRINKTIME,1);
     }
     @Override
     public void onDestroy(){
@@ -155,7 +159,7 @@ public class PlantDetailFragment extends Fragment {
         plantLatinNameTextView=view.findViewById(R.id.plant_detail_latin_name);;
         plantFamilyGenusTextView=view.findViewById(R.id.plant_detail_family_genus);;
         plantSoilView=view.findViewById(R.id.plant_detail_soil);
-
+        remindRelativeLayout=(RelativeLayout)view.findViewById(R.id.remind_setting);
         plantBirthdayTextView=view.findViewById(R.id.plant_detail_birthday);
         plantDrinkTimeTextView=view.findViewById(R.id.plant_detail_drink_water);
         plantFertilizationTimeTextView=view.findViewById(R.id.plant_detail_fertilization);

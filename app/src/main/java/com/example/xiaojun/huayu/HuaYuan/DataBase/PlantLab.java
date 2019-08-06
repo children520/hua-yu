@@ -67,17 +67,8 @@ public class PlantLab {
     public void deletePlant(Plant p){
         mDatabase.delete("Plant","plantchinesename=?",new String[]{p.getPlantChineseName()} );
         mDatabase.close();
-
     }
-    public long getDataBaseLength(){
-        String sql = "select count(*) from info";
-        Cursor cursor=mDatabase.rawQuery(sql,null);
-        cursor.moveToFirst();
-        long count = cursor.getLong(0);
-        cursor.close();
-        return count;
 
-    }
     public void updatePlant(Plant plant){
         String uuidString=plant.getPlantId().toString();
         ContentValues values=getContentValues(plant);

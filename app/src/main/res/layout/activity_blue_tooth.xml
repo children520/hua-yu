@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/grey_light">
 
     <LinearLayout
-        android:background="@color/grey_light"
+        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -17,11 +18,10 @@
             android:checked="false"
             android:text="开关"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="16dp" />
         <TextView
             android:layout_gravity="center_vertical"
             android:textColor="@color/white"
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="连接状态信息："/>
@@ -32,27 +32,26 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:gravity="center"
             android:text="名称"
             android:textColor="#ff000000"
             android:textSize="18dp" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
             android:text="地址"
@@ -60,9 +59,9 @@
             android:textSize="18dp"/>
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:gravity="center"
             android:text="状态"
             android:textColor="#ff000000"

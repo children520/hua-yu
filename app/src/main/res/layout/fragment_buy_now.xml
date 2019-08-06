@@ -2,163 +2,171 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:background="@mipmap/background_vague" />
-    <ImageView
-        android:id="@+id/buy_now_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/app"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="50dp"/>
+    <include layout="@layout/buy_now_background_style"
+        android:id="@+id/background"></include>
     <TextView
-        android:layout_below="@+id/buy_now_image"
+        android:layout_below="@+id/background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="填写收货人信息"
-        android:textSize="18dp"
+        android:textSize="15dp"
         android:id="@+id/write_info"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"/>
-    <TextView
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edittext_style"
+        android:layout_width="match_parent"
         android:id="@+id/buy_now_name"
         android:layout_below="@id/write_info"
-        android:text="姓名:"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/buy_now_name_edit"
-        android:layout_below="@id/write_info"
-        android:layout_toRightOf="@id/buy_now_name"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_below="@id/write_info"
+            android:text="姓名:"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/buy_now_name_edit"
+            android:layout_width="match_parent"
+            android:background="@drawable/content_style"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edittext_style"
         android:layout_width="match_parent"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/content_style"
-        android:layout_height="wrap_content" />
-
-    <TextView
         android:id="@+id/buy_now_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/buy_now_name"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="地址:"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-    <EditText
-        android:id="@+id/buy_now_address_edit"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/buy_now_name_edit"
-        android:layout_toRightOf="@id/buy_now_name"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buy_now_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:text="地址:"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/buy_now_address_edit"
+            android:layout_width="match_parent"
+            android:background="@drawable/content_style"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edittext_style"
         android:layout_width="match_parent"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/content_style"
-        android:layout_height="wrap_content" />
-
-    <TextView
         android:id="@+id/buy_now_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/buy_now_address"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="10dp"
-        android:text="电话:"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-    <EditText
-        android:id="@+id/buy_now_phone_edit"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/buy_now_address_edit"
-        android:layout_toRightOf="@id/buy_now_name"
-        android:layout_width="match_parent"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/content_style"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:text="电话:"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/goods"
+        <EditText
+            android:id="@+id/buy_now_phone_edit"
+            android:layout_width="match_parent"
+
+            android:background="@drawable/content_style"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_below="@id/buy_now_phone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="商品"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/part_line"
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/buy_now_price"
-        android:layout_alignParentRight="true"
-        android:text="$10.00"
-        android:layout_margin="10dp"
-        android:layout_below="@id/part_line"/>
-    <View
-        android:layout_marginTop="10dp"
-        android:background="@color/grey"
-        android:layout_below="@id/buy_now_phone_edit"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/part_line"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/freight_price"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:text="总价"
-        android:textSize="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/total_price"
-        android:layout_alignParentRight="true"
-        android:textStyle="bold"
-        android:text="$15.00"
-        android:textColor="#fd0000"
-        android:layout_margin="10dp"
-        android:layout_below="@id/freight_price"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/goods"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:text="运费"
-        android:textSize="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/freight_price"
-        android:layout_alignParentRight="true"
-        android:text="$5.00"
-        android:layout_margin="10dp"
-        android:layout_below="@id/goods"/>
-    <Button
-        android:id="@+id/wechat_pay_btn"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        android:background="#0f9711"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/total_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="微信支付"/>
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/goods"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/part_line"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:id="@+id/buy_now_price"
+                android:layout_alignParentRight="true"
+                android:text="$10.00"
+                android:layout_margin="10dp"
+                android:layout_below="@id/part_line"/>
+            <View
+                android:layout_marginTop="10dp"
+                android:background="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/part_line"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/freight_price"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:text="总价"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:id="@+id/total_price"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"
+                android:text="$15.00"
+                android:textColor="#fd0000"
+                android:layout_margin="10dp"
+                android:layout_below="@id/freight_price"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/goods"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:text="运费"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:id="@+id/freight_price"
+                android:layout_alignParentRight="true"
+                android:text="$5.00"
+                android:layout_margin="10dp"
+                android:layout_below="@id/goods"/>
+            <ImageView
+                android:layout_below="@+id/total_price"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/wechat_pay"/>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

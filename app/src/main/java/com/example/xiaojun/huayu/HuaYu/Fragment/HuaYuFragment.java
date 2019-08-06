@@ -127,7 +127,7 @@ public class HuaYuFragment extends Fragment {
     private void StopThumbnailDownloader(){
         thumbnailDownloader.quit();
         thumbnailDownloader.getLooper();
-        Log.i(TAG,"background thread start");
+
     }
     private void HuaYusearch(){
         Tools.WipeSearchViewUnderLine(HomeSearchView);

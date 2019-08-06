@@ -43,6 +43,7 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.example.xiaojun.huayu.HuaYu.Tools.Tools;
 import com.example.xiaojun.huayu.HuaYuan.Activity.BlueToothActivity;
 import com.example.xiaojun.huayu.HuaYuan.Adapter.PlantContentAdapter;
 import com.example.xiaojun.huayu.HuaYuan.Adapter.UserPlantContentAdapter;
@@ -68,7 +69,6 @@ public class HuaYuanFragment extends Fragment {
     private static final String PLANTFAMILYGENUS="plantfamilygenus";
     private static final String PLANTMORPHOLOGICALCHARACTERISTICS="plantmorphologicalcharacteristics";
     private static final String PLANTSOIL="plantsoil";
-
     private static final String PLANTBIRTHDAY="plantbirthday";
     private static final String PLANTDRINKTIME="plantdrinktime";
     private static final String PLANTFERTILIZATIONTIME="plantfertilizationtime";
@@ -89,18 +89,13 @@ public class HuaYuanFragment extends Fragment {
     private UserPlantContentAdapter mAdapter;
     private View AddPlantView;
     private AlertDialog.Builder AddPlantBuilder;
-
     private SearchView AddPlantSearchView;
     private ImageView AddPlantImageView;
-
     private RecyclerView AddPlantRecyclerView;
     public static TextView TPtextview,HMtextView,DItextview;
     private PlantLab plantLab;
     private Button blueBoothButton;
-
     private SwipeRefreshLayout HuanYuanSwipeRefreshLayout;
-
-
     @Override
     public void onCreate(Bundle paramBundle){
         super.onCreate(paramBundle);
@@ -126,16 +121,7 @@ public class HuaYuanFragment extends Fragment {
         bindAddPlantView();
         CloseBlueAndAddPlantDialog();
         AddPlantSearch();
-        addPlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                plantList.clear();
-                AddPlantAlertDialog.show();
-                Message message=new Message();
-                message.what=UPDATE_VIEW;
-                handler.sendMessage(message);
-            }
-        });
+        AddPlantEvent();
         SwipeSwipeRefreshPlantList();
         SendBroadcast();
         blueBoothConnect();
@@ -151,6 +137,18 @@ public class HuaYuanFragment extends Fragment {
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 HuanYuanSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+    private void AddPlantEvent(){
+        addPlant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plantList.clear();
+                AddPlantAlertDialog.show();
+                Message message=new Message();
+                message.what=UPDATE_VIEW;
+                handler.sendMessage(message);
             }
         });
     }
@@ -233,48 +231,52 @@ public class HuaYuanFragment extends Fragment {
     private void SendBroadcast(){
         UpdateUIBroadcastReceiver updateUIBroadcastReceiver=new UpdateUIBroadcastReceiver();
         IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("myBroadCast");
+        intentFilter.addAction("addplant");
+        intentFilter.addAction("deleteplant");
         getActivity().registerReceiver(updateUIBroadcastReceiver,intentFilter);
     }
     private void  AddPlantSearch(){
+        Tools.WipeSearchViewUnderLine(AddPlantSearchView);
         AddPlantSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(final String query) {
                 if(TextUtils.isEmpty(query)){
                     Toast.makeText(getActivity(),"请输入查找内容",Toast.LENGTH_SHORT).show();
                 }
-                BmobQuery<Plant> bmobQuery = new BmobQuery<Plant>();
-                bmobQuery.findObjects(new FindListener<Plant>() {
-                    @Override
-                    public void done(List<Plant> list, BmobException e) {
-                        if (e == null) {
-                            HashSet<Plant> plantSet =new HashSet<>();
-                            for (Plant plant :list){
-                                Log.d("name", plant.getPlantChineseName());
-                                if (query.equals(plant.getPlantChineseName())){
-                                    plantSet.add(plant);
-                                }
-                            }
-                            plantList.clear();
-                            Iterator<Plant> iterator=plantSet.iterator();
-                            while (iterator.hasNext()){
-                                plantList.add(iterator.next());
-                            }
-                            Message message=new Message();
-                            message.what=UPDATE_VIEW;
-                            handler.sendMessage(message);
-                        } else {
-                            Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                        }
-                    }
-                });
+                SearchPlant(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+    }
+    private void SearchPlant(final String plantName){
+        BmobQuery<Plant> bmobQuery = new BmobQuery<Plant>();
+        bmobQuery.findObjects(new FindListener<Plant>() {
+            @Override
+            public void done(List<Plant> list, BmobException e) {
+                if (e == null) {
+                    HashSet<Plant> plantSet =new HashSet<>();
+                    for (Plant plant :list){
+                        Log.d("name", plant.getPlantChineseName());
+                        if (plantName.equals(plant.getPlantChineseName())){
+                            plantSet.add(plant);
+                        }
+                    }
+                    plantList.clear();
+                    Iterator<Plant> iterator=plantSet.iterator();
+                    while (iterator.hasNext()){
+                        plantList.add(iterator.next());
+                    }
+                    Message message=new Message();
+                    message.what=UPDATE_VIEW;
+                    handler.sendMessage(message);
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                }
             }
         });
     }
@@ -411,18 +413,23 @@ public class HuaYuanFragment extends Fragment {
         return mUserPlantList;
     }
     public class UpdateUIBroadcastReceiver extends BroadcastReceiver {
-        private final String ACTION_BOOT ="myBroadCast";
+        private final String ADD_PLANT = "addplant";
+        private final String DELETE_PLANT = "deleteplant";
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(ACTION_BOOT.equals(intent.getAction())){
-                plantLab.displayPlantList(mUserPlantList);
-                Log.d("mUserPlantList",mUserPlantList.toString());
-                mAdapter = new UserPlantContentAdapter(mUserPlantList);
-                Log.d("adapter",mAdapter.toString());
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
+            if (ADD_PLANT.equals(intent.getAction())) {
+                UpdatePlant();
+            }
+            if (DELETE_PLANT.equals(intent.getAction())) {
+                UpdatePlant();
             }
         }
+    }
+    private void UpdatePlant(){
+        plantLab.displayPlantList(mUserPlantList);
+        mAdapter = new UserPlantContentAdapter(mUserPlantList);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
 

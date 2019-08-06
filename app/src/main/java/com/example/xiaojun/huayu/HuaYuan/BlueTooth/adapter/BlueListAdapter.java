@@ -56,7 +56,7 @@ public class BlueListAdapter extends BaseAdapter {
         }
 
         final BlueDevice device = mBlueList.get(position);
-        holder.tv_blue_name.setText(device.name+":");
+        holder.tv_blue_name.setText(device.name);
         holder.tv_blue_address.setText(device.address);
         holder.tv_blue_state.setText(mStateArray[device.state]);
         return convertView;
