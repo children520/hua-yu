@@ -2,6 +2,8 @@ package com.example.xiaojun.huayu.HuaYuan.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -10,11 +12,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -27,9 +28,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import android.widget.ImageView;
-
-
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -128,6 +126,7 @@ public class HuaYuanFragment extends Fragment {
 
         return view;
     }
+
     private void SwipeSwipeRefreshPlantList(){
         HuanYuanSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

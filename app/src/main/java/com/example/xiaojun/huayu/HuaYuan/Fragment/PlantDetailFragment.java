@@ -130,6 +130,7 @@ public class PlantDetailFragment extends Fragment {
         }else{
             plantDrinkTimeTextView.setText(PlantDrinkTime-(timediff%PlantDrinkTime)+"小时后");
         }
+        /*
         if(timediff%PlantFertilizationTime==0){
             plantFertilizationTimeTextView.setText(PlantFertilizationTime+"小时后");
         }else{
@@ -150,7 +151,7 @@ public class PlantDetailFragment extends Fragment {
         }else{
             plantBreedTimeTextView.setText(PlantBreedTime-timediff%PlantBreedTime+"小时后");
         }
-
+    */
 
     }
     private void bindView(View view){

@@ -10,11 +10,6 @@ import android.util.Log;
 import com.example.xiaojun.huayu.HuaYuan.Fragment.RemindSettingFragment;
 import com.example.xiaojun.huayu.HuaYuan.Utils.PollingUtils;
 
-/**
- * Polling service
- * @Author Ryan
- * @Create 2013-7-13 上午10:18:44
- */
 public class BreedService extends Service {
 	public static final String ACTION = "com.example.xiaojun.huayu.BreedService";
 	private Notification mNotification;

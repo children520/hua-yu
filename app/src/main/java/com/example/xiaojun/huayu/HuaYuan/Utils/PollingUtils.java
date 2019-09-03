@@ -2,11 +2,13 @@ package com.example.xiaojun.huayu.HuaYuan.Utils;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -73,15 +75,17 @@ public class PollingUtils {
     }
     public static void showNotification(Context context,String plantName,String plantMaintenance,int id) {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel=new NotificationChannel("notice","huayu",NotificationManager.IMPORTANCE_DEFAULT);
+            manager.createNotificationChannel(channel);
+        }
         Intent i=new Intent(context.getApplicationContext(),PlantDetailFragment.class);
         PendingIntent pendingIntent=PendingIntent.getActivity(context.getApplicationContext(),0,i,0);
-        Notification notification = new NotificationCompat.Builder(context, "chat")
-                .setContentTitle("花屿通知")
-                .setContentText("您的"+plantName+"植物需要"+plantMaintenance+"啦！")
+        Notification notification = new NotificationCompat.Builder(context, "notice")
+                .setContentTitle("花屿提醒")
+                .setContentText("您的"+plantName+"需要"+plantMaintenance+"啦！")
                 .setTicker("来自花屿的通知信息")
-                //.setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.apple)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.app))
+                .setSmallIcon(R.mipmap.app)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
